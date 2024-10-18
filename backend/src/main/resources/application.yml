@@ -1,1 +1,40 @@
-spring.application.name=backend
+spring:
+  application:
+    name: backend
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: postgres
+
+  datasource:
+    url: jdbc:postgresql://db:5432/kateringdb
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop # (create, create-drop, validate, update)
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: h2
+
+  h2:
+    console.enabled: true # http://localhost:8080/h2-console
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
