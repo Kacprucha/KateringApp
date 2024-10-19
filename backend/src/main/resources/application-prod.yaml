@@ -19,10 +19,6 @@ spring:
     init:
       mode: never
 
-logging:
-  level:
-    root: error
-
 springdoc:
   api-docs:
     enabled: false

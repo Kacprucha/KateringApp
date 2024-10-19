@@ -20,10 +20,6 @@ spring:
     init:
       mode: always
 
-logging:
-  level:
-    root: info
-
 springdoc:
   api-docs:
     enabled: true
