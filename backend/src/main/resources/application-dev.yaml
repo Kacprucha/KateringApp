@@ -1,0 +1,24 @@
+spring:
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/KateringApp
+          jwk-set-uri: http://localhost:8081/realms/KateringApp/protocol/openid-connect/certs
+
+  h2:
+    console.enabled: true # http://localhost:8080/h2-console
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

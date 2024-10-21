@@ -1,0 +1,27 @@
+spring:
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/KateringApp
+          jwk-set-uri: http://keycloak:8081/realms/KateringApp/protocol/openid-connect/certs
+
+  datasource:
+    url: jdbc:postgresql://db:5432/kateringdb
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop # (create, create-drop, validate, update)
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
