@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html'
+  templateUrl: './landing-page.component.html',
 })
-export class LandingPageComponent {
-
-}
+export class LandingPageComponent {}

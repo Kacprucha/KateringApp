@@ -1,19 +1,18 @@
-import {Injectable, signal} from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
-
   private _alert: Alert = {
     type: 'success',
     message: '',
-    isVisible: false
+    isVisible: false,
   };
 
   public alert = signal(this._alert);
 
-  constructor() { }
+  constructor() {}
 
   public show(message: string, type: 'success' | 'info' | 'warning' | 'error') {
     if (this.alert().isVisible) {
@@ -22,15 +21,14 @@ export class AlertService {
         this.alert.set({
           type,
           message,
-          isVisible: true
+          isVisible: true,
         });
       }, 400);
-    }
-    else {
+    } else {
       this.alert.set({
         type,
         message,
-        isVisible: true
+        isVisible: true,
       });
     }
   }
@@ -38,13 +36,13 @@ export class AlertService {
   public hide() {
     this.alert.set({
       ...this.alert(),
-      isVisible: false
+      isVisible: false,
     });
   }
 }
 
 export interface Alert {
-  type : 'success' | 'info' | 'warning' | 'error'
+  type: 'success' | 'info' | 'warning' | 'error';
   message: string;
   isVisible: boolean;
 }

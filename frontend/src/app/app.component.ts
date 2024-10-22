@@ -1,5 +1,5 @@
-import {Component, signal, WritableSignal} from '@angular/core';
-import {Alert, AlertService} from './services/alert.service';
+import { Component, signal, WritableSignal } from '@angular/core';
+import { Alert, AlertService } from './services/alert.service';
 
 @Component({
   selector: 'app-root',
