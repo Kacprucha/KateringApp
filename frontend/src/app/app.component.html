@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<main class="max-w-[70rem] mx-auto mt-10">
+  <router-outlet />
+</main>
+<div
+  [ngClass]="{
+    'alert text-white fixed w-[30rem] max-h-[7rem] left-[calc(50%-15rem)] z-99 transform duration-200 ease-in': true,
+    '-bottom-28': !alert().isVisible,
+    'bottom-4': alert().isVisible,
+    'bg-green-500': alert().type === 'success',
+    'bg-yellow-500': alert().type === 'warning',
+    'bg-sky-500': alert().type === 'info',
+    'bg-red-500': alert().type === 'error',
+  }"
+  (click)="hideAlert()"
+>
+  <span>{{ alert().message }}</span>
+</div>
