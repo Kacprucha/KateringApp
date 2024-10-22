@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
+import {Alert, AlertService} from './services/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'katering app';
+
+  alert: WritableSignal<Alert>;
+
+  constructor(private alertService: AlertService) {
+    this.alertService.show('Welcome to Katering App', 'info');
+    this.alert = this.alertService.alert;
+  }
+
+  hideAlert() {
+    this.alertService.hide();
+  }
 }
