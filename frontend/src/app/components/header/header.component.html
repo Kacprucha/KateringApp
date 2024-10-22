@@ -1,0 +1,21 @@
+<div class="navbar bg-base-100 max-w-[80rem] mx-auto">
+  <div class="flex-1" routerLink="/">
+    <a class="btn btn-ghost text-xl">Katering App</a>
+  </div>
+  <div>
+    <div tabindex="0" class="dropdown dropdown-end flex flex-row gap-4 btn btn-ghost no-animation">
+      <h1>User</h1>
+      <div role="button" class="avatar placeholder">
+        <div class="w-10 rounded-full bg-neutral text-neutral-content">
+          <span class="text-lg">U</span>
+        </div>
+      </div>
+      <ul tabindex="0" class="z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 fixed top-[60px]">
+        <li><a routerLink="/profile">Profile</a></li>
+        <li><a routerLink="/orders">My orders</a></li>
+        <li><a routerLink="/settings">Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
