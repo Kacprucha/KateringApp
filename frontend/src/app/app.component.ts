@@ -4,7 +4,6 @@ import {Alert, AlertService} from './services/alert.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'katering app';
@@ -12,7 +11,7 @@ export class AppComponent {
   alert: WritableSignal<Alert>;
 
   constructor(private alertService: AlertService) {
-    this.alertService.show('Welcome to Katering App', 'info');
+    // this.alertService.show('Welcome to Katering App', 'info');
     this.alert = this.alertService.alert;
   }
 
