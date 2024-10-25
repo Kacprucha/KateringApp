@@ -1,0 +1,24 @@
+FROM eclipse-temurin:21-jdk-alpine AS builder
+WORKDIR /app
+
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+RUN dos2unix mvnw
+RUN ./mvnw dependency:go-offline
+
+COPY src src
+RUN ./mvnw package
+
+RUN java -Djarmode=layertools -jar target/*.jar extract --destination target/extracted
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+ARG EXTRACTED=app/target/extracted
+COPY --from=builder ${EXTRACTED}/dependencies/ ./
+COPY --from=builder ${EXTRACTED}/spring-boot-loader/ ./
+COPY --from=builder ${EXTRACTED}/snapshot-dependencies/ ./
+COPY --from=builder ${EXTRACTED}/application/ ./
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
