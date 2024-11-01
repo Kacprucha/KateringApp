@@ -15,12 +15,13 @@
     }
 </script>
 
-<@layout.registrationLayout displayInfo=social.displayInfo; section>
+<@layout.registrationLayout; section>
     <#if section = "pageTitle">
         ${msg("signup")}
     <#elseif section = "form">
         <div class="divider"></div>
         <div class="kcform">
+        <div id="kc-form-wrapper" <#if realm.password && social.providers??>class="${properties.kcFormSocialAccountContentClass!} ${properties.kcFormSocialAccountClass!}"</#if>>
             <h1 id="kc-page-title" style="text-align: center;">
                 ${msg("Sign up")}
             </h1>
@@ -32,7 +33,9 @@
 
             <div id="client-fields" style="display: block;">
 
-                <form action="${url.registrationAction}" method="post">
+                <form id="kc-form-login" action="${url.registrationAction}" method="post">
+                    
+                    <input type="hidden" id="isCateringFirm" name="user.attributes.isCateringFirm" value="false">
 
                     <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('email',properties.kcFormGroupErrorClass!)}">
                         <div class="${properties.kcLabelWrapperClass!}">
@@ -72,15 +75,7 @@
                     </div>
                     </#if>
 
-
-                    <div class="${properties.kcFormGroupClass!}"">
-                        <div class="form-check">
-                            <input type="checkbox" required class="form-check-input" id="user.attributes.terms" name="user.attributes.terms"/>
-                            <label for="user.attributes.terms" class="form-check-label">${msg("terms")?no_esc}</label>
-                        </div>
-                    </div>
-
-                    <div class="${properties.kcFormGroupClass!}">
+                    <div class="${properties.kcFormGroupClass!}" id="kc-form-buttons">
                         <div class="form-buttons">
                             <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("signup")}"/>
                         </div>
@@ -91,14 +86,16 @@
 
             <div id="firm-fields" style="display: none;">
 
-                <form action="${url.registrationAction}" method="post">
+                <form action="${url.registrationAction}" method="post" class="kc-form-login">
+
+                    <input type="hidden" id="isCateringFirm" name="user.attributes.isCateringFirm" value="true">
 
                     <div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('username',properties.kcFormGroupErrorClass!)}">
                         <div class="${properties.kcLabelWrapperClass!}">
-                            <label for="username">${msg("Frim name")}</label>
+                            <label for="usernamefirm">${msg("Frim name")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="username" class="${properties.kcInputClass!}" name="username" value="${(register.formData.username!'')}" autocomplete="username" pattern=".*" title="${msg("usernameValid")}" required/>
+                            <input type="text" id="usernamefirm" class="${properties.kcInputClass!}" name="username" value="${(register.formData.username!'')}" autocomplete="username" pattern=".*" title="${msg("usernameValid")}" required/>
                         </div>
                     </div>
 
@@ -107,7 +104,7 @@
                             <label for="phoneNumber">${msg("Phone number")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="phoneNumber" class="${properties.kcInputClass!}" name="phoneNumber" value="${(register.formData.phoneNumber!'')}" autocomplete="phoneNumber" pattern=".*" title="${msg("phoneValid")}" required/>
+                            <input type="text" id="phoneNumber" class="${properties.kcInputClass!}" name="user.attributes.phoneNumber" value="${(register.formData.phoneNumber!'')}" autocomplete="phoneNumber" pattern=".*" title="${msg("phoneValid")}" required/>
                         </div>
                     </div>
 
@@ -116,7 +113,7 @@
                             <label for="address">${msg("Address")}</label>
                         </div>
                         <div class="${properties.kcInputWrapperClass!}">
-                            <input type="text" id="address" class="${properties.kcInputClass!}" name="address" value="${(register.formData.address!'')}" autocomplete="address" pattern=".*" title="${msg("addressValid")}" required/>
+                            <input type="text" id="address" class="${properties.kcInputClass!}" name="user.attributes.address" value="${(register.formData.address!'')}" autocomplete="address" pattern=".*" title="${msg("addressValid")}" required/>
                         </div>
                     </div>
 
@@ -149,19 +146,15 @@
                     </div>
                     </#if>
 
-                <div class="${properties.kcFormGroupClass!}"">
-                    <div class="form-check">
-                        <input type="checkbox" required class="form-check-input" id="user.attributes.terms" name="user.attributes.terms"/>
-                        <label for="user.attributes.terms" class="form-check-label">${msg("terms")?no_esc}</label>
-                    </div>
-                </div>
 
                 <div class="${properties.kcFormGroupClass!}">
-                    <div class="form-buttons">
+                    <div class="form-buttons" style="margin-top: 50;">
                         <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("signup")}"/>
                     </div>
                 </div>
+
             </form>
+        </div>
         </div>
     </div>
    </#if>
