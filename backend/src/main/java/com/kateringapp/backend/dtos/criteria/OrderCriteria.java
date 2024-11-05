@@ -1,4 +1,4 @@
 package com.kateringapp.backend.dtos.criteria;
 
-public class OrderCriteria {
-}
+public record OrderCriteria(Integer minRate,
+                            Integer maxRate){}

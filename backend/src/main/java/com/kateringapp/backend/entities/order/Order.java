@@ -1,6 +1,8 @@
 package com.kateringapp.backend.entities.order;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,6 +22,7 @@ public class Order {
     @Id
     @GeneratedValue
     private Long id;
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     private String opinion;
     private int rate;

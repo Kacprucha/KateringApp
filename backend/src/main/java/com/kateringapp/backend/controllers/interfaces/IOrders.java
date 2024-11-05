@@ -10,7 +10,8 @@ public interface IOrders {
     OrderDTO createOrder(OrderDTO orderDTO);
     void deleteOrder(Long id);
     OrderDTO getOrder(Long id);
-    List<OrderDTO> getOrders(OrderCriteria orderCriteria);
+    List<OrderDTO> getOrders(Integer minRate,
+                             Integer maxRate);
     OrderDTO updateOrder(Long id, OrderDTO orderDTO);
 
 }

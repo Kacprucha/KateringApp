@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -43,8 +44,9 @@ public class OrderController implements IOrders {
 
     @Override
     @GetMapping
-    public List<OrderDTO> getOrders(@RequestBody OrderCriteria orderCriteria) {
-        return orderService.getOrders(orderCriteria);
+    public List<OrderDTO> getOrders(@RequestParam(required = false) Integer minRate,
+                                    @RequestParam(required = false) Integer maxRate) {
+        return orderService.getOrders(minRate, maxRate);
     }
 
     @Override
