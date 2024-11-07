@@ -1,17 +1,18 @@
 package com.kateringapp.backend.services;
 
 
-import com.kateringapp.backend.dtos.MealDTO;
+import com.kateringapp.backend.dtos.MealCreateDTO;
+import com.kateringapp.backend.dtos.MealGetDTO;
 
 
 public interface IMeals {
 
-    MealDTO createMeal(MealDTO meal);
+    MealGetDTO createMeal(MealCreateDTO meal);
 
-    MealDTO updateMeal(int id, MealDTO meal);
+    MealGetDTO updateMeal(Long id, MealCreateDTO meal);
 
-    MealDTO getMeal(int id);
+    MealGetDTO getMeal(Long id);
 
-    void deleteMeal(int id);
+    void deleteMeal(Long id);
 
 }

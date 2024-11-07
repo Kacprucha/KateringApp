@@ -18,7 +18,7 @@ public class Allergen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int allergenId;
+    private Long allergenId;
 
     @Column(nullable = false, unique = true)
     private String name;

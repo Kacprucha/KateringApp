@@ -18,7 +18,7 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int ingredientId;
+    private Long ingredientId;
 
     @Column(nullable = false)
     private String name;

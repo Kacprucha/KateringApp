@@ -18,7 +18,7 @@ public class DeliveryType {
 
     @Id
     @GeneratedValue
-    private int deliveryTypeId;
+    private Long deliveryTypeId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

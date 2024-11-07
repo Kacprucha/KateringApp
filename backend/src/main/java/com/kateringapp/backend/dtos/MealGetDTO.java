@@ -1,16 +1,19 @@
 package com.kateringapp.backend.dtos;
 
 
+import com.kateringapp.backend.entities.Ingredient;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
+import java.util.List;
+
 @Value
 @Builder
 @Jacksonized
-public class MealDTO {
+public class MealGetDTO {
 
-    int mealId;
+    Long mealId;
 
     String name;
 
@@ -18,6 +21,10 @@ public class MealDTO {
 
     String description;
 
-    String photoUrl;
+    String photo;
+
+    List<Ingredient> ingredients;
+
+    CateringFirmGetDTO cateringFirm;
 
 }

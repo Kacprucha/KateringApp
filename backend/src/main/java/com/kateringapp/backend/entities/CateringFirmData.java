@@ -18,7 +18,7 @@ import java.util.List;
 public class CateringFirmData {
 
     @Id
-    private int cateringFirmId;
+    private Long cateringFirmId;
 
     private String info;
 

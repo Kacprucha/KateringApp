@@ -9,9 +9,9 @@ import java.util.List;
 @Value
 @Builder
 @Jacksonized
-public class CateringFirmDTO {
+public class CateringFirmGetDTO {
 
-    int cateringFirmId;
+    Long cateringFirmId;
 
     String name;
 
@@ -20,5 +20,7 @@ public class CateringFirmDTO {
     String logo;
 
     List<String> deliveryOptions;
+
+    CateringFirmKeycloakDTO cateringFirmKeycloakDTO;
 
 }

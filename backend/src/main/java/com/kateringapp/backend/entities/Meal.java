@@ -17,7 +17,7 @@ import java.util.List;
 public class Meal {
 
     @Id
-    private int mealId;
+    private Long mealId;
 
     @Column(nullable = false)
     private String name;
