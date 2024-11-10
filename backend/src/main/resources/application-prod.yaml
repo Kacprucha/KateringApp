@@ -4,8 +4,8 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8081/realms/KateringApp
-          jwk-set-uri: http://keycloak:8081/realms/KateringApp/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8081/realms/kateringapp
+          jwk-set-uri: http://keycloak:8081/realms/kateringapp/protocol/openid-connect/certs
 
   datasource:
     url: ${DB_URL}

@@ -4,8 +4,8 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8081/realms/KateringApp
-          jwk-set-uri: http://localhost:8081/realms/KateringApp/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8081/realms/kateringapp
+          jwk-set-uri: http://localhost:8081/realms/kateringapp/protocol/openid-connect/certs
 
   h2:
     console.enabled: true # http://localhost:8080/h2-console
@@ -22,3 +22,10 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2.server.resource: DEBUG
+    org.springframework.security.oauth2.jwt: DEBUG
