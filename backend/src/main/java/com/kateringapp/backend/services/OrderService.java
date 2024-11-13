@@ -3,11 +3,14 @@ package com.kateringapp.backend.services;
 import com.kateringapp.backend.dtos.OrderDTO;
 import com.kateringapp.backend.dtos.criteria.OrderCriteria;
 import com.kateringapp.backend.entities.order.Order;
+import com.kateringapp.backend.entities.order.OrderStatus;
 import com.kateringapp.backend.exceptions.order.OrderNotFoundException;
 import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
 import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.services.interfaces.IOrderService;
+import com.kateringapp.backend.specifications.OrderSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class OrderService implements IOrderService {
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO) {
         Order order = orderMapper.mapDTOToEntity(orderDTO);
+        order.setOrderStatus(OrderStatus.PENDING);
 
         order = orderRepository.save(order);
 
@@ -44,8 +48,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrders(Integer minRate, Integer maxRate) {
-        return orderRepository.findAll()
+    public List<OrderDTO> getOrders(OrderCriteria orderCriteria) {
+        Specification<Order> orderSpecification = OrderSpecification.matchesCriteria(orderCriteria);
+
+        return orderRepository.findAll(orderSpecification)
                 .stream()
                 .map(orderMapper::mapEntityToDTO)
                 .toList();

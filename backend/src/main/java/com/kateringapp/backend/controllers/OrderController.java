@@ -5,6 +5,7 @@ import com.kateringapp.backend.dtos.OrderDTO;
 import com.kateringapp.backend.dtos.criteria.OrderCriteria;
 import com.kateringapp.backend.services.interfaces.IOrderService;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/order")
+@RequestMapping("/order")
 public class OrderController implements IOrders {
 
     private final IOrderService orderService;
@@ -44,9 +44,8 @@ public class OrderController implements IOrders {
 
     @Override
     @GetMapping
-    public List<OrderDTO> getOrders(@RequestParam(required = false) Integer minRate,
-                                    @RequestParam(required = false) Integer maxRate) {
-        return orderService.getOrders(minRate, maxRate);
+    public List<OrderDTO> getOrders(@ParameterObject OrderCriteria orderCriteria) {
+        return orderService.getOrders(orderCriteria);
     }
 
     @Override

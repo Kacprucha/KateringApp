@@ -12,8 +12,7 @@ public interface IOrderService {
 
     OrderDTO getOrder(Long id);
 
-    List<OrderDTO> getOrders(Integer minRate,
-                             Integer maxRate);
+    List<OrderDTO> getOrders(OrderCriteria orderCriteria);
 
     OrderDTO updateOrder(Long id, OrderDTO orderDTO);
 }
