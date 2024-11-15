@@ -32,7 +32,7 @@ export class MealListComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(`I cannot download meals! With status code: ${error.status}, message: ${error.message}`)
-        this.mealList = [{
+        this.mealList = [{ //test purposes only
           id: 1,
           name: "Pizza Margherita",
           price: 15.99,
@@ -73,7 +73,7 @@ export class MealListComponent implements OnInit {
         this.mealList = this.mealList.filter(meal => meal.id !== id)
       },
       error: (error: HttpErrorResponse) => {
-        this.mealList = this.mealList.filter(meal => meal.id !== id)
+        this.mealList = this.mealList.filter(meal => meal.id !== id) //test purposes only
         console.log(`I cannot delete meal! With status code: ${error.status}, message: ${error.message}`)
       }
     })
