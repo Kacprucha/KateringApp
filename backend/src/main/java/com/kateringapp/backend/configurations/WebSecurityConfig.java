@@ -42,7 +42,8 @@ public class WebSecurityConfig {
                     corsSpec -> corsSpec.configurationSource(corsConfigurationSource)
             ).csrf(
                     AbstractHttpConfigurer::disable
-            ).build();
+            )
+                .headers(AbstractHttpConfigurer::disable).build();
     }
 
     private Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter() {
