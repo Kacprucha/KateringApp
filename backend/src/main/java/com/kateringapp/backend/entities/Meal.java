@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -17,18 +18,21 @@ import java.util.List;
 public class Meal {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long mealId;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int price;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
     @Column(nullable = false)
     private String description;
 
-    private String photo;
+    @Lob
+    @Column(name = "photo", columnDefinition = "BLOB")
+    private byte[] photo;
 
     @ManyToOne
     @JoinColumn(name="catering_firm_id", nullable=false)

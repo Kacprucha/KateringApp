@@ -33,7 +33,9 @@ public class CateringFirmData {
     )
     private List<DeliveryType> deliveryOptions;
 
-    private String logo;
+    @Lob
+    @Column(name = "logo", columnDefinition = "BLOB")
+    private byte[] logo;
 
     @OneToMany
     private List<Meal> meals;

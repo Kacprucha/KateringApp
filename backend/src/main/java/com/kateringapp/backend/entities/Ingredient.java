@@ -1,5 +1,6 @@
 package com.kateringapp.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class Ingredient {
     )
     private List<Allergen> allergens;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private List<Meal> meals;
 

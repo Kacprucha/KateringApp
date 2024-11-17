@@ -1,5 +1,6 @@
 package com.kateringapp.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class DeliveryType {
     @Column(nullable = false)
     private DeliveryTypeEnum deliveryType;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "deliveryOptions")
     private List<CateringFirmData> cateringFirmDataList;
 }

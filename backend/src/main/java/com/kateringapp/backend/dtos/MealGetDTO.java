@@ -3,28 +3,25 @@ package com.kateringapp.backend.dtos;
 
 import com.kateringapp.backend.entities.Ingredient;
 import lombok.Builder;
-import lombok.Value;
-import lombok.extern.jackson.Jacksonized;
+import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-@Value
+@Data
 @Builder
-@Jacksonized
 public class MealGetDTO {
 
     Long mealId;
 
     String name;
 
-    int price;
+    BigDecimal price;
 
     String description;
 
-    String photo;
+    byte[] photo;
 
     List<Ingredient> ingredients;
-
-    CateringFirmGetDTO cateringFirm;
 
 }

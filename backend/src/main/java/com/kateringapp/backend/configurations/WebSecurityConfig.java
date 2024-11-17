@@ -26,8 +26,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/secured").authenticated()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/v3/api-docs/**").permitAll()
-                    .requestMatchers("/h2-console/**").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             ).oauth2ResourceServer(
                     oauth2 -> oauth2.jwt(Customizer.withDefaults())
             ).cors(
