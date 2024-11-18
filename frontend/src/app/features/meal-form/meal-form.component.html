@@ -1,0 +1,117 @@
+<form
+  (ngSubmit)="onMealFormSubmit()"
+  class="max-w-md mx-auto p-4 bg-base-100 shadow-lg rounded-lg"
+>
+  <div class="form-control mb-4">
+    <label for="name" class="label">
+      <span class="label-text">Name:</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      [(ngModel)]="meal.name"
+      name="name"
+      class="input input-bordered w-full"
+    />
+    <div *ngIf="errors.name" class="text-error mt-1">
+      <small>{{ errors.name }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="description" class="label">
+      <span class="label-text">Description:</span>
+    </label>
+    <textarea
+      id="description"
+      [(ngModel)]="meal.description"
+      name="description"
+      class="textarea textarea-bordered w-full"
+    ></textarea>
+    <div *ngIf="errors.description" class="text-error mt-1">
+      <small>{{ errors.description }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="price" class="label">
+      <span class="label-text">Price:</span>
+    </label>
+    <input
+      type="number"
+      id="price"
+      [(ngModel)]="meal.price"
+      name="price"
+      class="input input-bordered w-full"
+    />
+    <div *ngIf="errors.price" class="text-error mt-1">
+      <small>{{ errors.price }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="photo" class="label">
+      <span class="label-text">Photo:</span>
+    </label>
+    <input
+      type="file"
+      id="photo"
+      (change)="onFileChange($event)"
+      accept="image/*"
+      class="file-input file-input-bordered w-full"
+    />
+    <div *ngIf="errors.photo" class="text-error mt-1">
+      <small>{{ errors.photo }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="ingredient" class="label">
+      <span class="label-text">Ingredient:</span>
+    </label>
+    <div class="flex gap-2">
+      <input
+        type="text"
+        id="ingredient"
+        [(ngModel)]="newIngredient"
+        name="ingredient"
+        class="input input-bordered w-full"
+        (keyup.enter)="addIngredient()"
+      />
+      <button type="button" class="btn" (click)="addIngredient()">
+        Add Ingredient
+      </button>
+    </div>
+    <div *ngIf="errors.ingredients" class="text-error mt-1">
+      <small>{{ errors.ingredients }}</small>
+    </div>
+    <ul class="list-disc list-inside my-2">
+      <li
+        *ngFor="let ingredient of meal.ingredients; let i = index"
+        class="flex justify-between items-center my-2"
+      >
+        <span>
+          {{ ingredient }}
+        </span>
+        <button
+          type="button"
+          class="btn btn-sm btn-error ml-2"
+          (click)="removeIngredient(i)"
+        >
+          Remove
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-full">Submit</button>
+
+  <div *ngIf="errors.serverErrors" class="mt-6">
+    <h3 class="text-lg font-bold mb-2">Errors:</h3>
+    <ul class="list-disc list-inside text-error">
+      <li *ngFor="let error of errors.serverErrors">
+        {{ error }}
+      </li>
+    </ul>
+  </div>
+</form>
