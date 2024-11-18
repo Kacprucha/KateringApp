@@ -17,7 +17,7 @@
  - Swagger zablokowany
 
 ## Swagger
-**Adres endpointu SwaggerUI:** http://localhost:8080/swagger-ui/index.html
+**Adres endpointu SwaggerUI:** http://localhost:8080/api/v1/swagger-ui/index.html
 
 ## Testy
 Do uruchomienia testów jednostkowych:
