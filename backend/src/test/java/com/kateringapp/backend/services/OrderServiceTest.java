@@ -1,4 +1,4 @@
-package com.kateringapp.backend.service;
+package com.kateringapp.backend.services;
 
 import com.kateringapp.backend.data.TestDataProvider;
 import com.kateringapp.backend.dtos.OrderDTO;
@@ -7,7 +7,6 @@ import com.kateringapp.backend.exceptions.order.OrderNotFoundException;
 import com.kateringapp.backend.mappers.OrderMapper;
 import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
 import com.kateringapp.backend.repositories.IOrderRepository;
-import com.kateringapp.backend.services.OrderService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

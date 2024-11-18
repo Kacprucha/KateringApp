@@ -1,9 +1,13 @@
 package com.kateringapp.backend.data;
 
 import com.kateringapp.backend.dtos.OrderDTO;
+import com.kateringapp.backend.dtos.PaymentRequest;
+import com.kateringapp.backend.dtos.PaymentResponse;
+import com.kateringapp.backend.entities.Payment;
 import com.kateringapp.backend.entities.order.Order;
 import com.kateringapp.backend.entities.order.OrderStatus;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 public class TestDataProvider {
@@ -29,6 +33,36 @@ public class TestDataProvider {
                 .startingAddress("aaa")
                 .destinationAddress("bbb")
                 .opinion("good")
+                .build();
+    }
+
+    public static PaymentRequest providePaymentRequest() {
+        return PaymentRequest.builder()
+                .amount(100.0)
+                .currency("USD")
+                .description("Test Payment")
+                .clientId(1L)
+                .build();
+    }
+
+    public static Payment providePayment() {
+        return Payment.builder()
+                .paymentId(1L)
+                .amount(BigDecimal.valueOf(100.0))
+                .currency("USD")
+                .description("Test Payment")
+                .status("PENDING")
+                .clientId(1L)
+                .build();
+    }
+
+    public static PaymentResponse providePaymentResponse() {
+        return PaymentResponse.builder()
+                .id("1")
+                .amount(100.0)
+                .currency("USD")
+                .description("Test Payment")
+                .status("PENDING")
                 .build();
     }
 
