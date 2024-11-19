@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MealListComponent } from './components/meal/list/meal-list.component';
 import { provideHttpClient } from '@angular/common/http';
+import { MealFormModule } from './features/meal-form/meal-form.module';
 
 @NgModule({
   declarations: [
@@ -15,9 +16,9 @@ import { provideHttpClient } from '@angular/common/http';
     HeaderComponent,
     PageNotFoundComponent,
     LandingPageComponent,
-    MealListComponent
+    MealListComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, MealFormModule],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })

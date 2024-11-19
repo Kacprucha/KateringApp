@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MealListComponent } from './components/meal/list/meal-list.component';
+import MealFormComponent from './features/meal-form/meal-form.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,11 @@ const routes: Routes = [
   },
   {
     path: 'meal',
-    component: MealListComponent
+    component: MealListComponent,
+  },
+  {
+    path: 'meal/create',
+    component: MealFormComponent,
   },
   {
     path: '**',

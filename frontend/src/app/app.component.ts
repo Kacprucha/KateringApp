@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { Alert, AlertService } from './services/alert.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { Alert, AlertService } from './services/alert.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'katering app';
+  title = 'Katering App';
 
   alert: WritableSignal<Alert>;
 
