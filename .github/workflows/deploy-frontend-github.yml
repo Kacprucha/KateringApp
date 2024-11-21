@@ -23,6 +23,10 @@ jobs:
     - name: Build the application
       run: npm run build --prod
       working-directory: ./frontend
+
+    - name: List build folder contents
+      run: ls -R ./frontend/dist
+      working-directory: ./frontend
       
     - name: Modify base href in index.html
       run: sed -i 's|<base href="/">|<base href="/KateringApp/">|' ./frontend/dist/frontend/browser/index.html
