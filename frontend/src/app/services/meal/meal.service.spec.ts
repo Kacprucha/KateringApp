@@ -66,4 +66,65 @@ describe('MealService', () => {
     expect(req.request.body).toEqual(mealData);
     req.flush(mockResponse);
   });
+
+  it('should call getMeals and return a list of meals', () => {
+    const mockResponse: MealGetDTO[] = [
+      {
+        mealId: 1,
+        name: 'Test Meal 1',
+        price: 1000,
+        description: 'A delicious test meal 1',
+        photo: 'base64string1',
+        ingredients: [
+          {
+            ingredientId: 1,
+            name: 'ingredient1',
+            allergens: [],
+          },
+        ],
+      },
+      {
+        mealId: 2,
+        name: 'Test Meal 2',
+        price: 2000,
+        description: 'A delicious test meal 2',
+        photo: 'base64string2',
+        ingredients: [
+          {
+            ingredientId: 2,
+            name: 'ingredient2',
+            allergens: [],
+          },
+        ],
+      },
+    ];
+
+    service.getMeals().subscribe((meals) => {
+      expect(meals.length).toBe(2);
+      expect(meals).toEqual(
+        mockResponse.map((meal) => ({
+          ...meal,
+          photo: `data:image;base64,${meal.photo}`,
+        })),
+      );
+    });
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/meal`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockResponse);
+  });
+
+  it('should call deleteMeal with correct URL', () => {
+    const mealId = 1;
+
+    service.deleteMeal(mealId).subscribe((response) => {
+      expect(response).toBeNull();
+    });
+
+    const req = httpMock.expectOne(
+      `${environment.apiUrl}/api/v1/meal/${mealId}`,
+    );
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null);
+  });
 });
