@@ -1,0 +1,35 @@
+name: Angular Build and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./frontend
+
+    - name: Install Chromium
+      run: sudo apt-get update && sudo apt-get install -y chromium-browser
+
+    - name: Build the application
+      run: npm run build --prod
+      working-directory: ./frontend
+
+    - name: Run Unit Tests
+      run: GOOGLE_CHROME_BIN=/usr/bin/chromium-browser npm test -- --browsers=ChromeHeadlessNoSandbox --watch=false
+      working-directory: ./frontend
