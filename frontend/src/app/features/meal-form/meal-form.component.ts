@@ -90,8 +90,8 @@ export default class MealFormComponent
     };
 
     this.mealService.createMeal(payload).subscribe({
-      next: (response: MealGetDTO) => {
-        this.router.navigate(['/meal', response.mealId]);
+      next: (_response: MealGetDTO) => {
+        this.router.navigate(['/meal']);
       },
       error: (error: any) => {
         this.errors.serverErrors = error.message;
