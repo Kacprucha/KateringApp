@@ -1,0 +1,33 @@
+name: Maven Build And Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Install dependencies
+      run: mvn install -DskipTests
+      working-directory: ./backend
+
+    - name: Unit Test
+      run: mvn clean test
+      working-directory: ./backend
+
+    - name: Integration Test
+      run: mvn clean verify
+      working-directory: ./backend
