@@ -30,7 +30,7 @@ describe('MealListComponent', () => {
     it('should get meal list', () => {
       const mockMeal: IMeal[] = [
         {
-          id: 1,
+          mealId: 1,
           name: 'Pizza Margherita',
           price: 15.99,
           description: 'A classic pizza with mozzarella, tomatoes, and basil.',
@@ -52,7 +52,7 @@ describe('MealListComponent', () => {
         const id = 1
         const mockMeal: IMeal[] = [
           {
-            id: 1,
+            mealId: 1,
             name: 'Pizza Margherita',
             price: 15.99,
             description: 'A classic pizza with mozzarella, tomatoes, and basil.',

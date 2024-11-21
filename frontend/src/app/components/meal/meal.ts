@@ -1,5 +1,5 @@
 export interface IMeal {
-    id: number //no definition in diagram model 
+    mealId: number  
     name: string,
     price: number
     description: string
