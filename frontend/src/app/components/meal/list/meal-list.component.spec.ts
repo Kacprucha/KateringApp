@@ -30,7 +30,7 @@ describe('MealListComponent', () => {
     it('should get meal list', () => {
       const mockMeal: IMeal[] = [
         {
-          id: 1,
+          mealId: 1,
           name: 'Pizza Margherita',
           price: 15.99,
           description: 'A classic pizza with mozzarella, tomatoes, and basil.',
@@ -38,7 +38,7 @@ describe('MealListComponent', () => {
           ingredients: [{ name: 'Cheese', allergens: ['lactose'] }]
         }]
         
-      const request = httpMock.expectOne(`${environment.apiUrl}/meal`)
+      const request = httpMock.expectOne(`${environment.apiUrl}/api/v1/meal`)
       expect(request.request.method).toBe("GET")
       request.flush(mockMeal)
 
@@ -52,7 +52,7 @@ describe('MealListComponent', () => {
         const id = 1
         const mockMeal: IMeal[] = [
           {
-            id: 1,
+            mealId: 1,
             name: 'Pizza Margherita',
             price: 15.99,
             description: 'A classic pizza with mozzarella, tomatoes, and basil.',
@@ -65,7 +65,7 @@ describe('MealListComponent', () => {
 
         component.onDeleteMeal(id)
   
-        const requests = httpMock.match(`${environment.apiUrl}/meal/${id}`);
+        const requests = httpMock.match(`${environment.apiUrl}/api/v1/meal/${id}`);
         const deleteRequest = requests[0]
         expect(deleteRequest.request.method).toBe("DELETE")
         deleteRequest.flush({})

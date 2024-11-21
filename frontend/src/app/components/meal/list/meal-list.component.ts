@@ -18,11 +18,11 @@ export class MealListComponent implements OnInit {
   }
 
   showMealOfferButtonClicked(): void {
-    this.http.get<IMeal[]>(`${environment.apiUrl}/meal`).subscribe({
+    this.http.get<IMeal[]>(`${environment.apiUrl}/api/v1/meal`).subscribe({
       next: (response: IMeal[]) => {
         if(response) {
           response.forEach((meal: IMeal) => {
-            if(meal) {
+            if(meal && meal.photo) {
               const blob = meal.photo
               meal.photoUrl = URL.createObjectURL(blob)
             }
@@ -32,48 +32,17 @@ export class MealListComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(`I cannot download meals! With status code: ${error.status}, message: ${error.message}`)
-        this.mealList = [{ //test purposes only
-          id: 1,
-          name: "Pizza Margherita",
-          price: 15.99,
-          description: "A classic pizza with mozzarella, tomatoes, and basil.",
-          photo: new Blob(),
-          ingredients: [{
-            name: "Basic ingredients",
-            allergens: ["gluten", "lactose"]
-          },
-          {
-            name: "Basic ingredientsv2",
-            allergens: ["gluten", "lactosev2"]
-          }]
-        },
-        {
-          id: 2,
-          name: "Makaron",
-          price: 2.22,
-          description: "Pesto",
-          photo: new Blob(),
-          ingredients: [{
-            name: "Basic ingredients",
-            allergens: ["gluten", "lactose"]
-          },
-          {
-            name: "Basic ingredientsv2",
-            allergens: ["gluten", "lactosev2"]
-          }]
-        }]
       }
     })
   }
 
   onDeleteMeal(id: number): void {
-    const url = `${environment.apiUrl}/meal/${id}`
+    const url = `${environment.apiUrl}/api/v1/meal/${id}`
     this.http.delete<void>(url).subscribe({
       next: () => {
-        this.mealList = this.mealList.filter(meal => meal.id !== id)
+        this.mealList = this.mealList.filter(meal => meal.mealId !== id)
       },
       error: (error: HttpErrorResponse) => {
-        this.mealList = this.mealList.filter(meal => meal.id !== id) //test purposes only
         console.log(`I cannot delete meal! With status code: ${error.status}, message: ${error.message}`)
       }
     })
