@@ -20,14 +20,21 @@ import { initializeKeycloak } from '../keycloak-init';
     LandingPageComponent,
     MealListComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MealFormModule, KeycloakAngularModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MealFormModule,
+    KeycloakAngularModule,
+  ],
   providers: [
-    provideHttpClient(),{
-    provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
-    multi: true,
-    deps: [KeycloakService]
-  }],
+    provideHttpClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

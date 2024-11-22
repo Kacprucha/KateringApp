@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  constructor(private readonly keycloakService: KeycloakService) {}
+  keycloakService = inject(KeycloakService);
 
   redirectToLoginPage(): Promise<void> {
     return this.keycloakService.login();
