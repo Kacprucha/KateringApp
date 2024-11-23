@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MealGetDTO, MealService } from '../../services/meal/meal.service';
+import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
 
 @Component({
   selector: 'app-meal-list',

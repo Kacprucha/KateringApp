@@ -1,0 +1,57 @@
+<div class="space-y-4">
+    <table class="min-w-full table-auto border-collapse border border-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border border-gray-300 text-left">#</th>
+          <th class="px-4 py-2 border border-gray-300 text-left">Opinion</th>
+          <th class="px-4 py-2 border border-gray-300 text-left">Rate</th>
+          <th class="px-4 py-2 border border-gray-300 text-left">Change Order Status</th>
+          <th class="px-4 py-2 border border-gray-300 text-left">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let order of orderList; let i = index"
+          class="hover:bg-gray-100 odd:bg-gray-50 even:bg-white"
+        >
+          <td class="px-4 py-2 border border-gray-300">{{ i + 1 }}</td>
+          <td class="px-4 py-2 border border-gray-300">{{ order.opinion }}</td>
+          <td class="px-4 py-2 border border-gray-300">{{ order.rate }}</td>
+          <td class="px-4 py-2 border border-gray-300">
+            <!-- Dropdown -->
+            <select
+              class="border border-gray-300 rounded px-2 py-1 w-full"
+              [value]="order.orderStatus"
+              (change)="onChangeStatus(order, $event)"
+            >
+              <option *ngFor="let status of orderStatusKeys" [value]="status">
+                {{ status }}
+              </option>
+            </select>
+          </td>
+          <td class="px-4 py-2 border border-gray-300">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+              (click)="showOrder(order)"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <order-details
+        [isOpen]="showModal"
+        (onClose)="closeModal()"
+    >
+        <div *ngIf="selectedOrder">
+            <p><strong>Opinion:</strong> {{ selectedOrder.opinion }}</p>
+            <p><strong>Rate:</strong> {{ selectedOrder.rate }}</p>
+            <p><strong>Status:</strong> {{ selectedOrder.orderStatus }}</p>
+            <p><strong>Starting address:</strong> {{ selectedOrder.startingAddress }}</p>
+            <p><strong>Destination address:</strong> {{ selectedOrder.destinationAddress }}</p>
+        </div>
+    </order-details>
+  </div>
+  
