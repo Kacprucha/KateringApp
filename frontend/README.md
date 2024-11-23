@@ -8,7 +8,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Production server
 
-Run `ng build --prod` to build the project. The build artifacts will be stored in the `dist/` directory. You can use the `--prod` flag for a production build.
+Run `ng build --catering-firm` to build the project for catering firm. The build artifacts will be stored in the `dist/` directory. You can use the `--prod` flag for a production build.
+Run `ng build --client` to build the project cilent. The build artifacts will be stored in the `dist/` directory. You can use the `--prod` flag for a production build.
 
 ## Code scaffolding
 
