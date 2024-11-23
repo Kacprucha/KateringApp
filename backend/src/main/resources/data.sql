@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS order_meals (
     meal_id BIGINT NOT NULL,
     PRIMARY KEY (order_id, meal_id),
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (meal_id) REFERENCES meal(id) ON DELETE CASCADE
+    FOREIGN KEY (meal_id) REFERENCES meal(meal_id) ON DELETE CASCADE
 );
 
 -- Tworzenie tabeli 'delivery_type'
