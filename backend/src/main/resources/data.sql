@@ -27,6 +27,15 @@ CREATE TABLE IF NOT EXISTS ingredient_allergen (
     FOREIGN KEY (allergen_id) REFERENCES allergen(allergen_id)
     );
 
+CREATE TABLE IF NOT EXISTS orders (
+    id BIGINT PRIMARY KEY,
+    order_status VARCHAR(50) NOT NULL,
+    opinion TEXT,
+    rate INT NOT NULL,
+    starting_address VARCHAR(255) NOT NULL,
+    destination_address VARCHAR(255) NOT NULL
+);
+
 -- Tworzenie tabeli 'meal'
 CREATE TABLE IF NOT EXISTS meal (
                                     meal_id BIGINT PRIMARY KEY,  -- Ręczne przypisywanie ID
@@ -37,6 +46,14 @@ CREATE TABLE IF NOT EXISTS meal (
     catering_firm_id BIGINT,
     FOREIGN KEY (catering_firm_id) REFERENCES catering_firm_data(catering_firm_id)
     );
+
+CREATE TABLE IF NOT EXISTS order_meals (
+    order_id BIGINT NOT NULL,
+    meal_id BIGINT NOT NULL,
+    PRIMARY KEY (order_id, meal_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (meal_id) REFERENCES meal(id) ON DELETE CASCADE
+);
 
 -- Tworzenie tabeli 'delivery_type'
 CREATE TABLE IF NOT EXISTS delivery_type (
@@ -142,6 +159,12 @@ VALUES
     (2, 1),  -- Healthy Bites: Home Delivery
     (3, 1);  -- Smoothie Masters: Home Delivery
 
+INSERT INTO orders (id, order_status, opinion, rate, starting_address, destination_address)
+VALUES
+    (101, 'PENDING', 'Good service', 5, '123 Starting St', '789 Destination Ave'),
+    (102, 'COMPLETED', 'Quick delivery', 4, '456 Another St', '101 Another Ave'),
+    (103, 'CANCELLED', 'Not delivered on time', 2, '789 Late St', '111 Final Ave');
+
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 1);
@@ -163,3 +186,12 @@ INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (105, 1);
 
 -- Acai Bowl (Meal ID: 6) - składniki: Dairy (ID: 1)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (106, 1);
+
+INSERT INTO order_meals (order_id, meal_id) VALUES (101, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (101, 102);
+
+INSERT INTO order_meals (order_id, meal_id) VALUES (102, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (102, 104);
+
+INSERT INTO order_meals (order_id, meal_id) VALUES (103, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (103, 106);

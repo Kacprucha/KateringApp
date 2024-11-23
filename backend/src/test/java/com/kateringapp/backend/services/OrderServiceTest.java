@@ -7,10 +7,12 @@ import com.kateringapp.backend.exceptions.order.OrderNotFoundException;
 import com.kateringapp.backend.mappers.OrderMapper;
 import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
 import com.kateringapp.backend.repositories.IOrderRepository;
+import com.kateringapp.backend.repositories.MealRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
@@ -19,13 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {OrderMapper.class, IOrderRepository.class})
+@SpringBootTest(classes = {OrderMapper.class, IOrderRepository.class, MealRepository.class})
 class OrderServiceTest {
 
     @InjectMocks
     OrderService orderService;
     @Mock
     IOrderRepository orderRepository;
+    @MockBean
+    MealRepository mealRepository;
     @Mock
     IOrderMapper orderMapper;
 
