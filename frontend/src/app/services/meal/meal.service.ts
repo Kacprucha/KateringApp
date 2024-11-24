@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/env.prod';
+import { environment } from '../../../environments/env';
+import { map } from 'rxjs/operators';
 
 export interface MealCreateDTO {
   name: string;
@@ -41,10 +42,23 @@ export class MealService {
   constructor(private http: HttpClient) {}
 
   createMeal(mealData: MealCreateDTO): Observable<MealGetDTO> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+    return this.http.post<MealGetDTO>(this.apiUrl, mealData);
+  }
 
-    return this.http.post<MealGetDTO>(this.apiUrl, mealData, { headers });
+  getMeals(): Observable<MealGetDTO[]> {
+    return this.http.get<MealGetDTO[]>(this.apiUrl).pipe(
+      map((meals) =>
+        meals.map((meal) => {
+          return {
+            ...meal,
+            photo: `data:image;base64,${meal.photo}`,
+          };
+        }),
+      ),
+    );
+  }
+
+  deleteMeal(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
