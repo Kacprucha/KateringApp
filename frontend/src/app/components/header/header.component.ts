@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthorizationService } from '../../services/authorization.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  constructor(private readonly authService: AuthorizationService) {}
+  authService = inject(AuthorizationService);
 
   logout(): void {
     this.authService.logout();

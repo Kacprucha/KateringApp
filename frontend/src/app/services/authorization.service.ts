@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  constructor(private readonly keycloakService: KeycloakService) {}
-
+ 
+  keycloakService = inject(KeycloakService);
+  
   redirectToLoginPage(): Promise<void> {
     return this.keycloakService.login();
   }
@@ -21,5 +24,13 @@ export class AuthorizationService {
 
   logout(): void {
     this.keycloakService.logout();
+  }
+
+  getToken(): Promise<string> {
+    return this.keycloakService.getToken();
+  }
+
+  addTokenToHeader(headers?: HttpHeaders): Observable<HttpHeaders>{
+    return this.keycloakService.addTokenToHeader(headers);
   }
 }

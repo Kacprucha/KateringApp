@@ -22,7 +22,8 @@ import { initializeKeycloak } from '../keycloak-init';
   ],
   imports: [BrowserModule, AppRoutingModule, MealFormModule, KeycloakAngularModule],
   providers: [
-    provideHttpClient(),{
+    provideHttpClient(),
+    {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,
