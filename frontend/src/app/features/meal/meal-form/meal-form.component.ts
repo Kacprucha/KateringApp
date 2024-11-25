@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMealFormLogic } from '../../services/meal/meal-form-logic.interface';
-import { MealDTO } from '../../shared/models/meal-dto';
-import { FormError } from '../../types/form-error';
-import { MealGetDTO, MealService } from '../../services/meal/meal.service';
-import { IMealFormWindow } from '../../services/meal/meal-form-window.interface';
+import { IMealFormLogic } from '../../../services/meal/meal-form-logic.interface';
+import { MealDTO } from '../../../shared/models/meal-dto';
+import { FormError } from '../../../types/form-error';
+import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
+import { IMealFormWindow } from '../../../services/meal/meal-form-window.interface';
 
 @Component({
   selector: 'app-meal-form',

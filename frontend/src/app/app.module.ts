@@ -7,10 +7,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { provideHttpClient } from '@angular/common/http';
-import { MealFormModule } from './features/meal-form/meal-form.module';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from '../keycloak-init';
-import { MealListModule } from './features/meal-list/meal-list.module';
+import { OrderModule } from './features/order/order.module';
+import { MealListModule } from './features/meal/meal-list/meal-list.module';
+import { MealFormModule } from './features/meal/meal-form/meal-form.module';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { MealListModule } from './features/meal-list/meal-list.module';
     PageNotFoundComponent,
     LandingPageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MealFormModule, MealListModule, KeycloakAngularModule],
+  imports: [BrowserModule, AppRoutingModule, MealFormModule, MealListModule, KeycloakAngularModule, OrderModule],
   providers: [
     provideHttpClient(),
     {

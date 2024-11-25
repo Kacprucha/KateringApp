@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MealGetDTO, MealService } from '../../services/meal/meal.service';
-import { isCateringFirmEnvironment } from '../../shared/utils/environmentGuard';
+import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
+import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
+
 
 @Component({
   selector: 'app-meal-list',

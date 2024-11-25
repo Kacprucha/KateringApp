@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import MealFormComponent from './meal-form.component';
-import { MealService } from '../../services/meal/meal.service';
+import { MealService } from '../../../services/meal/meal.service';
 import { provideHttpClient } from '@angular/common/http';
 
 describe('MealFormComponent', () => {

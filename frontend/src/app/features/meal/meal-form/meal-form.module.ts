@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import MealFormComponent from './meal-form.component';
 import { RouterModule } from '@angular/router';
-import { MealService } from '../../services/meal/meal.service';
+import { MealService } from '../../../services/meal/meal.service';
 
 @NgModule({
   declarations: [MealFormComponent],
