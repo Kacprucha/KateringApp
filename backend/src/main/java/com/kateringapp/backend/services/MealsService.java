@@ -4,10 +4,12 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.*;
+import com.kateringapp.backend.entities.order.Order;
 import com.kateringapp.backend.exceptions.BadRequestException;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
+import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
@@ -16,6 +18,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +37,7 @@ public class MealsService implements IMeals{
     private final MealRepository mealRepository;
     @PersistenceContext
     private final EntityManager entityManager;
+    private final IOrderRepository orderRepository;
 
     @Override
     public MealGetDTO createMeal(MealCreateDTO mealCreateDTO) {
@@ -65,8 +69,13 @@ public class MealsService implements IMeals{
     }
 
     @Override
+    @Transactional
     public void deleteMeal(Long id) {
         Meal meal = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
+
+        List<Order> orders = orderRepository.findOrdersByMealsContaining(meal);
+
+        orderRepository.deleteAll(orders);
 
         mealRepository.delete(meal);
     }
