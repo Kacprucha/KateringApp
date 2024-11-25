@@ -9,6 +9,7 @@ import com.kateringapp.backend.repositories.MealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -24,11 +25,17 @@ public class OrderMapper implements IOrderMapper {
                 .map(Meal::getMealId)
                 .toList();
 
+        BigDecimal totalPrice = order.getMeals()
+                .stream()
+                .map(Meal::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         return OrderDTO.builder()
                 .id(order.getId())
                 .opinion(order.getOpinion())
                 .orderStatus(order.getOrderStatus())
                 .rate(order.getRate())
+                .totalPrice(totalPrice)
                 .mealIds(mealIds)
                 .startingAddress(order.getStartingAddress())
                 .destinationAddress(order.getDestinationAddress())
@@ -47,6 +54,7 @@ public class OrderMapper implements IOrderMapper {
                 .rate(orderDTO.rate())
                 .opinion(orderDTO.opinion())
                 .rate(orderDTO.rate())
+                .orderStatus(orderDTO.orderStatus())
                 .startingAddress(orderDTO.startingAddress())
                 .destinationAddress(orderDTO.destinationAddress())
                 .meals(meals)
