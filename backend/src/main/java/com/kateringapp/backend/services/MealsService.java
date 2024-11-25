@@ -8,6 +8,7 @@ import com.kateringapp.backend.exceptions.BadRequestException;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
+import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
@@ -34,6 +35,7 @@ public class MealsService implements IMeals{
     private final MealRepository mealRepository;
     @PersistenceContext
     private final EntityManager entityManager;
+    private final IOrderRepository orderRepository;
 
     @Override
     public MealGetDTO createMeal(MealCreateDTO mealCreateDTO) {
@@ -67,6 +69,10 @@ public class MealsService implements IMeals{
     @Override
     public void deleteMeal(Long id) {
         Meal meal = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
+
+        if(!orderRepository.findOrdersByMealsContaining(meal).isEmpty()){
+            throw new BadRequestException("This meal can't be deleted. There are remaining orders containing this meal.");
+        }
 
         mealRepository.delete(meal);
     }
