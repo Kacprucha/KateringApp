@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { UserRole } from '../../app/types/user-roles';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class MockKeycloakService {
   isUserInRole(role: string): boolean{
     return true;
   }
-  getUserRoles(): string[]{
+  getUserRoles(): UserRole[]{
     return ['client'];
   }
 }
