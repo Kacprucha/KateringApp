@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -135,7 +135,7 @@ class MealsUnitTest {
     @Test
     void deleteMeal() {
         when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
-        when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(null);
+        when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(Collections.emptyList());
 
         mealsService.deleteMeal(1L);
 
