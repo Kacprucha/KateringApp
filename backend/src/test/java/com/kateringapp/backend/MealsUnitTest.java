@@ -4,6 +4,7 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.Meal;
 import com.kateringapp.backend.entities.CateringFirmData;
+import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.mappers.MealMapper;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -23,6 +25,9 @@ class MealsUnitTest {
 
     @Mock
     private MealRepository mealRepository;
+
+    @Mock
+    private IOrderRepository orderRepository;
 
     @Mock
     private CateringFirmDataRepository cateringFirmDataRepository;
@@ -130,6 +135,7 @@ class MealsUnitTest {
     @Test
     void deleteMeal() {
         when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
+        when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(null);
 
         mealsService.deleteMeal(1L);
 
