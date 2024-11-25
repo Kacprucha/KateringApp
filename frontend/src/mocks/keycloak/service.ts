@@ -28,4 +28,11 @@ export class MockKeycloakService {
     const updatedHeaders = (headers || new HttpHeaders()).set('Authorization', 'Bearer mock-token');
     return of(updatedHeaders);
   }
+
+  isUserInRole(role: string): boolean{
+    return true;
+  }
+  getUserRoles(): string[]{
+    return ['client'];
+  }
 }

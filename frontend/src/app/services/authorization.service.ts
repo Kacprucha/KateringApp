@@ -33,4 +33,12 @@ export class AuthorizationService {
   addTokenToHeader(headers?: HttpHeaders): Observable<HttpHeaders>{
     return this.keycloakService.addTokenToHeader(headers);
   }
+
+  isUserInRole(role: string): boolean{
+    return this.keycloakService.isUserInRole(role);
+  }
+  
+  getUserRoles(): string[]{
+    return this.keycloakService.getUserRoles(true);
+  }
 }
