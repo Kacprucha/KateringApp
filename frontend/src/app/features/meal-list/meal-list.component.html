@@ -1,10 +1,12 @@
 <div class="space-y-4">
-  <a
-    routerLink="/meal/create"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-  >
-    Add Meal
-  </a>
+  @if (isCateringFirmEnvironment) {
+    <a
+      routerLink="/meal/create"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Add Meal
+    </a>
+  }
   <table class="min-w-full table-auto border-collapse border border-gray-200">
     <thead class="bg-gray-100">
       <tr>

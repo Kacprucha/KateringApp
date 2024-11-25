@@ -1,12 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MealGetDTO, MealService } from '../../services/meal/meal.service';
+import { isCateringFirmEnvironment } from '../../shared/utils/environmentGuard';
 
 @Component({
   selector: 'app-meal-list',
   templateUrl: './meal-list.component.html',
 })
 export default class MealListComponent implements OnInit {
+  isCateringFirmEnvironment = isCateringFirmEnvironment;
   mealList: MealGetDTO[] = [];
 
   constructor(private mealService: MealService) {}
