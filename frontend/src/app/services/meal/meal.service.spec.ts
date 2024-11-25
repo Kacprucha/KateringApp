@@ -4,8 +4,8 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { MealService, MealCreateDTO, MealGetDTO } from './meal.service';
-import { environment } from '../../../environments/env';
 import { provideHttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 describe('MealService', () => {
   let service: MealService;

@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import MealListComponent from './meal-list.component';
-import { environment } from '../../../../environments/env';
+import { environment } from '../../../../environments/environment';
 
 const MOCK_MEAL = [
   {

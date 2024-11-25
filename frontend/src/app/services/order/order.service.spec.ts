@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { OrderService, OrderDTO, OrderStatus } from './order.service';
-import { environment } from '../../../environments/env.prod';
+import { environment } from '../../../environments/environment';
+
 
 describe('OrderService', () => {
   let service: OrderService;

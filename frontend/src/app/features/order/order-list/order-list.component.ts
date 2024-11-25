@@ -30,16 +30,6 @@ export default class OrderListComponent implements OnInit, IOrdersWindow {
     }
 
     showOrders(orderList: OrderDTO[]): void {
-        // const order: OrderDTO = {
-        //     id: 1,
-        //     mealIds: [1],
-        //     clientId: [1],
-        //     opinion: "GOOD",
-        //     rate: 100,
-        //     orderStatus: OrderStatus.CANCELLED,
-        //     startingAddress: "ADDR",
-        //     destinationAddress: "DEST"
-        // }
         this.orderList = orderList
     }
 

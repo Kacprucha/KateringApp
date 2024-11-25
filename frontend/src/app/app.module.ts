@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,9 +7,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { provideHttpClient } from '@angular/common/http';
-import { MealFormModule } from './features/meal/meal-form/meal-form.module';
-import { MealListModule } from './features/meal/meal-list/meal-list.module';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { initializeKeycloak } from '../keycloak-init';
 import { OrderModule } from './features/order/order.module';
+import { MealListModule } from './features/meal/meal-list/meal-list.module';
+import { MealFormModule } from './features/meal/meal-form/meal-form.module';
+
 
 @NgModule({
   declarations: [
@@ -18,8 +21,15 @@ import { OrderModule } from './features/order/order.module';
     PageNotFoundComponent,
     LandingPageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MealFormModule, MealListModule, OrderModule],
-  providers: [provideHttpClient()],
+  imports: [BrowserModule, AppRoutingModule, MealFormModule, MealListModule, KeycloakAngularModule, OrderModule],
+  providers: [
+    provideHttpClient(),
+    {
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService]
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

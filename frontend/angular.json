@@ -38,26 +38,21 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "catering-firm": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/env.ts",
-                  "with": "src/environments/env.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.catering-firm.ts"
                 }
-              ],
-              "budgets": [
+              ]
+            },
+            "client": {
+              "fileReplacements": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.client.ts"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "optimization": false,
@@ -65,16 +60,19 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "catering-firm"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "frontend:build:production"
-            },
             "development": {
               "buildTarget": "frontend:build:development"
+            },
+            "catering-firm": {
+              "buildTarget": "frontend:build:catering-firm"
+            },
+            "client": {
+              "buildTarget": "frontend:build:client"
             }
           },
           "defaultConfiguration": "development"

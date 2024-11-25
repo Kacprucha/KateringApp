@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrderDTO, OrderService, OrderStatus } from '../../../services/order/order.service';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/env.prod';
+import { environment } from '../../../../environments/environment';
 import OrderListComponent from './order-list.component';
 import OrderDetails from '../order-details/order-details.component';
 
