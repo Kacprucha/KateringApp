@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div class="bg-base-100 max-w-[80rem] mx-auto">
   @if (isCateringFirmEnvironment) {
     <a
       routerLink="/meal/create"
@@ -55,3 +55,10 @@
     </tbody>
   </table>
 </div>
+
+<meal-modal
+  [isOpen]="isDeleteModal"
+  (onClose)="closeModal()"
+>
+<div>I cannot delete meal! Meal is already linked to order!</div>
+</meal-modal>
