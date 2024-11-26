@@ -7,12 +7,14 @@ import {
 import { IOrdersWindow } from '../../../services/order/order-list-window.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { i18n } from '../../../../i18n';
+import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
 
 @Component({
   selector: 'order-list',
   templateUrl: './order-list.component.html',
 })
 export default class OrderListComponent implements OnInit, IOrdersWindow {
+  isCateringFirmEnvironment = isCateringFirmEnvironment;
   orderList: OrderDTO[] = [];
   orderStatusKeys = Object.values(OrderStatus);
   showModal: boolean = false;
