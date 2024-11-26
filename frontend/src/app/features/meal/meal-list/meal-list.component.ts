@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
 import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,10 @@ export default class MealListComponent implements OnInit {
   isMealModal: boolean = false
   modalText: string = ""
 
-  constructor(private mealService: MealService) {}
+  constructor(  
+    private mealService: MealService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.showMealOfferButtonClicked();
@@ -47,11 +51,15 @@ export default class MealListComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(
-          `I cannot delete meal! With status code: ${error.status}, message: ${error.message}`,
+          `I cannot edit this meal! With status code: ${error.status}, message: ${error.message}`,
         );
         this.isMealModal = true
-        this.modalText = "I cannot delete meal! Meal is already linked to order!"
+        this.modalText = "I cannot edit this meal!"
       },
     });
+  }
+
+  onEditMeal(id: number): void {
+    this.router.navigate(['/meal/update/' + id]);
   }
 }
