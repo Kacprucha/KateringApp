@@ -6,7 +6,6 @@ import {
 } from '../../../services/order/order.service';
 import { IOrdersWindow } from '../../../services/order/order-list-window.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
 import { i18n } from '../../../../i18n';
 
 @Component({
@@ -14,13 +13,16 @@ import { i18n } from '../../../../i18n';
   templateUrl: './order-list.component.html',
 })
 export default class OrderListComponent implements OnInit, IOrdersWindow {
-  isCateringFirmEnvironment = isCateringFirmEnvironment;
   orderList: OrderDTO[] = [];
   orderStatusKeys = Object.values(OrderStatus);
   showModal: boolean = false;
   selectedOrder!: OrderDTO;
 
   constructor(private orderService: OrderService) {}
+
+  getOrderStatusName(status: OrderStatus): string {
+    return i18n.getOrderStatusName(status);
+  }
 
   ngOnInit(): void {
     this.orderService.getOrders().subscribe({
@@ -33,10 +35,6 @@ export default class OrderListComponent implements OnInit, IOrdersWindow {
         );
       },
     });
-  }
-
-  getOrderStatusName(status: OrderStatus) {
-    return i18n.getOrderStatusName(status);
   }
 
   showOrders(orderList: OrderDTO[]): void {
