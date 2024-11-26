@@ -51,7 +51,7 @@ export default class MealListComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(
-          `I cannot edit this meal! With status code: ${error.status}, message: ${error.message}`,
+          `I cannot delete meal! With status code: ${error.status}, message: ${error.message}`,
         );
         this.isMealModal = true
         this.modalText = "I cannot delete meal! Meal is already linked to order!"
