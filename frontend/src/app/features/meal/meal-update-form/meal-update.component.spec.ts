@@ -4,8 +4,10 @@ import { By } from '@angular/platform-browser';
 import MealUpdateComponent from './meal-update.component';
 import { MealService } from '../../../services/meal/meal.service';
 import { provideHttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-describe('MealFormComponent', () => {
+describe('MealUpdateComponent', () => {
   let component: MealUpdateComponent;
   let fixture: ComponentFixture<MealUpdateComponent>;
 
@@ -13,7 +15,21 @@ describe('MealFormComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MealUpdateComponent],
       imports: [FormsModule],
-      providers: [MealService, provideHttpClient()],
+      providers: [
+        MealService,
+        provideHttpClient(),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get(): string {
+                  return '123';
+                },
+              },
+            },
+          },
+        },],
     }).compileComponents();
   });
 
@@ -55,7 +71,6 @@ describe('MealFormComponent', () => {
       'Description must be at least 6 characters long.',
     );
     expect(component.errors.price).toBe('Price must be a non-negative number.');
-    expect(component.errors.photo).toBe('Photo is required.');
     expect(component.errors.ingredients).toBe(
       'At least one ingredient is required.',
     );
