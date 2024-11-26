@@ -6,6 +6,7 @@ import {
 import { provideHttpClient } from '@angular/common/http';
 import MealListComponent from './meal-list.component';
 import { environment } from '../../../../environments/environment';
+import MealDeleteModal from '../meal-modal/meal-delete-modal.component';
 
 const MOCK_MEAL = [
   {
@@ -25,7 +26,7 @@ describe('MealListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MealListComponent],
+      declarations: [MealListComponent, MealDeleteModal],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 

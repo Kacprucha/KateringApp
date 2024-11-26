@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { OrderDTO, OrderService, OrderStatus } from "../../../services/order/order.service";
 import { IOrdersWindow } from "../../../services/order/order-list-window.interface";
 import { HttpErrorResponse } from "@angular/common/http";
+import { MealService } from "../../../services/meal/meal.service";
 
 @Component({
     selector: 'order-list',
@@ -13,7 +14,7 @@ export default class OrderListComponent implements OnInit, IOrdersWindow {
     showModal: boolean = false
     selectedOrder!: OrderDTO
 
-    constructor(private orderService: OrderService) {
+    constructor(private orderService: OrderService, private mealService: MealService) {
     }
 
     ngOnInit(): void {
@@ -32,6 +33,7 @@ export default class OrderListComponent implements OnInit, IOrdersWindow {
     showOrders(orderList: OrderDTO[]): void {
         this.orderList = orderList
     }
+
 
     showOrder(orderDTO: OrderDTO): void {
         this.orderService.getOrder(orderDTO.id).subscribe({

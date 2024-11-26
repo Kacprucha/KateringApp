@@ -11,11 +11,16 @@ import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuar
 export default class MealListComponent implements OnInit {
   isCateringFirmEnvironment = isCateringFirmEnvironment;
   mealList: MealGetDTO[] = [];
+  isDeleteModal: boolean = false
 
   constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
     this.showMealOfferButtonClicked();
+  }
+
+  closeModal(): void {
+    this.isDeleteModal = false
   }
 
   showMealOfferButtonClicked(): void {
@@ -40,6 +45,7 @@ export default class MealListComponent implements OnInit {
         console.log(
           `I cannot delete meal! With status code: ${error.status}, message: ${error.message}`,
         );
+        this.isDeleteModal = true
       },
     });
   }
