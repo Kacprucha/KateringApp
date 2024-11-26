@@ -15,19 +15,23 @@ const routes: Routes = [
   {
     path: 'orders',
     component: OrderListComponent,
+    title: 'KateringApp - Orders',
   },
   {
     path: 'meal',
     component: MealListComponent,
+    title: 'KateringApp - Meals',
   },
   {
     path: 'meal/create',
     component: MealFormComponent,
     canActivate: [cateringFirmEnvironmentGuard],
+    title: 'KateringApp - Create Meal',
   },
   {
     path: '**',
     component: PageNotFoundComponent,
+    title: 'KateringApp - 404',
   },
 ];
 
