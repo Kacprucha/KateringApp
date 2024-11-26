@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
     selector: 'meal-modal',
-    templateUrl: './meal-delete-modal.component.html',
+    templateUrl: './meal-modal.component.html',
 })
-export default class MealDeleteModal {
+export default class MealModal {
     @Input() isOpen = false; 
     @Output() onClose = new EventEmitter<void>();
 

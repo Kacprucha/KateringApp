@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import MealListComponent from './meal-list.component';
 import { RouterModule } from '@angular/router';
 import { MealService } from '../../../services/meal/meal.service';
-import MealDeleteModal from '../meal-modal/meal-delete-modal.component';
+import MealModal from '../meal-modal/meal-modal.component';
 
 @NgModule({
-  declarations: [MealListComponent, MealDeleteModal],
+  declarations: [MealListComponent, MealModal],
   imports: [CommonModule, RouterModule],
   providers: [MealService],
   exports: [MealListComponent],

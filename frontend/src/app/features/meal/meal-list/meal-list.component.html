@@ -27,7 +27,7 @@
         <td class="px-4 py-2 border border-gray-300">{{ i + 1 }}</td>
 
         <td class="px-4 py-2 border border-gray-300">{{ meal.name }}</td>
-        <td class="px-4 py-2 border border-gray-300">{{ meal.price / 100 }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ meal.price }} PLN</td>
         <td class="px-4 py-2 border border-gray-300">{{ meal.description }}</td>
         <td class="px-4 py-2 border border-gray-300">
           <img
@@ -57,8 +57,8 @@
 </div>
 
 <meal-modal
-  [isOpen]="isDeleteModal"
+  [isOpen]="isMealModal"
   (onClose)="closeModal()"
 >
-<div>I cannot delete meal! Meal is already linked to order!</div>
+<div>{{ modalText }}</div>
 </meal-modal>
