@@ -11,7 +11,8 @@ import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuar
 export default class MealListComponent implements OnInit {
   isCateringFirmEnvironment = isCateringFirmEnvironment;
   mealList: MealGetDTO[] = [];
-  isDeleteModal: boolean = false
+  isMealModal: boolean = false
+  modalText: string = ""
 
   constructor(private mealService: MealService) {}
 
@@ -20,7 +21,8 @@ export default class MealListComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.isDeleteModal = false
+    this.isMealModal = false
+    this.modalText = ""
   }
 
   showMealOfferButtonClicked(): void {
@@ -32,6 +34,8 @@ export default class MealListComponent implements OnInit {
         console.log(
           `I cannot download meals! With status code: ${error.status}, message: ${error.message}`,
         );
+        this.isMealModal = true
+        this.modalText = "I cannot download meals!"
       },
     });
   }
@@ -45,7 +49,8 @@ export default class MealListComponent implements OnInit {
         console.log(
           `I cannot delete meal! With status code: ${error.status}, message: ${error.message}`,
         );
-        this.isDeleteModal = true
+        this.isMealModal = true
+        this.modalText = "I cannot delete meal! Meal is already linked to order!"
       },
     });
   }
