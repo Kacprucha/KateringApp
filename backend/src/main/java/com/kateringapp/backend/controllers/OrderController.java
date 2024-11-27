@@ -6,6 +6,9 @@ import com.kateringapp.backend.dtos.criteria.OrderCriteria;
 import com.kateringapp.backend.services.interfaces.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +28,10 @@ public class OrderController implements IOrders {
     private final IOrderService orderService;
 
     @Override
+    @Secured("ROLE_client")
     @PostMapping
-    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
-        return orderService.createOrder(orderDTO);
+    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO, @AuthenticationPrincipal Jwt token) {
+        return orderService.createOrder(orderDTO, token);
     }
 
     @Override
@@ -44,8 +48,9 @@ public class OrderController implements IOrders {
 
     @Override
     @GetMapping
-    public List<OrderDTO> getOrders(@ParameterObject OrderCriteria orderCriteria) {
-        return orderService.getOrders(orderCriteria);
+    public List<OrderDTO> getOrders(
+            @ParameterObject OrderCriteria orderCriteria, @AuthenticationPrincipal Jwt token) {
+        return orderService.getOrders(orderCriteria, token);
     }
 
     @Override

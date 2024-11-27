@@ -17,6 +17,7 @@ import org.mockito.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,13 +42,16 @@ class MealsUnitTest {
     private Meal meal;
     private MealCreateDTO mealCreateDTO;
     private CateringFirmData cateringFirmData;
+    private UUID cateringFirmId;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
+        cateringFirmId = UUID.randomUUID();
+
         cateringFirmData = CateringFirmData.builder()
-                .cateringFirmId(1L)
+                .cateringFirmId(cateringFirmId)
                 .build();
 
         meal = Meal.builder()
@@ -62,13 +66,14 @@ class MealsUnitTest {
                 .name("Sample Meal")
                 .price(BigDecimal.valueOf(100))
                 .description("Delicious sample meal")
-                .cateringFirmId(1L)
+                .cateringFirmId(cateringFirmId)
                 .build();
     }
 
     @Test
     void createMeal() {
-        when(cateringFirmDataRepository.findByCateringFirmId(1L)).thenReturn(cateringFirmData);
+
+        when(cateringFirmDataRepository.findByCateringFirmId(cateringFirmId)).thenReturn(cateringFirmData);
         when(mealMapper.mapDTOToEntity(mealCreateDTO, cateringFirmData)).thenReturn(meal);
         when(mealRepository.save(meal)).thenReturn(meal);
         when(mealMapper.mapEntityToDTO(meal)).thenReturn(MealGetDTO.builder()

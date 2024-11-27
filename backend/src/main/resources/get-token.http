@@ -8,6 +8,16 @@ grant_type=password&
 username=janedoe@gmail.com&
 password=password
 
+### Token klienta
+POST http://localhost:8081/realms/kateringapp/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=KateringAppClientBackend&
+client_secret=fZWsuYBEJuB2vu0625BbQcpCIVAQa1k5&
+grant_type=password&
+username=johndoe@gmail.com&
+password=password
+
 ### Token firmy kateringowej
 POST http://localhost:8081/realms/kateringapp/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
@@ -16,4 +26,14 @@ client_id=KateringAppClientBackend&
 client_secret=fZWsuYBEJuB2vu0625BbQcpCIVAQa1k5&
 grant_type=password&
 username=firm1@gmail.com&
+password=password
+
+### Token firmy kateringowej
+POST http://localhost:8081/realms/kateringapp/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=KateringAppClientBackend&
+client_secret=fZWsuYBEJuB2vu0625BbQcpCIVAQa1k5&
+grant_type=password&
+username=firm3@gmail.com&
 password=password
