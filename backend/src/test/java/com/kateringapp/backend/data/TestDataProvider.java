@@ -20,7 +20,6 @@ public class TestDataProvider {
                 .startingAddress("aaa")
                 .destinationAddress("bbb")
                 .opinion("good")
-                .clientId(1L)
                 .mealIds(Collections.emptyList())
                 .build();
     }
