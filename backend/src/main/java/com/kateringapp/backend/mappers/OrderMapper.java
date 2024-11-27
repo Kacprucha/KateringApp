@@ -44,19 +44,19 @@ public class OrderMapper implements IOrderMapper {
 
     @Override
     public Order mapDTOToEntity(OrderDTO orderDTO) {
-        List<Meal> meals = mealRepository.findAllById(orderDTO.mealIds());
+        List<Meal> meals = mealRepository.findAllById(orderDTO.getMealIds());
 
-        if (orderDTO.mealIds().size() != meals.size()){
+        if (orderDTO.getMealIds().size() != meals.size()){
             throw new MealNotFoundException();
         }
 
         return Order.builder()
-                .rate(orderDTO.rate())
-                .opinion(orderDTO.opinion())
-                .rate(orderDTO.rate())
-                .orderStatus(orderDTO.orderStatus())
-                .startingAddress(orderDTO.startingAddress())
-                .destinationAddress(orderDTO.destinationAddress())
+                .rate(orderDTO.getRate())
+                .opinion(orderDTO.getOpinion())
+                .rate(orderDTO.getRate())
+                .orderStatus(orderDTO.getOrderStatus())
+                .startingAddress(orderDTO.getStartingAddress())
+                .destinationAddress(orderDTO.getDestinationAddress())
                 .meals(meals)
                 .build();
     }

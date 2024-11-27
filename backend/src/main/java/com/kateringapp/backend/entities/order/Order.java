@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -24,6 +25,8 @@ public class Order {
     private Long id;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    private UUID clientId;
     private String opinion;
     private int rate;
     private String startingAddress;
