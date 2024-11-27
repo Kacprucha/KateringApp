@@ -20,5 +20,4 @@ public class MealCreateDTO {
 
     List<String> ingredients;
 
-    Long cateringFirmId;
 }

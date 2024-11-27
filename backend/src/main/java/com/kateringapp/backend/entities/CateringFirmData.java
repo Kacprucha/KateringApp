@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -18,7 +19,7 @@ import java.util.List;
 public class CateringFirmData {
 
     @Id
-    private Long cateringFirmId;
+    private UUID cateringFirmId;
 
     private String info;
 

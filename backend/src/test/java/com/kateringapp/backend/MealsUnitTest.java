@@ -4,24 +4,39 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.Meal;
 import com.kateringapp.backend.entities.CateringFirmData;
+import com.kateringapp.backend.entities.order.Order;
+import com.kateringapp.backend.exceptions.BadRequestException;
 import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.services.MealsService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MealsUnitTest {
+
+    @Mock
+    private MealMapper mealMapper;
+
+    @Mock
+    private CateringFirmDataRepository cateringFirmDataRepository;
 
     @Mock
     private MealRepository mealRepository;
@@ -30,10 +45,7 @@ class MealsUnitTest {
     private IOrderRepository orderRepository;
 
     @Mock
-    private CateringFirmDataRepository cateringFirmDataRepository;
-
-    @Mock
-    private MealMapper mealMapper;
+    private EntityManager entityManager;
 
     @InjectMocks
     private MealsService mealsService;
@@ -41,13 +53,17 @@ class MealsUnitTest {
     private Meal meal;
     private MealCreateDTO mealCreateDTO;
     private CateringFirmData cateringFirmData;
+    private UUID cateringFirmId;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
+        cateringFirmId = UUID.fromString("6c84fb95-12c4-11ec-82a8-0242ac130007");
+
         cateringFirmData = CateringFirmData.builder()
-                .cateringFirmId(1L)
+                .cateringFirmId(cateringFirmId)
+                .name("Test Catering Firm")
                 .build();
 
         meal = Meal.builder()
@@ -62,13 +78,25 @@ class MealsUnitTest {
                 .name("Sample Meal")
                 .price(BigDecimal.valueOf(100))
                 .description("Delicious sample meal")
-                .cateringFirmId(1L)
                 .build();
+
+        // Mockowanie SecurityContextHolder
+        Jwt jwt = mock(Jwt.class);
+        when(jwt.getClaimAsString("sub")).thenReturn(cateringFirmId.toString());
+
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.isAuthenticated()).thenReturn(true);
+        when(authentication.getPrincipal()).thenReturn(jwt);
+
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
     }
 
     @Test
-    void createMeal() {
-        when(cateringFirmDataRepository.findByCateringFirmId(1L)).thenReturn(cateringFirmData);
+    void createMeal_ShouldCreateMealSuccessfully() {
+        when(cateringFirmDataRepository.findByCateringFirmId(cateringFirmId)).thenReturn(cateringFirmData);
         when(mealMapper.mapDTOToEntity(mealCreateDTO, cateringFirmData)).thenReturn(meal);
         when(mealRepository.save(meal)).thenReturn(meal);
         when(mealMapper.mapEntityToDTO(meal)).thenReturn(MealGetDTO.builder()
@@ -76,36 +104,47 @@ class MealsUnitTest {
                 .name("Sample Meal")
                 .price(BigDecimal.valueOf(100))
                 .description("Delicious sample meal")
-                .photo(null)
+                .cateringFirmId(cateringFirmId)
                 .build());
 
-        MealGetDTO mealGetDTO = mealsService.createMeal(mealCreateDTO);
+        MealGetDTO result = mealsService.createMeal(mealCreateDTO);
 
-        assertNotNull(mealGetDTO);
-        assertEquals("Sample Meal", mealGetDTO.getName());
+        assertNotNull(result);
+        assertEquals("Sample Meal", result.getName());
+        assertEquals(cateringFirmId, result.getCateringFirmId());
+
         verify(mealRepository, times(1)).save(meal);
     }
 
+
     @Test
-    void updateMeal() {
+    void updateMeal_ShouldUpdateMealSuccessfully() {
+        MealCreateDTO updatedMealDTO = MealCreateDTO.builder()
+                .name("Updated Meal")
+                .price(BigDecimal.valueOf(150))
+                .description("Updated description")
+                .build();
+
         when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
-        when(cateringFirmDataRepository.findById(1L)).thenReturn(Optional.of(cateringFirmData));
-        when(mealMapper.mapDTOToEntity(mealCreateDTO, cateringFirmData)).thenReturn(meal);
+        when(mealMapper.mapDTOToEntity(updatedMealDTO, cateringFirmData)).thenReturn(meal);
         when(mealRepository.save(meal)).thenReturn(meal);
         when(mealMapper.mapEntityToDTO(meal)).thenReturn(MealGetDTO.builder()
                 .mealId(1L)
-                .name("Sample Meal")
-                .price(BigDecimal.valueOf(100))
-                .description("Delicious sample meal")
-                .photo(null)
+                .name("Updated Meal")
+                .price(BigDecimal.valueOf(150))
+                .description("Updated description")
+                .cateringFirmId(cateringFirmId)
                 .build());
 
-        MealGetDTO updatedMeal = mealsService.updateMeal(1L, mealCreateDTO);
+        MealGetDTO result = mealsService.updateMeal(1L, updatedMealDTO);
 
-        assertNotNull(updatedMeal);
-        assertEquals("Sample Meal", updatedMeal.getName());
+        assertNotNull(result);
+        assertEquals("Updated Meal", result.getName());
+        assertEquals(BigDecimal.valueOf(150), result.getPrice());
+
         verify(mealRepository, times(1)).save(meal);
     }
+
 
     @Test
     void getMeal() {
@@ -126,14 +165,25 @@ class MealsUnitTest {
     }
 
     @Test
-    void getMealNotFound() {
-        when(mealRepository.findById(1L)).thenReturn(Optional.empty());
+    void getMeal_ShouldReturnMealSuccessfully() {
+        when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
+        when(mealMapper.mapEntityToDTO(meal)).thenReturn(MealGetDTO.builder()
+                .mealId(1L)
+                .name("Sample Meal")
+                .price(BigDecimal.valueOf(100))
+                .description("Delicious sample meal")
+                .cateringFirmId(cateringFirmId)
+                .build());
 
-        assertThrows(MealNotFoundException.class, () -> mealsService.getMeal(1L));
+        MealGetDTO result = mealsService.getMeal(1L);
+
+        assertNotNull(result);
+        assertEquals("Sample Meal", result.getName());
     }
 
+
     @Test
-    void deleteMeal() {
+    void deleteMeal_ShouldDeleteMealSuccessfully() {
         when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
         when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(Collections.emptyList());
 
@@ -141,6 +191,17 @@ class MealsUnitTest {
 
         verify(mealRepository, times(1)).delete(meal);
     }
+
+    @Test
+    void deleteMeal_ShouldThrowExceptionWhenMealHasOrders() {
+        when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
+        when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(List.of(new Order()));
+
+        assertThrows(BadRequestException.class, () -> mealsService.deleteMeal(1L));
+
+        verify(mealRepository, never()).delete(any(Meal.class));
+    }
+
 
     @Test
     void deleteMealNotFound() {

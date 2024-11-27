@@ -1,6 +1,6 @@
 -- Tworzenie tabeli 'catering_firm_data' z ręcznie przypisywanym ID
 CREATE TABLE IF NOT EXISTS catering_firm_data (
-                                                  catering_firm_id BIGINT PRIMARY KEY,  -- Ręczne przypisywanie ID
+                                                  catering_firm_id UUID PRIMARY KEY,  -- Ręczne przypisywanie ID
                                                   name VARCHAR(255) NOT NULL,
     info TEXT,
     logo BYTEA
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS meal (
     price INT NOT NULL,
     description TEXT NOT NULL,
     photo BYTEA,
-    catering_firm_id BIGINT,
+    catering_firm_id UUID,
     FOREIGN KEY (catering_firm_id) REFERENCES catering_firm_data(catering_firm_id)
     );
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS delivery_type (
 
 -- Tworzenie tabeli 'catering_firm_data_delivery_type' (relacja wiele do wielu)
 CREATE TABLE IF NOT EXISTS catering_firm_data_delivery_type (
-                                                                catering_firm_id BIGINT,
+                                                                catering_firm_id UUID,
                                                                 delivery_type_id BIGINT,
                                                                 PRIMARY KEY (catering_firm_id, delivery_type_id),
     FOREIGN KEY (catering_firm_id) REFERENCES catering_firm_data(catering_firm_id),
@@ -81,9 +81,9 @@ CREATE TABLE IF NOT EXISTS meal_ingredients (
 -- Wstawianie danych do tabeli 'catering_firm_data'
 INSERT INTO catering_firm_data (catering_firm_id, name, info, logo)
 VALUES
-    (1, 'Italian Delights Catering', 'Italian cuisine with a variety of pasta and pizza options', null),
-    (2, 'Healthy Bites', 'Fresh, organic, and healthy meals', null),
-    (3, 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
+    ('6c84fb95-12c4-11ec-82a8-0242ac130005', 'Italian Delights Catering', 'Italian cuisine with a variety of pasta and pizza options', null),
+    ('6c84fb95-12c4-11ec-82a8-0242ac130006', 'Healthy Bites', 'Fresh, organic, and healthy meals', null),
+    ('6c84fb95-12c4-11ec-82a8-0242ac130007', 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
 
 -- Wstawianie danych do tabeli 'ingredient'
 INSERT INTO ingredient (ingredient_id, name)
@@ -138,12 +138,12 @@ VALUES
 -- Wstawianie danych do tabeli 'meal'
 INSERT INTO meal (meal_id, name, price, description, photo, catering_firm_id)
 VALUES
-    (101, 'Pasta Carbonara', 12, 'A classic Italian pasta dish with creamy sauce and pancetta.', null, 1),
-    (102, 'Margherita Pizza', 10, 'A simple pizza with tomato, mozzarella, and basil.', null, 1),
-    (103, 'Grilled Chicken Salad', 8, 'A healthy salad with grilled chicken, fresh greens, and vinaigrette.', null, 2),
-    (104, 'Vegan Burger', 7, 'A plant-based burger with a side of fries.', null, 2),
-    (105, 'Tropical Smoothie', 5, 'A refreshing smoothie made with pineapple, mango, and coconut milk.', null, 3),
-    (106, 'Acai Bowl', 6, 'A smoothie bowl topped with granola, fruits, and honey.', null, 3);
+    (101, 'Pasta Carbonara', 12, 'A classic Italian pasta dish with creamy sauce and pancetta.', null, '6c84fb95-12c4-11ec-82a8-0242ac130005'),
+    (102, 'Margherita Pizza', 10, 'A simple pizza with tomato, mozzarella, and basil.', null, '6c84fb95-12c4-11ec-82a8-0242ac130005'),
+    (103, 'Grilled Chicken Salad', 8, 'A healthy salad with grilled chicken, fresh greens, and vinaigrette.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006'),
+    (104, 'Vegan Burger', 7, 'A plant-based burger with a side of fries.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006'),
+    (105, 'Tropical Smoothie', 5, 'A refreshing smoothie made with pineapple, mango, and coconut milk.', null, '6c84fb95-12c4-11ec-82a8-0242ac130007'),
+    (106, 'Acai Bowl', 6, 'A smoothie bowl topped with granola, fruits, and honey.', null, '6c84fb95-12c4-11ec-82a8-0242ac130007');
 
 -- Wstawianie danych do tabeli 'delivery_type'
 INSERT INTO delivery_type (delivery_type_id, delivery_type)
@@ -154,10 +154,10 @@ VALUES
 -- Powiązania dla 'catering_firm_data_delivery_type'
 INSERT INTO catering_firm_data_delivery_type (catering_firm_id, delivery_type_id)
 VALUES
-    (1, 1),  -- Italian Delights Catering: Home Delivery
-    (1, 2),  -- Italian Delights Catering: Pick-Up
-    (2, 1),  -- Healthy Bites: Home Delivery
-    (3, 1);  -- Smoothie Masters: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130005', 1),  -- Italian Delights Catering: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130005', 2),  -- Italian Delights Catering: Pick-Up
+    ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130007', 1);  -- Smoothie Masters: Home Delivery
 
 INSERT INTO orders (id, order_status, opinion, rate, starting_address, destination_address)
 VALUES
