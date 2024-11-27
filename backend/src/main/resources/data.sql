@@ -155,10 +155,10 @@ VALUES
 -- Powiązania dla 'catering_firm_data_delivery_type'
 INSERT INTO catering_firm_data_delivery_type (catering_firm_id, delivery_type_id)
 VALUES
-    ('919b0f69-766e-4f51-a36c-5e9e643385cd', 1),  -- Italian Delights Catering: Home Delivery
-    ('919b0f69-766e-4f51-a36c-5e9e643385cd', 2),  -- Italian Delights Catering: Pick-Up
-    ('919b0f69-766e-4f51-a36c-5e9e643385cd', 1),  -- Healthy Bites: Home Delivery
-    ('919b0f69-766e-4f51-a36c-5e9e643385cd', 1);  -- Smoothie Masters: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130005', 1),  -- Italian Delights Catering: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130005', 2),  -- Italian Delights Catering: Pick-Up
+    ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130006', 2);  -- Smoothie Masters: Home Delivery
 
 INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address)
 VALUES
