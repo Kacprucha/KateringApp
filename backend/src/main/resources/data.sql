@@ -1,6 +1,6 @@
 -- Tworzenie tabeli 'catering_firm_data' z ręcznie przypisywanym ID
 CREATE TABLE IF NOT EXISTS catering_firm_data (
-                                                  catering_firm_id BIGINT PRIMARY KEY,  -- Ręczne przypisywanie ID
+                                                  catering_firm_id UUID PRIMARY KEY,  -- Ręczne przypisywanie ID
                                                   name VARCHAR(255) NOT NULL,
     info TEXT,
     logo BYTEA

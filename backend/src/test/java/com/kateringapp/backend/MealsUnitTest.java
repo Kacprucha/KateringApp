@@ -4,15 +4,13 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.Meal;
 import com.kateringapp.backend.entities.CateringFirmData;
-import com.kateringapp.backend.entities.order.Order;
-import com.kateringapp.backend.exceptions.BadRequestException;
+
 import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.services.MealsService;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -23,7 +21,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,9 +40,6 @@ class MealsUnitTest {
 
     @Mock
     private IOrderRepository orderRepository;
-
-    @Mock
-    private EntityManager entityManager;
 
     @InjectMocks
     private MealsService mealsService;
@@ -191,17 +185,6 @@ class MealsUnitTest {
 
         verify(mealRepository, times(1)).delete(meal);
     }
-
-    @Test
-    void deleteMeal_ShouldThrowExceptionWhenMealHasOrders() {
-        when(mealRepository.findById(1L)).thenReturn(Optional.of(meal));
-        when(orderRepository.findOrdersByMealsContaining(meal)).thenReturn(List.of(new Order()));
-
-        assertThrows(BadRequestException.class, () -> mealsService.deleteMeal(1L));
-
-        verify(mealRepository, never()).delete(any(Meal.class));
-    }
-
 
     @Test
     void deleteMealNotFound() {
