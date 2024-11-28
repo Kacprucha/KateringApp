@@ -35,6 +35,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/secured/**").authenticated()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/v3/api-docs/**").permitAll()
+                    .requestMatchers("/api/v1/h2-console/**").permitAll()
                     .anyRequest().authenticated()
             ).oauth2ResourceServer(
                     oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))

@@ -10,6 +10,7 @@ import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.repositories.IOrderRepository;
+import com.kateringapp.backend.repositories.IngredientRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.kateringapp.backend.utils.AuthHelper;
 import com.querydsl.core.types.OrderSpecifier;
@@ -27,13 +28,10 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +43,7 @@ public class MealsService implements IMeals{
     @PersistenceContext
     private final EntityManager entityManager;
     private final IOrderRepository orderRepository;
+    private final IngredientRepository ingredientRepository;
 
     @Override
     public MealGetDTO createMeal(MealCreateDTO mealCreateDTO) {
@@ -61,17 +60,15 @@ public class MealsService implements IMeals{
     public MealGetDTO updateMeal(Long id, MealCreateDTO meal) {
         Meal mealToUpdate = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
         CateringFirmData cateringFirmData = mealToUpdate.getCateringFirmData();
-
         UUID currentUserId = getCurrentUserIdFromJwt();
 
         if(!currentUserId.equals(cateringFirmData.getCateringFirmId())){
             throw new BadRequestException("You can update only your meals");
         }
 
-        Meal updatedMeal = mealMapper.mapDTOToEntity(meal, cateringFirmData);
-        updatedMeal.setMealId(id);
+        updateMealFields(mealToUpdate, meal);
 
-        return mealMapper.mapEntityToDTO(mealRepository.save(updatedMeal));
+        return mealMapper.mapEntityToDTO(mealRepository.save(mealToUpdate));
     }
 
     @Override
@@ -155,14 +152,12 @@ public class MealsService implements IMeals{
         QAllergen qAllergen = QAllergen.allergen;
         QIngredient qIngredient = QIngredient.ingredient;
         QOrder qOrder = QOrder.order;
-        UUID currentUserId = getCurrentUserIdFromJwt();
 
         OrderSpecifier<?> orderSpecifier = createOrderSpecifier(mealCriteria.getSortOrder(),
                 mealCriteria.getSortBy(), pathBuilder);
 
         JPAQuery<Meal> query = new JPAQuery<>(entityManager).select(qMeal)
                 .from(qMeal)
-                .where(qMeal.cateringFirmData.cateringFirmId.eq(currentUserId))
                 .leftJoin(qMeal.ingredients, qIngredient)
                 .leftJoin(qIngredient.allergens, qAllergen)
                 .groupBy(qMeal.mealId);
@@ -211,6 +206,18 @@ public class MealsService implements IMeals{
         }
 
         return null;
+    }
+
+    private void updateMealFields(Meal mealToUpdate, MealCreateDTO meal) {
+        mealToUpdate.setPrice(meal.getPrice());
+        mealToUpdate.setName(meal.getName());
+        mealToUpdate.setDescription(meal.getDescription());
+        mealToUpdate.setPhoto(meal.getPhoto());
+
+        if (meal.getIngredients() != null) {
+            List<Ingredient> ingredients = ingredientRepository.findByNameIn(meal.getIngredients());
+            mealToUpdate.setIngredients(ingredients);
+        }
     }
 
 }
