@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
 import { MealDTO } from '../../../shared/models/meal-dto';
 import { FormError } from '../../../types/form-error';
+import { IMealFormWindow } from '../../../services/meal/meal-form-window.interface';
+import { IMealFormLogic } from '../../../services/meal/meal-form-logic.interface';
 
 @Component({
   selector: 'app-meal-update',
   templateUrl: './meal-update.component.html',
 })
-export default class MealUpdateComponent implements OnInit {
+export default class MealUpdateComponent
+  implements OnInit, IMealFormWindow, IMealFormLogic {
   meal: MealDTO = {
                   id: 0,
                   name: '',
@@ -27,6 +30,14 @@ export default class MealUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private mealService: MealService,
   ) {}
+
+  onRemoveMeal(id: number): void {
+    this.removeMeal(id);
+  }
+
+  removeMeal(id: number): void {
+    console.log(`Removing meal with id: ${id}`);
+  }
 
   ngOnInit(): void {
     let id = Number.parseInt(this.route.snapshot.paramMap.get('id')!);
@@ -88,6 +99,17 @@ export default class MealUpdateComponent implements OnInit {
     this.meal = mealDTO;
   }
 
+  updateMeal(id: number, mealDto: MealDTO) {
+    this.mealService.updateMeal(this.meal.id, mealDto).subscribe({
+      next: (_response: MealGetDTO) => {
+        this.router.navigate(['/meal']);
+      },
+      error: (error: any) => {
+        this.errors.serverErrors = error.message;
+      },
+    });
+  }
+
   onMealFormSubmit() {
     this.clearErrors();
     this.validateMeal(this.meal);
@@ -101,14 +123,7 @@ export default class MealUpdateComponent implements OnInit {
       price: this.meal.price * 100,
     };
 
-    this.mealService.updateMeal(this.meal.id, payload).subscribe({
-      next: (_response: MealGetDTO) => {
-        this.router.navigate(['/meal']);
-      },
-      error: (error: any) => {
-        this.errors.serverErrors = error.message;
-      },
-    });
+    this.updateMeal(this.meal.id, payload);
   }
 
   onFileChange(event: Event) {

@@ -24,7 +24,7 @@ describe('MealUpdateComponent', () => {
             snapshot: {
               paramMap: {
                 get(): string {
-                  return '123';
+                  return '1';
                 },
               },
             },
@@ -96,6 +96,30 @@ describe('MealUpdateComponent', () => {
     component.meal.name = 'Soup';
     component.onMealFormSubmit();
     expect(window.alert).not.toHaveBeenCalled();
+  });
+
+  it('should change product if there are not validation errors', () => {
+    spyOn(component, 'updateMeal').and.callThrough();
+
+    component.meal = {
+      id: 1,
+      name: 'Valid Meal Name',
+      description: 'Delicious meal description',
+      price: 10,
+      photo: 'photo.png',
+      ingredients: ['Ingredient1'],
+      cateringFirmId: 1,
+    };
+    component.clearErrors();
+    component.validateMeal(component.meal);
+    expect(Object.keys(component.errors).length).toBe(0);
+
+    component.onMealFormSubmit();
+
+    expect(component.updateMeal).toHaveBeenCalledWith(component.meal.id, {
+      ...component.meal,
+      price: component.meal.price * 100,
+    });
   });
 
   it('should update photo on file change', (done) => {
