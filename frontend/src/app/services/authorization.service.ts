@@ -8,15 +8,16 @@ import { UserRole } from '../types/user-roles';
   providedIn: 'root',
 })
 export class AuthorizationService {
- 
   keycloakService = inject(KeycloakService);
-  
+
   redirectToLoginPage(): Promise<void> {
     return this.keycloakService.login();
   }
 
-  get userName(): string {
-    return this.keycloakService.getUsername();
+  async getUserName(): Promise<string> {
+    return this.keycloakService
+      .loadUserProfile()
+      .then((profile) => profile.username!); // username is required in register
   }
 
   isLoggedIn(): boolean {
@@ -31,18 +32,18 @@ export class AuthorizationService {
     return this.keycloakService.getToken();
   }
 
-  addTokenToHeader(headers?: HttpHeaders): Observable<HttpHeaders>{
+  addTokenToHeader(headers?: HttpHeaders): Observable<HttpHeaders> {
     return this.keycloakService.addTokenToHeader(headers);
   }
 
-  isUserInRole(role: string): boolean{
+  isUserInRole(role: string): boolean {
     return this.keycloakService.isUserInRole(role);
   }
 
   getUserRoles(): UserRole[] {
     const allRoles: string[] = this.keycloakService.getUserRoles(true);
     const validRoles: UserRole[] = allRoles.filter((role): role is UserRole =>
-      ['catering-firm	', 'client'].includes(role)
+      Object.values(UserRole).includes(role as UserRole),
     );
     return validRoles;
   }

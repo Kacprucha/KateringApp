@@ -26,14 +26,17 @@ export class MockKeycloakService {
   }
 
   addTokenToHeader(headers?: HttpHeaders): Observable<HttpHeaders> {
-    const updatedHeaders = (headers || new HttpHeaders()).set('Authorization', 'Bearer mock-token');
+    const updatedHeaders = (headers || new HttpHeaders()).set(
+      'Authorization',
+      'Bearer mock-token',
+    );
     return of(updatedHeaders);
   }
 
-  isUserInRole(role: string): boolean{
+  isUserInRole(role: string): boolean {
     return true;
   }
-  getUserRoles(): UserRole[]{
-    return ['client'];
+  getUserRoles(): UserRole[] {
+    return [UserRole.Client];
   }
 }

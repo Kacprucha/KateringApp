@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { cateringFirmEnvironmentGuard } from './guards/catering-firm-environment.guard';
 import OrderListComponent from './features/order/order-list/order-list.component';
@@ -11,20 +10,24 @@ import MealUpdateComponent from './features/meal/meal-update-form/meal-update.co
 const routes: Routes = [
   {
     path: '',
-    component: LandingPageComponent,
+    redirectTo: 'meal',
+    pathMatch: 'full',
   },
   {
     path: 'orders',
-    component: OrderListComponent
+    component: OrderListComponent,
+    title: 'KateringApp - Orders',
   },
   {
     path: 'meal',
     component: MealListComponent,
+    title: 'KateringApp - Meals',
   },
   {
     path: 'meal/create',
     component: MealFormComponent,
     canActivate: [cateringFirmEnvironmentGuard],
+    title: 'KateringApp - Create Meal',
   },
   {
     path: 'meal/update/:id',
@@ -34,6 +37,7 @@ const routes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent,
+    title: 'KateringApp - 404',
   },
 ];
 
