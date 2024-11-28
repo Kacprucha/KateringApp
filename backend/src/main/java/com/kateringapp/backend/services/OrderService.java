@@ -12,6 +12,7 @@ import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
 import com.kateringapp.backend.services.interfaces.IOrderService;
 import com.kateringapp.backend.specifications.OrderSpecification;
+import com.kateringapp.backend.utils.AuthHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -64,7 +65,6 @@ public class OrderService implements IOrderService {
     public List<OrderDTO> getOrders(OrderCriteria orderCriteria, Jwt jwt) {
 
         UUID userId = UUID.fromString(jwt.getSubject());
-        Map<String, Object> claims = jwt.getClaims();
 
         Specification<Order> orderSpecification = OrderSpecification.matchesCriteria(orderCriteria, userId);
 
@@ -73,9 +73,7 @@ public class OrderService implements IOrderService {
                 .map(orderMapper::mapEntityToDTO)
                 .toList();
 
-        // Jeżeli użytkownik to firma kateringowa to z dto trzeba wywalić posiłki, które nie należą do tej firmy
-        List<String> roles  = (List<String>) ((Map<String, Object>) claims.get("realm_access")).get("roles");
-        if(roles.contains("catering-firm")) {
+        if(AuthHelper.isCateringFirm(jwt)) {
             removeUnnecessaryMeals(orderDTOList, userId);
         }
 

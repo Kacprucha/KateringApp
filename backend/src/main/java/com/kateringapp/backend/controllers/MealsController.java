@@ -5,6 +5,8 @@ import com.kateringapp.backend.dtos.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.services.MealsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,8 @@ public class MealsController {
     }
 
     @GetMapping
-    public List<MealGetDTO> getAllMeals(@ModelAttribute MealCriteria mealCriteria){
-        return mealsService.getMeals(mealCriteria);
+    public List<MealGetDTO> getAllMeals(@ModelAttribute MealCriteria mealCriteria, @AuthenticationPrincipal Jwt token){
+        return mealsService.getMeals(mealCriteria, token);
     }
 
 }
