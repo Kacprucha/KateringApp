@@ -4,6 +4,7 @@ package com.kateringapp.backend.services;
 import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IMeals {
 
     MealGetDTO getMeal(Long id);
 
-    List<MealGetDTO> getMeals(MealCriteria mealCriteria);
+    List<MealGetDTO> getMeals(MealCriteria mealCriteria, Jwt jwt);
 
     void deleteMeal(Long id);
 
