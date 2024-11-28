@@ -45,8 +45,9 @@ export class MealService {
     return this.http.post<MealGetDTO>(this.apiUrl, mealData);
   }
 
-  getMeals(): Observable<MealGetDTO[]> {
-    return this.http.get<MealGetDTO[]>(this.apiUrl).pipe(
+  getMeals(orderId?: number): Observable<MealGetDTO[]> {
+    const params = orderId ? `?orderId=${orderId}` : '';
+    return this.http.get<MealGetDTO[]>(`${this.apiUrl}${params}`).pipe(
       map((meals) =>
         meals.map((meal) => {
           return {

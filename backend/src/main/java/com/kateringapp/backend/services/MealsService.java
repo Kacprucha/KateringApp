@@ -4,6 +4,7 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.*;
+import com.kateringapp.backend.entities.order.QOrder;
 import com.kateringapp.backend.exceptions.BadRequestException;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.mappers.MealMapper;
@@ -117,10 +118,10 @@ public class MealsService implements IMeals{
     }
 
     private JPAQuery<Meal> queryCreatorForGetMeal(MealCriteria mealCriteria, PathBuilder<Meal> pathBuilder) {
-
         QMeal qMeal = QMeal.meal;
         QAllergen qAllergen = QAllergen.allergen;
         QIngredient qIngredient = QIngredient.ingredient;
+        QOrder qOrder = QOrder.order;
 
         OrderSpecifier<?> orderSpecifier = createOrderSpecifier(mealCriteria.getSortOrder(),
                 mealCriteria.getSortBy(), pathBuilder);
@@ -144,6 +145,15 @@ public class MealsService implements IMeals{
                             .leftJoin(qMeal.ingredients, qIngredient)
                             .leftJoin(qIngredient.allergens, qAllergen)
                             .where(qAllergen.name.in(mealCriteria.getAllergens()))
+            ));
+        }
+
+        if(mealCriteria.getOrderId() != null){
+            query.where(qMeal.mealId.in(
+                    JPAExpressions.select(qMeal.mealId)
+                            .from(qMeal)
+                            .leftJoin(qMeal.orders, qOrder)
+                            .where(qOrder.id.eq(mealCriteria.getOrderId()))
             ));
         }
 
