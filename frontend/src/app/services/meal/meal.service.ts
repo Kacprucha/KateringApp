@@ -61,4 +61,12 @@ export class MealService {
   deleteMeal(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  updateMeal(id: number, mealData: MealCreateDTO): Observable<MealGetDTO> {
+    return this.http.put<MealGetDTO>(`${this.apiUrl}/${id}`, mealData);
+  }
+
+  getMeal(id: number): Observable<MealGetDTO> {
+    return this.http.get<MealGetDTO>(`${this.apiUrl}/${id}`);
+  }
 }

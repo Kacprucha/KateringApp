@@ -5,6 +5,7 @@ import { cateringFirmEnvironmentGuard } from './guards/catering-firm-environment
 import OrderListComponent from './features/order/order-list/order-list.component';
 import MealListComponent from './features/meal/meal-list/meal-list.component';
 import MealFormComponent from './features/meal/meal-form/meal-form.component';
+import MealUpdateComponent from './features/meal/meal-update-form/meal-update.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
     component: MealFormComponent,
     canActivate: [cateringFirmEnvironmentGuard],
     title: 'KateringApp - Create Meal',
+  },
+  {
+    path: 'meal/update/:id',
+    component: MealUpdateComponent,
+    canActivate: [cateringFirmEnvironmentGuard],
   },
   {
     path: '**',

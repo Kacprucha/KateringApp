@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import MealListComponent from './meal-list.component';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MealService } from '../../../services/meal/meal.service';
-import MealModal from '../meal-modal/meal-modal.component';
+import MealListComponent from './meal-list.component';
+import { MealModalModule } from '../meal-modal/meal-modal.module';
 
 @NgModule({
-  declarations: [MealListComponent, MealModal],
-  imports: [CommonModule, RouterModule],
+  declarations: [MealListComponent],
+  imports: [CommonModule, RouterModule, MealModalModule],
   providers: [MealService],
   exports: [MealListComponent],
 })
