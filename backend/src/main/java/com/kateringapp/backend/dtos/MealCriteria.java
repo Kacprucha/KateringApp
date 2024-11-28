@@ -10,6 +10,8 @@ import java.util.List;
 @Builder
 public class MealCriteria {
 
+    Long orderId;
+    
     List<String> ingredients;
 
     List<String> allergens;

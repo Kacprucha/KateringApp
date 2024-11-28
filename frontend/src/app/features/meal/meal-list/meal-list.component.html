@@ -1,44 +1,43 @@
-<div class="bg-base-100 max-w-[80rem] mx-auto">
-  @if (isCateringFirmEnvironment) {
-    <a
-      routerLink="/meal/create"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Add Meal
-    </a>
-  }
-  <table class="min-w-full table-auto border-collapse border border-gray-200">
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="px-4 py-2 border border-gray-300 text-left">#</th>
-        <th class="px-4 py-2 border border-gray-300 text-left">Name</th>
-        <th class="px-4 py-2 border border-gray-300 text-left">Price</th>
-        <th class="px-4 py-2 border border-gray-300 text-left">Description</th>
-        <th class="px-4 py-2 border border-gray-300 text-left">Image</th>
+@if (isCateringFirmEnvironment) {
+  <button
+    routerLink="/meal/create"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4"
+  >
+    Add Meal
+  </button>
+}
+<table class="min-w-full table-auto border-collapse border border-gray-200">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="px-4 py-2 border border-gray-300 text-left">#</th>
+      <th class="px-4 py-2 border border-gray-300 text-left">Name</th>
+      <th class="px-4 py-2 border border-gray-300 text-left">Price</th>
+      <th class="px-4 py-2 border border-gray-300 text-left">Description</th>
+      <th class="px-4 py-2 border border-gray-300 text-left">Image</th>
+      @if (isCateringFirmEnvironment) {
         <th class="px-4 py-2 border border-gray-300 text-left">Edit</th>
         <th class="px-4 py-2 border border-gray-300 text-left">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let meal of mealList; let i = index"
-        class="hover:bg-gray-100 odd:bg-gray-50 even:bg-white"
-      >
-        <td class="px-4 py-2 border border-gray-300">{{ i + 1 }}</td>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let meal of mealList; let i = index"
+      class="hover:bg-gray-100 odd:bg-gray-50 even:bg-white"
+    >
+      <td class="px-4 py-2 border border-gray-300">{{ i + 1 }}</td>
 
-        <td class="px-4 py-2 border border-gray-300">{{ meal.name }}</td>
-        <td class="px-4 py-2 border border-gray-300">{{ meal.price }} PLN</td>
-        <td class="px-4 py-2 border border-gray-300">{{ meal.description }}</td>
-        <td class="px-4 py-2 border border-gray-300">
-          <img
-            [src]="meal.photo"
-            alt="{{ meal.name }}"
-            class="w-16 h-16"
-          />
-        </td>
+      <td class="px-4 py-2 border border-gray-300">{{ meal.name }}</td>
+      <td class="px-4 py-2 border border-gray-300">{{ meal.price / 100 }}</td>
+      <td class="px-4 py-2 border border-gray-300">{{ meal.description }}</td>
+      <td class="px-4 py-2 border border-gray-300">
+        <img [src]="meal.photo" alt="{{ meal.name }}" class="w-16 h-16" />
+      </td>
+      @if (isCateringFirmEnvironment) {
         <td class="px-4 py-2 border border-gray-300">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            (click)="onEditMeal(meal.mealId)"
           >
             Edit
           </button>
@@ -51,14 +50,11 @@
             Delete
           </button>
         </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      }
+    </tr>
+  </tbody>
+</table>
 
-<meal-modal
-  [isOpen]="isMealModal"
-  (onClose)="closeModal()"
->
-<div>{{ modalText }}</div>
+<meal-modal [isOpen]="isMealModal" (onClose)="closeModal()">
+  <div>{{ modalText }}</div>
 </meal-modal>

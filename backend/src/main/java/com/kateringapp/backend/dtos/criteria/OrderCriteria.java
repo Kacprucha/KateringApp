@@ -6,6 +6,5 @@ public record OrderCriteria(Integer minRate,
                             Integer maxRate,
                             OrderStatus orderStatus,
                             String startingAddress,
-                            String destinationAddress,
-                            Long clientId) {
+                            String destinationAddress) {
 }

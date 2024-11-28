@@ -4,12 +4,14 @@ import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.*;
+import com.kateringapp.backend.entities.order.QOrder;
 import com.kateringapp.backend.exceptions.BadRequestException;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
 import com.kateringapp.backend.mappers.MealMapper;
 import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.MealRepository;
+import com.kateringapp.backend.utils.AuthHelper;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
@@ -22,10 +24,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.Querydsl;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -98,7 +103,7 @@ public class MealsService implements IMeals{
     }
 
     @Override
-    public List<MealGetDTO> getMeals(MealCriteria mealCriteria){
+    public List<MealGetDTO> getMeals(MealCriteria mealCriteria, Jwt jwt){
         PathBuilder<Meal> pathBuilder = new PathBuilder<>(Meal.class, "meal");
 
         Querydsl querydsl = new Querydsl(entityManager, pathBuilder);
@@ -106,13 +111,22 @@ public class MealsService implements IMeals{
         Pageable pageRequest = PageRequest.of(mealCriteria.getPageNumber() == null ? 0 : mealCriteria.getPageNumber(),
                 mealCriteria.getPageSize() == null ? 10 : mealCriteria.getPageSize());
 
-        JPAQuery<Meal> query = queryCreatorForGetMeal(mealCriteria, pathBuilder);
+
+        JPAQuery<Meal> query;
+
+        if(AuthHelper.isCateringFirm(jwt)) {
+
+            UUID cateringFirmId = UUID.fromString(jwt.getSubject());
+            query = queryCreatorForGetMeal(mealCriteria, pathBuilder, cateringFirmId);
+        } else {
+            query = queryCreatorForGetMeal(mealCriteria, pathBuilder, null);
+        }
 
         List<Meal> meals = querydsl.applyPagination(pageRequest, query).fetch();
 
         return meals.stream()
                 .map(mealMapper::mapEntityToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private OrderSpecifier<?> createOrderSpecifier(Sort.Direction sortOrder, String sortBy, PathBuilder<Meal> pathBuilder) {
@@ -136,11 +150,11 @@ public class MealsService implements IMeals{
         return orderSpecifier;
     }
 
-    private JPAQuery<Meal> queryCreatorForGetMeal(MealCriteria mealCriteria, PathBuilder<Meal> pathBuilder) {
-
+    private JPAQuery<Meal> queryCreatorForGetMeal(MealCriteria mealCriteria, PathBuilder<Meal> pathBuilder, UUID cateringFirmId) {
         QMeal qMeal = QMeal.meal;
         QAllergen qAllergen = QAllergen.allergen;
         QIngredient qIngredient = QIngredient.ingredient;
+        QOrder qOrder = QOrder.order;
         UUID currentUserId = getCurrentUserIdFromJwt();
 
         OrderSpecifier<?> orderSpecifier = createOrderSpecifier(mealCriteria.getSortOrder(),
@@ -169,8 +183,21 @@ public class MealsService implements IMeals{
             ));
         }
 
+        if(mealCriteria.getOrderId() != null){
+            query.where(qMeal.mealId.in(
+                    JPAExpressions.select(qMeal.mealId)
+                            .from(qMeal)
+                            .leftJoin(qMeal.orders, qOrder)
+                            .where(qOrder.id.eq(mealCriteria.getOrderId()))
+            ));
+        }
+
         if(orderSpecifier != null) {
             query.orderBy(orderSpecifier);
+        }
+
+        if (cateringFirmId != null) {
+            query.where(qMeal.cateringFirmData.cateringFirmId.eq(cateringFirmId));
         }
 
         return query;

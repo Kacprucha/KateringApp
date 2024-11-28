@@ -7,7 +7,10 @@
       tabindex="0"
       class="dropdown dropdown-end flex flex-row gap-4 btn btn-ghost no-animation"
     >
-      <h1>User</h1>
+      <div class="flex flex-col gap-1">
+        <h3>{{ userName }}</h3>
+        <span>{{ userRoles.join(", ") }}</span>
+      </div>
       <div role="button" class="avatar placeholder">
         <div class="w-10 rounded-full bg-neutral text-neutral-content">
           <span class="text-lg">U</span>
@@ -17,10 +20,8 @@
         tabindex="0"
         class="z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 fixed top-[60px]"
       >
-        <li><a routerLink="/profile">Profile</a></li>
         <li><a routerLink="/meal">Meals</a></li>
         <li><a routerLink="/orders">My orders</a></li>
-        <li><a routerLink="/settings">Settings</a></li>
         <li><a (click)="logout()">Logout</a></li>
       </ul>
     </div>

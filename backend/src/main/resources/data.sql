@@ -1,6 +1,6 @@
 -- Tworzenie tabeli 'catering_firm_data' z ręcznie przypisywanym ID
 CREATE TABLE IF NOT EXISTS catering_firm_data (
-                                                  catering_firm_id UUID PRIMARY KEY,  -- Ręczne przypisywanie ID
+                                                  catering_firm_id BIGINT PRIMARY KEY,  -- Ręczne przypisywanie ID
                                                   name VARCHAR(255) NOT NULL,
     info TEXT,
     logo BYTEA
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS ingredient_allergen (
 CREATE TABLE IF NOT EXISTS orders (
     id BIGINT PRIMARY KEY,
     order_status VARCHAR(50) NOT NULL,
+    client_id UUID,
     opinion TEXT,
     rate INT NOT NULL,
     starting_address VARCHAR(255) NOT NULL,
@@ -83,7 +84,7 @@ INSERT INTO catering_firm_data (catering_firm_id, name, info, logo)
 VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130005', 'Italian Delights Catering', 'Italian cuisine with a variety of pasta and pizza options', null),
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 'Healthy Bites', 'Fresh, organic, and healthy meals', null),
-    ('6c84fb95-12c4-11ec-82a8-0242ac130007', 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
+    ('919b0f69-766e-4f51-a36c-5e9e643385cd', 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
 
 -- Wstawianie danych do tabeli 'ingredient'
 INSERT INTO ingredient (ingredient_id, name)
@@ -141,9 +142,9 @@ VALUES
     (101, 'Pasta Carbonara', 12, 'A classic Italian pasta dish with creamy sauce and pancetta.', null, '6c84fb95-12c4-11ec-82a8-0242ac130005'),
     (102, 'Margherita Pizza', 10, 'A simple pizza with tomato, mozzarella, and basil.', null, '6c84fb95-12c4-11ec-82a8-0242ac130005'),
     (103, 'Grilled Chicken Salad', 8, 'A healthy salad with grilled chicken, fresh greens, and vinaigrette.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006'),
-    (104, 'Vegan Burger', 7, 'A plant-based burger with a side of fries.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006'),
-    (105, 'Tropical Smoothie', 5, 'A refreshing smoothie made with pineapple, mango, and coconut milk.', null, '6c84fb95-12c4-11ec-82a8-0242ac130007'),
-    (106, 'Acai Bowl', 6, 'A smoothie bowl topped with granola, fruits, and honey.', null, '6c84fb95-12c4-11ec-82a8-0242ac130007');
+    (104, 'Vegan Burger', 7, 'A plant-based burger with a side of fries.', null, '6c84fb95-12c4-11ec-82a8-0242ac130005'),
+    (105, 'Tropical Smoothie', 5, 'A refreshing smoothie made with pineapple, mango, and coconut milk.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006'),
+    (106, 'Acai Bowl', 6, 'A smoothie bowl topped with granola, fruits, and honey.', null, '6c84fb95-12c4-11ec-82a8-0242ac130006');
 
 -- Wstawianie danych do tabeli 'delivery_type'
 INSERT INTO delivery_type (delivery_type_id, delivery_type)
@@ -157,13 +158,13 @@ VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130005', 1),  -- Italian Delights Catering: Home Delivery
     ('6c84fb95-12c4-11ec-82a8-0242ac130005', 2),  -- Italian Delights Catering: Pick-Up
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
-    ('6c84fb95-12c4-11ec-82a8-0242ac130007', 1);  -- Smoothie Masters: Home Delivery
+    ('6c84fb95-12c4-11ec-82a8-0242ac130006', 2);  -- Smoothie Masters: Home Delivery
 
-INSERT INTO orders (id, order_status, opinion, rate, starting_address, destination_address)
+INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address)
 VALUES
-    (101, 'PENDING', 'Good service', 5, '123 Starting St', '789 Destination Ave'),
-    (102, 'COMPLETED', 'Quick delivery', 4, '456 Another St', '101 Another Ave'),
-    (103, 'CANCELLED', 'Not delivered on time', 2, '789 Late St', '111 Final Ave');
+    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave'),
+    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave'),
+    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave');
 
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);

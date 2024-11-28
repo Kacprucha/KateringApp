@@ -49,11 +49,11 @@
   "users": [
     {
       "id": "6c84fb95-12c4-11ec-82a8-0242ac130003",
-      "enabled":true,
-      "createdTimestamp":"1701385200000",
+      "enabled": true,
+      "createdTimestamp": "1701385200000",
       "username": "johndoe@gmail.com",
       "email": "johndoe@gmail.com",
-      "attributes" : {
+      "attributes": {
         "isCateringFirm": false
       },
       "credentials": [
@@ -62,17 +62,15 @@
           "value": "password"
         }
       ],
-      "realmRoles": [
-        "client", "default-roles-kateringapp"
-      ]
+      "realmRoles": ["client", "default-roles-kateringapp"]
     },
     {
       "id": "6c84fb95-12c4-11ec-82a8-0242ac130004",
-      "enabled":true,
-      "createdTimestamp":"1701385200000",
+      "enabled": true,
+      "createdTimestamp": "1701385200000",
       "username": "janedoe@gmail.com",
       "email": "janedoe@gmail.com",
-      "attributes" : {
+      "attributes": {
         "isCateringFirm": false
       },
       "credentials": [
@@ -81,17 +79,34 @@
           "value": "password"
         }
       ],
-      "realmRoles": [
-        "client", "default-roles-kateringapp"
-      ]
+      "realmRoles": ["client", "default-roles-kateringapp"]
     },
     {
       "id": "6c84fb95-12c4-11ec-82a8-0242ac130005",
-      "enabled":true,
-      "createdTimestamp":"1701385200000",
+      "enabled": true,
+      "createdTimestamp": "1701385200000",
       "username": "firm1@gmail.com",
       "email": "firm1@gmail.com",
-      "attributes" : {
+      "attributes": {
+        "isCateringFirm": true,
+        "address": "1234 Main St",
+        "phoneNumber": "123-456-7890"
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password"
+        }
+      ],
+      "realmRoles": ["catering-firm", "default-roles-kateringapp"]
+    },
+    {
+      "id": "6c84fb95-12c4-11ec-82a8-0242ac130006",
+      "enabled": true,
+      "createdTimestamp": "1701385200000",
+      "username": "firm2@gmail.com",
+      "email": "firm2@gmail.com",
+      "attributes": {
         "isCateringFirm": true,
         "address": "1234 Main St",
         "phoneNumber": "123-456-7890"
@@ -107,11 +122,11 @@
       ]
     },
     {
-      "id": "6c84fb95-12c4-11ec-82a8-0242ac130006",
+      "id": "919b0f69-766e-4f51-a36c-5e9e643385cd",
       "enabled":true,
       "createdTimestamp":"1701385200000",
-      "username": "firm2@gmail.com",
-      "email": "firm2@gmail.com",
+      "username": "firm3@gmail.com",
+      "email": "firm3@gmail.com",
       "attributes" : {
         "isCateringFirm": true,
         "address": "1234 Main St",
@@ -136,9 +151,7 @@
         "description": "Catering firm is able to manage their meals",
         "composite": true,
         "composites": {
-          "realm": [
-            "default-roles-kateringapp"
-          ]
+          "realm": ["default-roles-kateringapp"]
         },
         "clientRole": false,
         "containerId": "6ff7bebb-3ff9-48d2-b6d2-63679e6a97a8",
@@ -159,9 +172,7 @@
         "description": "Basic user able to make orders",
         "composite": true,
         "composites": {
-          "realm": [
-            "default-roles-kateringapp"
-          ]
+          "realm": ["default-roles-kateringapp"]
         },
         "clientRole": false,
         "containerId": "6ff7bebb-3ff9-48d2-b6d2-63679e6a97a8",
@@ -182,15 +193,9 @@
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
-          "realm": [
-            "offline_access",
-            "uma_authorization"
-          ],
+          "realm": ["offline_access", "uma_authorization"],
           "client": {
-            "account": [
-              "view-profile",
-              "manage-account"
-            ]
+            "account": ["view-profile", "manage-account"]
           }
         },
         "clientRole": false,
@@ -303,10 +308,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "realm-management": [
-                "query-users",
-                "query-groups"
-              ]
+              "realm-management": ["query-users", "query-groups"]
             }
           },
           "clientRole": true,
@@ -356,9 +358,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "realm-management": [
-                "query-clients"
-              ]
+              "realm-management": ["query-clients"]
             }
           },
           "clientRole": true,
@@ -461,9 +461,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "account": [
-                "view-consent"
-              ]
+              "account": ["view-consent"]
             }
           },
           "clientRole": true,
@@ -495,9 +493,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "account": [
-                "manage-account-links"
-              ]
+              "account": ["manage-account-links"]
             }
           },
           "clientRole": true,
@@ -525,9 +521,7 @@
     "clientRole": false,
     "containerId": "6ff7bebb-3ff9-48d2-b6d2-63679e6a97a8"
   },
-  "requiredCredentials": [
-    "password"
-  ],
+  "requiredCredentials": ["password"],
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA1",
   "otpPolicyInitialCounter": 0,
@@ -542,10 +536,7 @@
   ],
   "localizationTexts": {},
   "webAuthnPolicyRpEntityName": "keycloak",
-  "webAuthnPolicySignatureAlgorithms": [
-    "ES256",
-    "RS256"
-  ],
+  "webAuthnPolicySignatureAlgorithms": ["ES256", "RS256"],
   "webAuthnPolicyRpId": "",
   "webAuthnPolicyAttestationConveyancePreference": "not specified",
   "webAuthnPolicyAuthenticatorAttachment": "not specified",
@@ -556,10 +547,7 @@
   "webAuthnPolicyAcceptableAaguids": [],
   "webAuthnPolicyExtraOrigins": [],
   "webAuthnPolicyPasswordlessRpEntityName": "keycloak",
-  "webAuthnPolicyPasswordlessSignatureAlgorithms": [
-    "ES256",
-    "RS256"
-  ],
+  "webAuthnPolicyPasswordlessSignatureAlgorithms": ["ES256", "RS256"],
   "webAuthnPolicyPasswordlessRpId": "",
   "webAuthnPolicyPasswordlessAttestationConveyancePreference": "not specified",
   "webAuthnPolicyPasswordlessAuthenticatorAttachment": "not specified",
@@ -572,35 +560,24 @@
   "scopeMappings": [
     {
       "clientScope": "offline_access",
-      "roles": [
-        "offline_access"
-      ]
+      "roles": ["offline_access"]
     },
     {
       "clientScope": "roles",
-      "roles": [
-        "catering-firm",
-        "client",
-        "default-roles-kateringapp"
-      ]
+      "roles": ["catering-firm", "client", "default-roles-kateringapp"]
     }
   ],
   "clientScopeMappings": {
     "realm-management": [
       {
         "clientScope": "roles",
-        "roles": [
-          "manage-users"
-        ]
+        "roles": ["manage-users"]
       }
     ],
     "account": [
       {
         "client": "account-console",
-        "roles": [
-          "manage-account",
-          "view-groups"
-        ]
+        "roles": ["manage-account", "view-groups"]
       }
     ]
   },
@@ -615,9 +592,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/kateringapp/account/*"
-      ],
+      "redirectUris": ["/realms/kateringapp/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -662,9 +637,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/kateringapp/account/*"
-      ],
+      "redirectUris": ["/realms/kateringapp/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -796,12 +769,7 @@
           }
         }
       ],
-      "defaultClientScopes": [
-        "acr",
-        "roles",
-        "profile",
-        "email"
-      ],
+      "defaultClientScopes": ["acr", "roles", "profile", "email"],
       "optionalClientScopes": [
         "web-origins",
         "address",
@@ -865,12 +833,8 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "http://localhost:4200/*"
-      ],
-      "webOrigins": [
-        "+"
-      ],
+      "redirectUris": ["http://localhost:4200/*", "http://localhost:4300/*"],
+      "webOrigins": ["+"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -883,7 +847,6 @@
       "protocol": "openid-connect",
       "attributes": {
         "client.introspection.response.allow.jwt.claim.enabled": "false",
-        "post.logout.redirect.uris": "http://localhost:4200/*",
         "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false",
         "use.refresh.tokens": "true",
@@ -930,12 +893,8 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "fZWsuYBEJuB2vu0625BbQcpCIVAQa1k5",
-      "redirectUris": [
-        "/*"
-      ],
-      "webOrigins": [
-        "/*"
-      ],
+      "redirectUris": ["/*"],
+      "webOrigins": ["/*"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1031,12 +990,8 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/admin/kateringapp/console/*"
-      ],
-      "webOrigins": [
-        "+"
-      ],
+      "redirectUris": ["/admin/kateringapp/console/*"],
+      "webOrigins": ["+"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1754,10 +1709,7 @@
   "adminTheme": "",
   "emailTheme": "",
   "eventsEnabled": false,
-  "eventsListeners": [
-    "register-listener",
-    "jboss-logging"
-  ],
+  "eventsListeners": ["register-listener", "jboss-logging"],
   "enabledEventTypes": [
     "UPDATE_CONSENT_ERROR",
     "SEND_RESET_PASSWORD",
@@ -1872,9 +1824,7 @@
         "subType": "authenticated",
         "subComponents": {},
         "config": {
-          "allow-default-scopes": [
-            "true"
-          ]
+          "allow-default-scopes": ["true"]
         }
       },
       {
@@ -1922,9 +1872,7 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "allow-default-scopes": [
-            "true"
-          ]
+          "allow-default-scopes": ["true"]
         }
       },
       {
@@ -1942,9 +1890,7 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "max-clients": [
-            "200"
-          ]
+          "max-clients": ["200"]
         }
       },
       {
@@ -1954,12 +1900,8 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "host-sending-registration-request-must-match": [
-            "true"
-          ],
-          "client-uris-must-match": [
-            "true"
-          ]
+          "host-sending-registration-request-must-match": ["true"],
+          "client-uris-must-match": ["true"]
         }
       }
     ],
@@ -1982,9 +1924,7 @@
         "providerId": "aes-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ]
+          "priority": ["100"]
         }
       },
       {
@@ -1993,12 +1933,8 @@
         "providerId": "hmac-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ],
-          "algorithm": [
-            "HS512"
-          ]
+          "priority": ["100"],
+          "algorithm": ["HS512"]
         }
       },
       {
@@ -2007,12 +1943,8 @@
         "providerId": "rsa-enc-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ],
-          "algorithm": [
-            "RSA-OAEP"
-          ]
+          "priority": ["100"],
+          "algorithm": ["RSA-OAEP"]
         }
       },
       {
@@ -2021,9 +1953,7 @@
         "providerId": "rsa-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ]
+          "priority": ["100"]
         }
       }
     ]

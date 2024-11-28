@@ -1,5 +1,6 @@
 package com.kateringapp.backend.entities;
 
+import com.kateringapp.backend.entities.order.Order;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -45,4 +46,12 @@ public class Meal {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
     private List<Ingredient> ingredients;
+    
+    @ManyToMany
+    @JoinTable(
+            name = "order_meals",
+            joinColumns = @JoinColumn(name = "meal_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
+    private List<Order> orders;
 }
