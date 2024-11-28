@@ -62,7 +62,7 @@ describe('OrderListComponent', () => {
 
     it('should set selectedOrder and open modal on successful order fetch', () => {
         component.showOrder(component.orderList[0]);
-    
+
         expect(component.selectedOrder).toEqual(component.orderList[0]);
         expect(component.showModal).toBeTrue();
     });
