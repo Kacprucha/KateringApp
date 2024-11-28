@@ -86,7 +86,7 @@ export default class MealFormComponent
 
     const payload = {
       ...this.meal,
-      price: this.meal.price * 100,
+      price: this.meal.price,
     };
 
     this.mealService.createMeal(payload).subscribe({
