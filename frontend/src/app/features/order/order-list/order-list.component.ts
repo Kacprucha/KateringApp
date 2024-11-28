@@ -10,7 +10,6 @@ import { i18n } from '../../../../i18n';
 import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
 import { Subscription } from 'rxjs';
 import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
-import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'order-list',
@@ -30,7 +29,6 @@ export default class OrderListComponent
   constructor(
     private orderService: OrderService,
     private mealService: MealService,
-    private keycloakService: KeycloakService,
   ) {}
 
   getOrderStatusName(status: OrderStatus): string {
