@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:client": "ng build -c client",
+    "build:catering-firm": "ng build -c catering-firm",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

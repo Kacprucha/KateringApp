@@ -1,8 +1,17 @@
 services:
-  frontend:
+  frontend-client:
     build:
       context: ./frontend
+      dockerfile: Dockerfile.client
     ports:
-      - '4200:80'
+      - "4200:80"
+    volumes:
+      - ./frontend:/usr/src/app
+  frontend-catering-firm:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.catering-firm
+    ports:
+      - "4300:80"
     volumes:
       - ./frontend:/usr/src/app
