@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CateringFirmDataRepository extends JpaRepository<CateringFirmData, Long> {
+public interface CateringFirmDataRepository extends JpaRepository<CateringFirmData, UUID> {
     CateringFirmData findByCateringFirmId(UUID cateringFirmId);
 }

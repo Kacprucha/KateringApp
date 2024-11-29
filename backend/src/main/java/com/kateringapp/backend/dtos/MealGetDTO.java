@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -23,5 +24,9 @@ public class MealGetDTO {
     byte[] photo;
 
     List<Ingredient> ingredients;
+
+    UUID cateringFirmId;
+
+    String cateringFirmName;
 
 }

@@ -21,5 +21,4 @@ public class MealCreateDTO {
 
     List<String> ingredients;
 
-    UUID cateringFirmId;
 }

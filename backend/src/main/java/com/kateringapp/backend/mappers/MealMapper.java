@@ -40,9 +40,10 @@ public class MealMapper implements IMealMapper {
                 .description(meal.getDescription())
                 .photo(meal.getPhoto())
                 .price(meal.getPrice())
-                .photo(meal.getPhoto())
                 .name(meal.getName())
                 .ingredients(meal.getIngredients())
+                .cateringFirmId(meal.getCateringFirmData().getCateringFirmId())
+                .cateringFirmName(meal.getCateringFirmData().getName())
                 .build();
     }
 }
