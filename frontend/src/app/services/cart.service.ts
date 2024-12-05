@@ -1,11 +1,14 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { MealGetDTO } from './meal/meal.service';
+import { AuthorizationService } from './authorization.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor() {}
+  constructor(private authService: AuthorizationService) {
+    this.retrieveCart();
+  }
 
   public cartState: WritableSignal<Cart> = signal(defaultCartState);
 
@@ -21,6 +24,8 @@ export class CartService {
       cart.total += meal.price * quantity;
       return cart;
     });
+
+    this.saveCartState();
   }
 
   public removeFromCart(mealId: number) {
@@ -36,12 +41,33 @@ export class CartService {
       }
       return cart;
     });
-    console.log(this.cartState())
+
+    this.saveCartState();
+  }
+
+  private async retrieveCart() {
+    const username = await this.authService.getUserName();
+    const cart = localStorage.getItem(`cart-${username}`);
+    if (cart) {
+      this.cartState.set(JSON.parse(cart));
+    } else {
+      this.cartState.set({
+        username,
+        productCount: 0,
+        total: 0,
+        products: [],
+      });
+    }
+  }
+
+  private async saveCartState() {
+    const username = await this.authService.getUserName();
+    localStorage.setItem(`cart-${username}`, JSON.stringify(this.cartState()));
   }
 }
 
 export interface Cart {
-  userId: string;
+  username: string;
   productCount: number;
   total: number;
   products: CartItem[];
@@ -52,8 +78,8 @@ export interface CartItem {
   quantity: number;
 }
 
-const defaultCartState = {
-  userId: '',
+const defaultCartState: Cart = {
+  username: '',
   productCount: 0,
   total: 0,
   products: [],
