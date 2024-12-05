@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { KeycloakService } from 'keycloak-angular';
 import { MockKeycloakService } from '../mocks/keycloak/service';
+import { CartComponent } from './components/cart/cart.component';
 
 
 describe('AppComponent', () => {
@@ -13,7 +14,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([])],
-      declarations: [AppComponent, HeaderComponent],
+      declarations: [AppComponent, HeaderComponent, CartComponent],
       providers: [{ provide: KeycloakService, useClass: MockKeycloakService }],
     }).compileComponents();
   });
