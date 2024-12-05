@@ -18,6 +18,9 @@
         <th class="px-4 py-2 border border-gray-300 text-left">Edit</th>
         <th class="px-4 py-2 border border-gray-300 text-left">Delete</th>
       }
+      @if (isClientEnvironment) {
+        <th class="px-4 py-2 border border-gray-300 text-left">Order</th>
+      }
     </tr>
   </thead>
   <tbody>
@@ -48,6 +51,16 @@
             (click)="onDeleteMeal(meal.mealId)"
           >
             Delete
+          </button>
+        </td>
+      }
+      @if (isClientEnvironment) {
+        <td class="px-4 py-2 border border-gray-300">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            (click)="onAddToCart(meal)"
+          >
+            Add to Cart
           </button>
         </td>
       }

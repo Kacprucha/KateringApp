@@ -1,0 +1,13 @@
+<div *ngIf="cartState" class="indicator">
+  <span *ngIf="cartState().productCount > 0" class="indicator-item mt-2 badge badge-secondary">
+    {{cartState().productCount}}
+  </span>
+<div
+  class="my-auto flex flex-row gap-1 font-semibold btn btn-ghost no-animation text-lg"
+>
+  <div class="mt-1">
+    <span class="material-symbols-outlined"> shopping_cart </span>
+  </div>
+  <p>Cart</p>
+</div>
+</div>

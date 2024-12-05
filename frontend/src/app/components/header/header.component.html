@@ -2,7 +2,8 @@
   <div class="flex-1" routerLink="/">
     <a class="btn btn-ghost text-xl">Katering App</a>
   </div>
-  <div>
+  <div class="flex flex-row gap-8">
+    <app-cart *ngIf="isClientEnvironment"></app-cart>
     <div
       tabindex="0"
       class="dropdown dropdown-end flex flex-row gap-4 btn btn-ghost no-animation"
