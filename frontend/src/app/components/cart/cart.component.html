@@ -1,13 +1,70 @@
-<div *ngIf="cartState" class="indicator">
-  <span *ngIf="cartState().productCount > 0" class="indicator-item mt-2 badge badge-secondary">
-    {{cartState().productCount}}
-  </span>
-<div
-  class="my-auto flex flex-row gap-1 font-semibold btn btn-ghost no-animation text-lg"
->
-  <div class="mt-1">
-    <span class="material-symbols-outlined"> shopping_cart </span>
+<div *ngIf="cartState" class="dropdown dropdown-end">
+  <div class="indicator">
+    <span
+      *ngIf="cartState().productCount > 0"
+      class="indicator-item mt-2 badge badge-secondary"
+    >
+      {{ cartState().productCount }}
+    </span>
+    <div
+      tabindex="0"
+      class="my-auto flex flex-row gap-1 font-semibold btn btn-ghost no-animation text-lg"
+    >
+      <div class="mt-1">
+        <span class="material-symbols-outlined"> shopping_cart </span>
+      </div>
+      <p>Cart</p>
+    </div>
+    <div
+      tabindex="0"
+      class="z-[1] p-4 shadow dropdown-content bg-base-100 rounded-box min-w-[30rem] fixed top-[60px]"
+    >
+      <h1 class="text-center font-semibold text-lg mb-4">Your Cart</h1>
+      <p *ngIf="cartState().productCount === 0" class="text-center italic">
+        Your cart is empty.
+      </p>
+      <div *ngIf="cartState().productCount > 0">
+        <ul class="">
+          <li
+            *ngFor="let product of cartState().products"
+            class="flex flex-row justify-between py-4"
+          >
+            <div class="flex flex-row justify-between my-auto">
+              <p>{{ product.meal.name }}</p>
+            </div>
+            <div class="flex flex-row gap-4">
+              <div class="flex flex-row gap-1">
+                <div
+                  class="btn btn-sm btn-error my-auto font-bold"
+                  (click)="removeFromCart(product.meal)"
+                >
+                  -
+                </div>
+                <p class="btn btn-disabled">
+                  <span class="text-black">
+                    {{ product.quantity }}
+                  </span>
+                </p>
+                <div
+                  class="btn btn-sm btn-success my-auto font-bold"
+                  (click)="addToCart(product.meal, 1)"
+                >
+                  +
+                </div>
+              </div>
+              <p class="font-semibold text-right w-[80px] my-auto">
+                {{ product.meal.price * product.quantity }} PLN
+              </p>
+            </div>
+          </li>
+        </ul>
+        <p class="text-right font-semibold mt-4">
+          Total: {{ cartState().total }} PLN
+        </p>
+        <div class="flex flex-row justify-end">
+          <button class="mx-auto mt-4 btn btn-info w-20">Order</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <p>Cart</p>
-</div>
 </div>
