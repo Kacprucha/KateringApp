@@ -9,6 +9,7 @@ import com.kateringapp.backend.entities.order.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.UUID;
 
 public class TestDataProvider {
 
@@ -32,15 +33,15 @@ public class TestDataProvider {
                 .startingAddress("aaa")
                 .destinationAddress("bbb")
                 .opinion("good")
+                .clientId(UUID.randomUUID())
                 .build();
     }
 
     public static PaymentRequest providePaymentRequest() {
         return PaymentRequest.builder()
-                .amount(100.0)
                 .currency("USD")
                 .description("Test Payment")
-                .clientId(1L)
+                .orderId(1L)
                 .build();
     }
 
@@ -51,7 +52,7 @@ public class TestDataProvider {
                 .currency("USD")
                 .description("Test Payment")
                 .status("PENDING")
-                .clientId(1L)
+                .order(provideOrder())
                 .build();
     }
 

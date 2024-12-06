@@ -1,5 +1,7 @@
 package com.kateringapp.backend.entities;
 
+import com.kateringapp.backend.entities.client.Client;
+import com.kateringapp.backend.entities.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +33,8 @@ public class Payment {
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable = false)
-    private Long clientId;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
 }
