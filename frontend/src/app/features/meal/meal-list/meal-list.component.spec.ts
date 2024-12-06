@@ -7,6 +7,8 @@ import { provideHttpClient } from '@angular/common/http';
 import MealListComponent from './meal-list.component';
 import { environment } from '../../../../environments/environment';
 import MealModal from '../meal-modal/meal-modal.component';
+import { KeycloakService } from 'keycloak-angular';
+import { MockKeycloakService } from '../../../../mocks/keycloak/service';
 
 const MOCK_MEAL = [
   {
@@ -27,7 +29,14 @@ describe('MealListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MealListComponent, MealModal],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        {
+          provide: KeycloakService,
+          useClass: MockKeycloakService,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MealListComponent);

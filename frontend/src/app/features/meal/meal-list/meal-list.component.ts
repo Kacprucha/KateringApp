@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MealGetDTO, MealService } from '../../../services/meal/meal.service';
-import { isCateringFirmEnvironment } from '../../../shared/utils/environmentGuard';
+import { isCateringFirmEnvironment, isClientEnvironment } from '../../../shared/utils/environmentGuard';
 import { Router } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
 
 
 @Component({
@@ -11,13 +12,15 @@ import { Router } from '@angular/router';
 })
 export default class MealListComponent implements OnInit {
   isCateringFirmEnvironment = isCateringFirmEnvironment;
+  isClientEnvironment = isClientEnvironment;
   mealList: MealGetDTO[] = [];
   isMealModal: boolean = false
   modalText: string = ""
 
-  constructor(  
+  constructor(
     private mealService: MealService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +30,10 @@ export default class MealListComponent implements OnInit {
   closeModal(): void {
     this.isMealModal = false
     this.modalText = ""
+  }
+
+  onAddToCart(meal: MealGetDTO): void {
+    this.cartService.addToCart(meal, 1);
   }
 
   showMealOfferButtonClicked(): void {

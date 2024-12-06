@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthorizationService } from '../../services/authorization.service';
+import { isClientEnvironment } from '../../shared/utils/environmentGuard';
 import { i18n } from '../../../i18n';
 
 @Component({
@@ -7,6 +8,7 @@ import { i18n } from '../../../i18n';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
+  isClientEnvironment = isClientEnvironment;
   authService = inject(AuthorizationService);
   userName = '';
   userRoles: string[] = [];
