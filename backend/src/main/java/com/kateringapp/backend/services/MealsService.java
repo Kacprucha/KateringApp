@@ -12,6 +12,7 @@ import com.kateringapp.backend.repositories.CateringFirmDataRepository;
 import com.kateringapp.backend.repositories.IOrderRepository;
 import com.kateringapp.backend.repositories.IngredientRepository;
 import com.kateringapp.backend.repositories.MealRepository;
+import com.kateringapp.backend.services.interfaces.IMeals;
 import com.kateringapp.backend.utils.AuthHelper;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
@@ -35,7 +36,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MealsService implements IMeals{
+public class MealsService implements IMeals {
 
     private final MealMapper mealMapper;
     private final CateringFirmDataRepository cateringFirmDataRepository;
