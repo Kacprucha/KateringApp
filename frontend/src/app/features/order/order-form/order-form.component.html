@@ -1,0 +1,89 @@
+<form
+  (ngSubmit)="submitOrder()"
+  class="max-w-md mx-auto p-4 bg-base-100 shadow-lg rounded-lg"
+>
+  <div class="form-control mb-4">
+    <label for="name" class="label">
+      <span class="label-text">Name:</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      [(ngModel)]="deliveryDetails.name"
+      name="name"
+      class="input input-bordered w-full"
+    />
+    <div *ngIf="errors.name" class="text-error mt-1">
+      <small>{{ errors.name }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="surname" class="label">
+      <span class="label-text">Surame:</span>
+    </label>
+    <input
+      type="text"
+      id="surname"
+      [(ngModel)]="deliveryDetails.surname"
+      name="surname"
+      class="input input-bordered w-full"
+    />
+    <div *ngIf="errors.surname" class="text-error mt-1">
+      <small>{{ errors.surname }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="address" class="label">
+      <span class="label-text">Address:</span>
+    </label>
+    <textarea
+      id="address"
+      [(ngModel)]="deliveryDetails.address"
+      name="address"
+      class="textarea textarea-bordered w-full"
+    ></textarea>
+    <div *ngIf="errors.address" class="text-error mt-1">
+      <small>{{ errors.address }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="phone" class="label">
+      <span class="label-text">Phone Number:</span>
+    </label>
+    <input
+      type="text"
+      id="phone"
+      [(ngModel)]="deliveryDetails.phone"
+      name="phone"
+      class="input input-bordered w-full"
+    />
+    <div *ngIf="errors.phone" class="text-error mt-1">
+      <small>{{ errors.phone }}</small>
+    </div>
+  </div>
+
+  <div class="form-control mb-4">
+    <label for="paymentMethod" class="label">
+      <span class="label-text">Payment Method:</span>
+    </label>
+    <select
+      id="paymentMethod"
+      [(ngModel)]="deliveryDetails.paymentMethod"
+      name="paymentMethod"
+      class="select select-bordered w-full"
+    >
+      <option value="" disabled selected>Choose a payment method</option>
+      <option value="credit_card">Credit Card</option>
+      <option value="paypal">PayPal</option>
+      <option value="cash_on_delivery">Blik</option>
+    </select>
+    <div *ngIf="errors.paymentMethod" class="text-error mt-1">
+      <small>{{ errors.paymentMethod }}</small>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-full">Go to summary</button>
+</form>
