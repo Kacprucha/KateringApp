@@ -1,4 +1,4 @@
-package com.kateringapp.backend.entities.user;
+package com.kateringapp.backend.entities.client;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
