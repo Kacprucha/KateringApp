@@ -1,13 +1,10 @@
-package com.kateringapp.backend.entities.client;
+package com.kateringapp.backend.entities.user;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.UUID;
 import lombok.NoArgsConstructor;
