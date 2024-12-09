@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS client (
                                         first_name VARCHAR(255),
                                         last_name VARCHAR(255),
                                         phone_number VARCHAR(255),
-                                        address VARCHAR(255),
+                                        address VARCHAR(255)
 
     );
 
