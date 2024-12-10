@@ -1,6 +1,9 @@
 package com.kateringapp.backend.entities.order;
 
 import com.kateringapp.backend.entities.Meal;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,6 +52,12 @@ public class Order {
     )
     private List<Meal> meals = new ArrayList<>();
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "name", column = @Column(name = "name")),
+            @AttributeOverride(name = "surname", column = @Column(name = "surname")),
+            @AttributeOverride(name = "orderDateTime", column = @Column(name = "order_date_time")),
+            @AttributeOverride(name = "dueDateTime", column = @Column(name = "due_date_time"))
+    })
     private ContactData contactData;
 
 }
