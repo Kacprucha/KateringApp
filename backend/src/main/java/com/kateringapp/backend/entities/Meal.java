@@ -32,7 +32,7 @@ public class Meal {
     private String description;
 
     @Lob
-    @Column(name = "photo", columnDefinition = "BLOB")
+    @Column(name = "photo", columnDefinition = "BYTEA")
     private byte[] photo;
 
     @ManyToOne

@@ -160,11 +160,29 @@ VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 2);  -- Smoothie Masters: Home Delivery
 
-INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address)
+INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address, total_price, completed_at)
 VALUES
-    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave'),
-    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave'),
-    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave');
+    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 22, null),
+    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 15, '2024-03-28 00:00:00'::timestamp),
+    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 11, null),
+    (104, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Delicious meals!', 5, '22 Elm St', '88 Pine St', 18, '2024-03-15 12:45:00'::timestamp),
+    (105, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Loved the smoothies!', 4, '300 Oak St', '700 Maple St', 10, '2024-03-20 15:30:00'::timestamp),
+    (106, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Waiting for delivery...', 3, '55 Birch St', '66 Willow St', 12, NULL),
+    (107, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Fast service!', 5, '99 Cedar St', '101 Oak St', 25, '2024-03-21 18:00:00'::timestamp),
+    (108, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130002', 'Had to cancel', 1, '200 Ash St', '300 Spruce St', 15, NULL),
+    (109, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Very fresh ingredients', 4, '45 Palm St', '50 Mango St', 14, '2024-03-25 11:20:00'::timestamp),
+    (110, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130006', 'Looking forward to it', 4, '77 Cypress St', '99 Mahogany St', 17, NULL),
+    (111, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp),
+    (112, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Late order', 2, '11 Pear St', '22 Peach St', 13, NULL),
+    (113, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Great taste', 5, '19 Apricot St', '31 Grape St', 16, '2024-04-05 20:10:00'::timestamp),
+    (114, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Best pizza!', 5, '21 Lime St', '42 Fig St', 22, '2024-04-10 12:00:00'::timestamp),
+    (115, 'CANCELLED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Changed my mind', 2, '78 Plum St', '89 Orange St', 10, NULL),
+    (116, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130002', 'Good service overall', 4, '60 Strawberry St', '70 Blueberry St', 19, '2024-04-15 13:50:00'::timestamp),
+    (117, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Healthy and tasty', 5, '88 Blackberry St', '99 Raspberry St', 18, '2024-04-20 10:30:00'::timestamp),
+    (118, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130006', 'Order in progress', 3, '15 Watermelon St', '25 Melon St', 14, NULL),
+    (119, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Perfectly cooked', 5, '100 Pineapple St', '150 Banana St', 25, '2024-04-22 17:25:00'::timestamp),
+    (120, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Loved every bite!', 5, '33 Coconut St', '44 Papaya St', 21, '2024-04-25 19:40:00'::timestamp),
+    (121, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'wooow so delicioso', 5, '88 Blackberry St', '99 Raspberry St', 18, '2024-04-20 10:30:00'::timestamp);
 
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);
@@ -196,3 +214,75 @@ INSERT INTO order_meals (order_id, meal_id) VALUES (102, 104);
 
 INSERT INTO order_meals (order_id, meal_id) VALUES (103, 105);
 INSERT INTO order_meals (order_id, meal_id) VALUES (103, 106);
+
+-- Zamówienie 104
+INSERT INTO order_meals (order_id, meal_id) VALUES (104, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (104, 102);
+
+-- Zamówienie 105
+INSERT INTO order_meals (order_id, meal_id) VALUES (105, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (105, 104);
+
+-- Zamówienie 106
+INSERT INTO order_meals (order_id, meal_id) VALUES (106, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (106, 106);
+
+-- Zamówienie 107
+INSERT INTO order_meals (order_id, meal_id) VALUES (107, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (107, 102);
+
+-- Zamówienie 108
+INSERT INTO order_meals (order_id, meal_id) VALUES (108, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (108, 104);
+
+-- Zamówienie 109
+INSERT INTO order_meals (order_id, meal_id) VALUES (109, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (109, 106);
+
+-- Zamówienie 110
+INSERT INTO order_meals (order_id, meal_id) VALUES (110, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (110, 102);
+
+-- Zamówienie 111
+INSERT INTO order_meals (order_id, meal_id) VALUES (111, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (111, 104);
+
+-- Zamówienie 112
+INSERT INTO order_meals (order_id, meal_id) VALUES (112, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (112, 106);
+
+-- Zamówienie 113
+INSERT INTO order_meals (order_id, meal_id) VALUES (113, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (113, 102);
+
+-- Zamówienie 114
+INSERT INTO order_meals (order_id, meal_id) VALUES (114, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (114, 104);
+
+-- Zamówienie 115
+INSERT INTO order_meals (order_id, meal_id) VALUES (115, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (115, 106);
+
+-- Zamówienie 116
+INSERT INTO order_meals (order_id, meal_id) VALUES (116, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (116, 102);
+
+-- Zamówienie 117
+INSERT INTO order_meals (order_id, meal_id) VALUES (117, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (117, 104);
+
+-- Zamówienie 118
+INSERT INTO order_meals (order_id, meal_id) VALUES (118, 105);
+INSERT INTO order_meals (order_id, meal_id) VALUES (118, 106);
+
+-- Zamówienie 119
+INSERT INTO order_meals (order_id, meal_id) VALUES (119, 101);
+INSERT INTO order_meals (order_id, meal_id) VALUES (119, 102);
+
+-- Zamówienie 120
+INSERT INTO order_meals (order_id, meal_id) VALUES (120, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (120, 104);
+
+-- Zamówienie 121
+INSERT INTO order_meals (order_id, meal_id) VALUES (121, 103);
+INSERT INTO order_meals (order_id, meal_id) VALUES (121, 104);

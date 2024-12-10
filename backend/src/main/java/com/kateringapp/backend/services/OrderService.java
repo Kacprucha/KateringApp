@@ -19,8 +19,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -95,7 +93,6 @@ public class OrderService implements IOrderService {
 
     private void removeUnnecessaryMeals(List<OrderDTO> orderDTOS, UUID cateringFirmId) {
         orderDTOS.forEach(orderDTO -> {
-            // Filter mealIds to retain only those belonging to the specified CateringFirm
             List<Long> filteredMealIds = orderDTO.getMealIds().stream()
                     .filter(mealId -> {
                         Meal meal = mealRepository.findById(mealId)
@@ -104,7 +101,6 @@ public class OrderService implements IOrderService {
                     })
                     .toList();
 
-            // Replace the existing mealIds with the filtered list
             orderDTO.setMealIds(filteredMealIds);
         });
     }
