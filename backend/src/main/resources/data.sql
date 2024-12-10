@@ -6,6 +6,16 @@ CREATE TABLE IF NOT EXISTS catering_firm_data (
     logo BYTEA
     );
 
+-- Tworzenie tabeli 'client'
+CREATE TABLE IF NOT EXISTS client (
+                                        client_id UUID PRIMARY KEY,  -- Ręczne przypisywanie ID
+                                        first_name VARCHAR(255),
+                                        last_name VARCHAR(255),
+                                        phone_number VARCHAR(255),
+                                        address VARCHAR(255)
+
+    );
+
 -- Tworzenie tabeli 'ingredient'
 CREATE TABLE IF NOT EXISTS ingredient (
                                           ingredient_id BIGINT PRIMARY KEY,  -- Ręczne przypisywanie ID
@@ -85,6 +95,12 @@ VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130005', 'Italian Delights Catering', 'Italian cuisine with a variety of pasta and pizza options', null),
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 'Healthy Bites', 'Fresh, organic, and healthy meals', null),
     ('919b0f69-766e-4f51-a36c-5e9e643385cd', 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
+
+-- Wstawianie danych do tabeli 'client'
+INSERT INTO client (client_id, first_name, last_name, phone_number, address)
+VALUES
+    ('6c84fb95-12c4-11ec-82a8-0242ac130003', 'John', 'Doe', '+48 341 231 412', 'ul. Klonowa 15/3, Warszawa'),
+    ('6c84fb95-12c4-11ec-82a8-0242ac130004', 'Jane', 'Doe', '+48 412 341 412', 'ul. Jasna 7A, 02-456 Kraków');
 
 -- Wstawianie danych do tabeli 'ingredient'
 INSERT INTO ingredient (ingredient_id, name)
