@@ -1,4 +1,4 @@
-package com.kateringapp.backend.services;
+package com.kateringapp.backend.services.interfaces;
 
 
 import com.kateringapp.backend.dtos.MealCreateDTO;
