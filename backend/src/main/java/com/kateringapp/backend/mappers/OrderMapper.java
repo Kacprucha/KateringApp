@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -39,6 +40,7 @@ public class OrderMapper implements IOrderMapper {
                 .mealIds(mealIds)
                 .startingAddress(order.getStartingAddress())
                 .destinationAddress(order.getDestinationAddress())
+                .contactData(order.getContactData())
                 .build();
     }
 
@@ -50,6 +52,8 @@ public class OrderMapper implements IOrderMapper {
             throw new MealNotFoundException();
         }
 
+        orderDTO.getContactData().setOrderDateTime(LocalDateTime.now());
+        orderDTO.getContactData().setDueDateTime(LocalDateTime.now().plusHours(1));
         return Order.builder()
                 .rate(orderDTO.getRate())
                 .opinion(orderDTO.getOpinion())
@@ -58,6 +62,7 @@ public class OrderMapper implements IOrderMapper {
                 .startingAddress(orderDTO.getStartingAddress())
                 .destinationAddress(orderDTO.getDestinationAddress())
                 .meals(meals)
+                .contactData(orderDTO.getContactData())
                 .build();
     }
 
