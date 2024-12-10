@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS orders (
     opinion TEXT,
     rate INT NOT NULL,
     starting_address VARCHAR(255) NOT NULL,
-    destination_address VARCHAR(255) NOT NULL
+    destination_address VARCHAR(255) NOT NULL,
+    total_price NUMERIC(10, 2),
+    completed_at TIMESTAMP
 );
 
 -- Tworzenie tabeli 'meal'
