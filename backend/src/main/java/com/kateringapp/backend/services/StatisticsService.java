@@ -18,7 +18,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,9 +53,24 @@ public class StatisticsService implements IStatistics {
         }
         else{
             switch(criteria.getStatisticsPeriod()){
-                case WEEK -> conditions.and(qOrder.completedAt.goe(Timestamp.from(Instant.from(LocalDate.now().minusWeeks(1)))));
-                case MONTH -> conditions.and(qOrder.completedAt.goe(Timestamp.from(Instant.from(LocalDate.now().minusMonths(1)))));
-                case YEAR -> conditions.and(qOrder.completedAt.goe(Timestamp.from(Instant.from(LocalDate.now().minusYears(1)))));
+                case WEEK -> {
+                    Instant oneWeekAgo = LocalDateTime.now().minusWeeks(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneWeekAgo)));
+                }
+                case MONTH -> {
+                    Instant oneMonthAgo = LocalDateTime.now().minusMonths(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneMonthAgo)));
+                }
+                case YEAR -> {
+                    Instant oneYearAgo = LocalDateTime.now().minusYears(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneYearAgo)));
+                }
             }
         }
 
