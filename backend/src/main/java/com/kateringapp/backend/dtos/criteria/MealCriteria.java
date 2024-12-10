@@ -1,4 +1,4 @@
-package com.kateringapp.backend.dtos;
+package com.kateringapp.backend.dtos.criteria;
 
 import lombok.Builder;
 import lombok.Data;

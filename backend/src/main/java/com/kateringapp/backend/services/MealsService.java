@@ -1,7 +1,8 @@
 package com.kateringapp.backend.services;
 
+import com.kateringapp.backend.configurations.SpringContextRetriever;
 import com.kateringapp.backend.dtos.MealCreateDTO;
-import com.kateringapp.backend.dtos.MealCriteria;
+import com.kateringapp.backend.dtos.criteria.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.*;
 import com.kateringapp.backend.entities.order.QOrder;
@@ -27,8 +28,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +44,11 @@ public class MealsService implements IMeals {
     private final EntityManager entityManager;
     private final IOrderRepository orderRepository;
     private final IngredientRepository ingredientRepository;
+    private final SpringContextRetriever springContextRetriever;
 
     @Override
     public MealGetDTO createMeal(MealCreateDTO mealCreateDTO) {
-        UUID currentUserId = getCurrentUserIdFromJwt();
+        UUID currentUserId = springContextRetriever.getCurrentUserIdFromJwt();
         CateringFirmData cateringFirmData =
                 cateringFirmDataRepository.findByCateringFirmId(currentUserId);
         Meal meal = mealMapper.mapDTOToEntity(mealCreateDTO, cateringFirmData);
@@ -61,7 +61,7 @@ public class MealsService implements IMeals {
     public MealGetDTO updateMeal(Long id, MealCreateDTO meal) {
         Meal mealToUpdate = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
         CateringFirmData cateringFirmData = mealToUpdate.getCateringFirmData();
-        UUID currentUserId = getCurrentUserIdFromJwt();
+        UUID currentUserId = springContextRetriever.getCurrentUserIdFromJwt();
 
         if(!currentUserId.equals(cateringFirmData.getCateringFirmId())){
             throw new BadRequestException("You can update only your meals");
@@ -75,7 +75,7 @@ public class MealsService implements IMeals {
     @Override
     public MealGetDTO getMeal(Long id) {
         Meal meal = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
-        UUID currentUserId = getCurrentUserIdFromJwt();
+        UUID currentUserId = springContextRetriever.getCurrentUserIdFromJwt();
 
         if(!currentUserId.equals(meal.getCateringFirmData().getCateringFirmId())) {
             throw new BadRequestException("You can only get your meals");
@@ -87,7 +87,7 @@ public class MealsService implements IMeals {
     @Override
     public void deleteMeal(Long id) {
         Meal meal = mealRepository.findById(id).orElseThrow(() -> new MealNotFoundException(id));
-        UUID currentUserId = getCurrentUserIdFromJwt();
+        UUID currentUserId = springContextRetriever.getCurrentUserIdFromJwt();
 
         if(!currentUserId.equals(meal.getCateringFirmData().getCateringFirmId())) {
             throw new BadRequestException("You can delete only your meals");
@@ -197,16 +197,6 @@ public class MealsService implements IMeals {
         }
 
         return query;
-    }
-
-    public UUID getCurrentUserIdFromJwt() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof Jwt jwt) {
-            return UUID.fromString(jwt.getClaimAsString("sub"));
-        }
-
-        return null;
     }
 
     private void updateMealFields(Meal mealToUpdate, MealCreateDTO meal) {
