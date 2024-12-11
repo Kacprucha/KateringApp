@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -53,5 +55,7 @@ public class Order {
     private List<Meal> meals = new ArrayList<>();
     @Embedded
     private ContactData contactData;
+    private Timestamp completedAt;
+    private BigDecimal totalPrice;
 
 }

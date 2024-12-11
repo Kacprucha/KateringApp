@@ -1,5 +1,6 @@
 package com.kateringapp.backend;
 
+import com.kateringapp.backend.configurations.SpringContextRetriever;
 import com.kateringapp.backend.dtos.MealCreateDTO;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.entities.Meal;
@@ -44,6 +45,9 @@ class MealsUnitTest {
     @InjectMocks
     private MealsService mealsService;
 
+    @Mock
+    private SpringContextRetriever springContextRetriever;
+
     private Meal meal;
     private MealCreateDTO mealCreateDTO;
     private CateringFirmData cateringFirmData;
@@ -74,9 +78,10 @@ class MealsUnitTest {
                 .description("Delicious sample meal")
                 .build();
 
-        // Mockowanie SecurityContextHolder
         Jwt jwt = mock(Jwt.class);
         when(jwt.getClaimAsString("sub")).thenReturn(cateringFirmId.toString());
+
+        when(springContextRetriever.getCurrentUserIdFromJwt()).thenReturn(cateringFirmId);
 
         Authentication authentication = mock(Authentication.class);
         when(authentication.isAuthenticated()).thenReturn(true);

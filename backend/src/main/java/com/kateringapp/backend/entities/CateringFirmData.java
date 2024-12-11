@@ -35,7 +35,7 @@ public class CateringFirmData {
     private List<DeliveryType> deliveryOptions;
 
     @Lob
-    @Column(name = "logo", columnDefinition = "BLOB")
+    @Column(name = "logo", columnDefinition = "BYTEA")
     private byte[] logo;
 
     @OneToMany

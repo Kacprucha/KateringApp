@@ -1,7 +1,7 @@
 package com.kateringapp.backend.controllers;
 
 import com.kateringapp.backend.dtos.MealCreateDTO;
-import com.kateringapp.backend.dtos.MealCriteria;
+import com.kateringapp.backend.dtos.criteria.MealCriteria;
 import com.kateringapp.backend.dtos.MealGetDTO;
 import com.kateringapp.backend.services.MealsService;
 import lombok.RequiredArgsConstructor;
