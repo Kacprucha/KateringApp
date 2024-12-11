@@ -7,6 +7,7 @@ import com.kateringapp.backend.exceptions.client.ClientNotFoundException;
 import com.kateringapp.backend.mappers.ClientMapper;
 import com.kateringapp.backend.repositories.IClientRepository;
 import com.kateringapp.backend.services.interfaces.IClientService;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -21,10 +22,9 @@ public class ClientService implements IClientService {
 
   public ClientGetDTO getClient(Jwt token) {
     UUID userId = UUID.fromString(token.getSubject());
+    Optional<Client> optionalClient = clientRepository.findById(userId);
 
-    return clientMapper
-        .mapEntityToDTO(clientRepository.findById(userId)
-            .orElseThrow(() -> new ClientNotFoundException(userId)));
+    return optionalClient.map(clientMapper::mapEntityToDTO).orElse(null);
   }
 
   public ClientGetDTO updateClient(ClientCreateDTO clientDTO, Jwt token) {
