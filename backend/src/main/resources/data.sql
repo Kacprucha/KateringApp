@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date_time TIMESTAMP,
     due_date_time TIMESTAMP,
     email VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(11) NOT NULL
+    phone_number VARCHAR(11) NOT NULL,
     total_price NUMERIC(10, 2),
     completed_at TIMESTAMP
 );
@@ -244,7 +244,14 @@ VALUES
     (111, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp, 'Henry', 'Martin', '2024-03-10 08:45:00', '2024-04-01 19:45:00', 'henry.martin@example.com', '889900112'),
     (112, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Late order', 2, '11 Pear St', '22 Peach St', 13, NULL, 'Grace', 'White', '2024-03-10 08:45:00', '2024-03-25 18:00:00', 'grace.white@example.com', '990011223'),
     (113, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Great taste', 5, '19 Apricot St', '31 Grape St', 16, '2024-04-05 20:10:00'::timestamp, 'Isabella', 'Harris', '2024-03-10 08:45:00', '2024-04-05 20:10:00', 'isabella.harris@example.com', '334455667'),
-    (114, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Best pizza!', 5, '21 Lime St', '42 Fig St', 22, '2024-04-10 12:00:00'::timestamp, 'Elijah', 'Clark', '2024-03-10 08:45:00', '2024-04-10 12:00:00', 'elijah.clark@example.com', '445566778');
+    (114, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Best pizza!', 5, '21 Lime St', '42 Fig St', 22, '2024-04-10 12:00:00'::timestamp, 'Elijah', 'Clark', '2024-03-10 08:45:00', '2024-04-10 12:00:00', 'elijah.clark@example.com', '445566778'),
+    (115, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 22, null, 'John', 'Doe', '2024-12-01 10:00:00', '2024-12-15 18:00:00', 'john.doe@example.com', '123456789'),
+    (116, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 15, '2024-03-28 00:00:00'::timestamp, 'Jane', 'Smith', '2024-11-20 09:30:00', '2024-12-01 14:00:00', 'jane.smith@example.com', '987654321'),
+    (117, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 11, null, 'Alice', 'Johnson', '2024-11-15 08:45:00', '2024-11-30 16:00:00', 'alice.johnson@example.com', '654321987'),
+    (118, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Delicious meals!', 5, '22 Elm St', '88 Pine St', 18, '2024-03-15 12:45:00'::timestamp, 'Michael', 'Brown', '2024-02-28 10:00:00', '2024-03-15 12:45:00', 'michael.brown@example.com', '111222333'),
+    (119, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Loved the smoothies!', 4, '300 Oak St', '700 Maple St', 10, '2024-03-20 15:30:00'::timestamp, 'Emily', 'Davis', '2024-03-05 08:45:00', '2024-03-20 15:30:00', 'emily.davis@example.com', '444555666'),
+    (120, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Waiting for delivery...', 3, '55 Birch St', '66 Willow St', 12, NULL, 'James', 'Wilson', '2024-03-10 09:30:00', '2024-03-25 14:00:00', 'james.wilson@example.com', '777888999'),
+    (121, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp, 'Henry', 'Martin', '2024-03-10 08:45:00', '2024-04-01 19:45:00', 'henry.martin@example.com', '889900112');
 
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);
