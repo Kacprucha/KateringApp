@@ -9,8 +9,8 @@ import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
 import com.kateringapp.backend.repositories.MealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -38,6 +38,7 @@ public class OrderMapper implements IOrderMapper {
                 .mealIds(mealIds)
                 .startingAddress(order.getStartingAddress())
                 .destinationAddress(order.getDestinationAddress())
+                .contactData(order.getContactData())
                 .build();
     }
 
@@ -49,6 +50,8 @@ public class OrderMapper implements IOrderMapper {
             throw new MealNotFoundException();
         }
 
+        orderDTO.getContactData().setOrderDateTime(LocalDateTime.now());
+        orderDTO.getContactData().setDueDateTime(LocalDateTime.now().plusHours(1));
         BigDecimal totalPrice = meals
                 .stream()
                 .map(Meal::getPrice)
@@ -63,6 +66,7 @@ public class OrderMapper implements IOrderMapper {
                 .destinationAddress(orderDTO.getDestinationAddress())
                 .totalPrice(totalPrice)
                 .meals(meals)
+                .contactData(orderDTO.getContactData())
                 .build();
 
         if(orderDTO.getOrderStatus() == OrderStatus.COMPLETED){
