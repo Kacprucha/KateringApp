@@ -14,6 +14,7 @@ import { MealFormModule } from './features/meal/meal-form/meal-form.module';
 import { httpInterceptor } from './http.interceptor';
 import { MealUpdateModule } from './features/meal/meal-update-form/meal-update.module';
 import { CartComponent } from './components/cart/cart.component';
+import { StatisticsModule } from './features/statistics/statistics.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent, CartComponent],
@@ -25,6 +26,7 @@ import { CartComponent } from './components/cart/cart.component';
     MealListModule,
     KeycloakAngularModule,
     OrderModule,
+    StatisticsModule
   ],
   providers: [
     provideHttpClient(withInterceptors([httpInterceptor])),
