@@ -30,9 +30,15 @@ export class ProfileComponent implements OnInit {
   constructor(private clientService: ClientService) {}
 
   ngOnInit(): void {
+    this.loadClient();
+  }
+
+  loadClient()
+  {
     this.clientService.getClient().subscribe({
       next: (data) => {
         this.client = data;
+        this.client.phoneNumber = this.client.phoneNumber.replaceAll(' ', '');
         this.errorMessage = null;
       },
       error: (err) => {
@@ -43,6 +49,14 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleEdit() {
+    this.clientUpdate = {
+      firstName: this.client.firstName,
+      lastName: this.client.lastName,
+      email: this.client.email,
+      phoneNumber: this.client.phoneNumber,
+      address: this.client.address
+    };
+    
     this.isEditing = !this.isEditing;
     this.errorMessage = null;
   }
@@ -56,6 +70,8 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.isEditing = false;
         this.errorMessage = null;
+
+        this.loadClient();
       },
       error: (err) => {
         console.error('Błąd podczas zapisu:', err);
