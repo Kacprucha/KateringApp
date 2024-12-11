@@ -27,7 +27,9 @@ export default class OrderFormComponent {
   submitOrder(): void {
     this.clearErrors();
     if (this.validateForm()) {
-      this.router.navigate(['/summary'], { state: { data: this.deliveryDetails } });
+      this.router.navigate(['/order/summary'], {
+        state: { data: this.deliveryDetails },
+      });
     }
   }
 

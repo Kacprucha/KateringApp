@@ -7,6 +7,8 @@ import MealListComponent from './features/meal/meal-list/meal-list.component';
 import MealFormComponent from './features/meal/meal-form/meal-form.component';
 import MealUpdateComponent from './features/meal/meal-update-form/meal-update.component';
 import OrderFormComponent from './features/order/order-form/order-form.component';
+import OrderSummaryComponent from './features/order/order-summary/order-summary.component';
+import OrderCheckoutComponent from './features/order/order-checkout/order-checkout.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,16 @@ const routes: Routes = [
     path: 'order/form',
     component: OrderFormComponent,
     title: 'KateringApp - Order Form',
+  },
+  {
+    path: 'order/summary',
+    component: OrderSummaryComponent,
+    title: 'KateringApp - Order Summary',
+  },
+  {
+    path: 'order/checkout',
+    component: OrderCheckoutComponent,
+    title: 'KateringApp - Order Checkout',
   },
   {
     path: 'meal',
