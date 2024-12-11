@@ -5,7 +5,6 @@
       {{ errorMessage }}
     </div>
 
-    <!-- Dane użytkownika w trybie nieedytowalnym -->
     <div *ngIf="!isEditing">
       <p><strong>Imię:</strong> {{ client.firstName }}</p>
       <p><strong>Nazwisko:</strong> {{ client.lastName }}</p>
@@ -20,7 +19,6 @@
       </button>
     </div>
   
-    <!-- Formularz edytowalny -->
     <form *ngIf="isEditing" #profileForm="ngForm" (ngSubmit)="saveChanges(profileForm)" class="space-y-4">
       <div>
         <label for="firstName" class="block text-sm font-medium text-gray-700">Imię</label>
