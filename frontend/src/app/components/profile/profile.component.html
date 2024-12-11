@@ -1,0 +1,108 @@
+<div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold mb-4">Profil użytkownika</h2>
+  
+    <div *ngIf="errorMessage" class="mb-4 p-2 text-red-600 bg-red-100 rounded">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Dane użytkownika w trybie nieedytowalnym -->
+    <div *ngIf="!isEditing">
+      <p><strong>Imię:</strong> {{ client.firstName }}</p>
+      <p><strong>Nazwisko:</strong> {{ client.lastName }}</p>
+      <p><strong>Email:</strong> {{ client.email }}</p>
+      <p><strong>Telefon:</strong> {{ client.phoneNumber }}</p>
+      <p><strong>Adres:</strong> {{ client.address }}</p>
+      <button
+        (click)="toggleEdit()"
+        class="mt-4 bg-indigo-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-indigo-700"
+      >
+        Edytuj
+      </button>
+    </div>
+  
+    <!-- Formularz edytowalny -->
+    <form *ngIf="isEditing" #profileForm="ngForm" (ngSubmit)="saveChanges(profileForm)" class="space-y-4">
+      <div>
+        <label for="firstName" class="block text-sm font-medium text-gray-700">Imię</label>
+        <input
+          type="text"
+          id="firstName"
+          [(ngModel)]="clientUpdate.firstName"
+          name="firstName"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        <p *ngIf="formErrors['firstName']" class="text-red-600 text-sm">{{ formErrors['firstName'] }}</p>
+      </div>
+  
+      <div>
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Nazwisko</label>
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="clientUpdate.lastName"
+          name="lastName"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        <p *ngIf="formErrors['lastName']" class="text-red-600 text-sm">{{ formErrors['lastName'] }}</p>
+      </div>
+  
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="clientUpdate.email"
+          name="email"
+          required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        <p *ngIf="formErrors['email']" class="text-red-600 text-sm">{{ formErrors['email'] }}</p>
+      </div>
+  
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700">Telefon</label>
+        <input
+          type="text"
+          id="phone"
+          [(ngModel)]="clientUpdate.phoneNumber"
+          name="phone"
+          required
+          pattern="^\+?[0-9]{9,15}$"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        <p *ngIf="formErrors['phone']" class="text-red-600 text-sm">{{ formErrors['phone'] }}</p>
+      </div>
+  
+      <div>
+        <label for="address" class="block text-sm font-medium text-gray-700">Adres</label>
+        <input
+          type="text"
+          id="address"
+          required
+          [(ngModel)]="client.address"
+          name="address"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+        <p *ngIf="formErrors['address']" class="text-red-600 text-sm">{{ formErrors['address'] }}</p>
+      </div>
+  
+      <div class="flex space-x-4">
+        <button
+          type="submit"
+          class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-indigo-700"
+        >
+          Zapisz
+        </button>
+        <button
+          type="button"
+          (click)="toggleEdit()"
+          class="bg-gray-300 text-black font-medium py-2 px-4 rounded-md shadow hover:bg-gray-400"
+        >
+          Anuluj
+        </button>
+      </div>
+    </form>
+</div>
