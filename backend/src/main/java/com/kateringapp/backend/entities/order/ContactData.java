@@ -16,6 +16,10 @@ public class ContactData {
     private String name;
     @NotNull
     private String surname;
+    @NotNull
+    private String email;
+    @NotNull
+    private String phoneNumber;
     private LocalDateTime orderDateTime;
     private LocalDateTime dueDateTime;
 }

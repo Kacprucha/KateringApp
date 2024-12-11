@@ -52,12 +52,6 @@ public class Order {
     )
     private List<Meal> meals = new ArrayList<>();
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "name")),
-            @AttributeOverride(name = "surname", column = @Column(name = "surname")),
-            @AttributeOverride(name = "orderDateTime", column = @Column(name = "order_date_time")),
-            @AttributeOverride(name = "dueDateTime", column = @Column(name = "due_date_time"))
-    })
     private ContactData contactData;
 
 }

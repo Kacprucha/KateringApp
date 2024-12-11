@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS orders (
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     order_date_time TIMESTAMP,
-    due_date_time TIMESTAMP
+    due_date_time TIMESTAMP,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(11) NOT NULL
 );
 
 -- Tworzenie tabeli 'meal'
@@ -164,11 +166,11 @@ VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 2);  -- Smoothie Masters: Home Delivery
 
-INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address, name, surname, order_date_time, due_date_time)
+INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address, name, surname, order_date_time, due_date_time, email, phone_number)
 VALUES
-    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 'John', 'Doe', '2024-12-01 10:00:00', '2024-12-15 18:00:00'),
-    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 'Jane', 'Smith', '2024-11-20 09:30:00', '2024-12-01 14:00:00'),
-    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 'Alice', 'Johnson', '2024-11-15 08:45:00', '2024-11-30 16:00:00');
+    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 'John', 'Doe', '2024-12-01 10:00:00', '2024-12-15 18:00:00', 'john.doe@example.com', '555123456'),
+    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 'Jane', 'Smith', '2024-11-20 09:30:00', '2024-12-01 14:00:00', 'jane.smith@example.com', '555987653'),
+    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 'Alice', 'Johnson', '2024-11-15 08:45:00', '2024-11-30 16:00:00', 'alice.johnson@example.com', '555654320');
 
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);
