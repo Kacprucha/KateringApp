@@ -111,7 +111,32 @@ VALUES
     (2, 'Peanut Butter'),
     (3, 'Wheat Flour'),
     (4, 'Soy Sauce'),
-    (5, 'Egg Whites');
+    (5, 'Egg Whites'),
+    (6, 'Butter'),
+    (7, 'Sugar'),
+    (8, 'Salt'),
+    (9, 'Black Pepper'),
+    (10, 'Olive Oil'),
+    (11, 'Garlic'),
+    (12, 'Onion'),
+    (13, 'Tomato'),
+    (14, 'Carrot'),
+    (15, 'Potato'),
+    (16, 'Chicken Breast'),
+    (17, 'Beef Mince'),
+    (18, 'Pork Chops'),
+    (19, 'Fish Fillet'),
+    (20, 'Shrimp'),
+    (21, 'Cheddar Cheese'),
+    (22, 'Mozzarella Cheese'),
+    (23, 'Basil'),
+    (24, 'Parsley'),
+    (25, 'Cumin'),
+    (26, 'Cinnamon'),
+    (27, 'Vanilla Extract'),
+    (28, 'Honey'),
+    (29, 'Yogurt'),
+    (30, 'Lettuce');
 
 -- Wstawianie danych do tabeli 'allergen'
 INSERT INTO allergen (allergen_id, name)
@@ -153,6 +178,26 @@ VALUES
 INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
 VALUES
     (5, 5);
+
+-- Fish Fillet (Fish)
+INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
+VALUES (19, 6);
+
+-- Shrimp (Shellfish)
+INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
+VALUES (20, 7);
+
+-- Cheddar Cheese (Dairy)
+INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
+VALUES (21, 3);
+
+-- Mozzarella Cheese (Dairy)
+INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
+VALUES (22, 3);
+
+-- Yogurt (Dairy)
+INSERT INTO ingredient_allergen (ingredient_id, allergen_id)
+VALUES (29, 3);
 
 -- Wstawianie danych do tabeli 'meal'
 INSERT INTO meal (meal_id, name, price, description, photo, catering_firm_id)
