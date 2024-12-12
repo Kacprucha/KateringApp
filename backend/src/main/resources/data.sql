@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS client (
                                         client_id UUID PRIMARY KEY,  -- Ręczne przypisywanie ID
                                         first_name VARCHAR(255),
                                         last_name VARCHAR(255),
+                                        email VARCHAR(255),
                                         phone_number VARCHAR(255),
                                         address VARCHAR(255)
 
@@ -45,6 +46,12 @@ CREATE TABLE IF NOT EXISTS orders (
     rate INT NOT NULL,
     starting_address VARCHAR(255) NOT NULL,
     destination_address VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    order_date_time TIMESTAMP,
+    due_date_time TIMESTAMP,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(11) NOT NULL,
     total_price NUMERIC(10, 2),
     completed_at TIMESTAMP
 );
@@ -99,10 +106,10 @@ VALUES
     ('919b0f69-766e-4f51-a36c-5e9e643385cd', 'Smoothie Masters', 'Delicious smoothies and acai bowls', null);
 
 -- Wstawianie danych do tabeli 'client'
-INSERT INTO client (client_id, first_name, last_name, phone_number, address)
+INSERT INTO client (client_id, first_name, last_name, email, phone_number, address)
 VALUES
-    ('6c84fb95-12c4-11ec-82a8-0242ac130003', 'John', 'Doe', '+48 341 231 412', 'ul. Klonowa 15/3, Warszawa'),
-    ('6c84fb95-12c4-11ec-82a8-0242ac130004', 'Jane', 'Doe', '+48 412 341 412', 'ul. Jasna 7A, 02-456 Kraków');
+    ('6c84fb95-12c4-11ec-82a8-0242ac130003', 'John', 'Doe', 'johndoe@gmail.com', '+48 341 231 412', 'ul. Klonowa 15/3, Warszawa'),
+    ('6c84fb95-12c4-11ec-82a8-0242ac130004', 'Jane', 'Doe', 'janedoe@gmail.com', '+48 412 341 412', 'ul. Jasna 7A, 02-456 Kraków');
 
 -- Wstawianie danych do tabeli 'ingredient'
 INSERT INTO ingredient (ingredient_id, name)
@@ -223,29 +230,29 @@ VALUES
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 1),  -- Healthy Bites: Home Delivery
     ('6c84fb95-12c4-11ec-82a8-0242ac130006', 2);  -- Smoothie Masters: Home Delivery
 
-INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address, total_price, completed_at)
+INSERT INTO orders (id, order_status, client_id, opinion, rate, starting_address, destination_address, total_price, completed_at, name, surname, order_date_time, due_date_time, email, phone_number)
 VALUES
-    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 22, null),
-    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 15, '2024-03-28 00:00:00'::timestamp),
-    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 11, null),
-    (104, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Delicious meals!', 5, '22 Elm St', '88 Pine St', 18, '2024-03-15 12:45:00'::timestamp),
-    (105, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Loved the smoothies!', 4, '300 Oak St', '700 Maple St', 10, '2024-03-20 15:30:00'::timestamp),
-    (106, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Waiting for delivery...', 3, '55 Birch St', '66 Willow St', 12, NULL),
-    (107, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Fast service!', 5, '99 Cedar St', '101 Oak St', 25, '2024-03-21 18:00:00'::timestamp),
-    (108, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130002', 'Had to cancel', 1, '200 Ash St', '300 Spruce St', 15, NULL),
-    (109, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Very fresh ingredients', 4, '45 Palm St', '50 Mango St', 14, '2024-03-25 11:20:00'::timestamp),
-    (110, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130006', 'Looking forward to it', 4, '77 Cypress St', '99 Mahogany St', 17, NULL),
-    (111, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp),
-    (112, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Late order', 2, '11 Pear St', '22 Peach St', 13, NULL),
-    (113, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Great taste', 5, '19 Apricot St', '31 Grape St', 16, '2024-04-05 20:10:00'::timestamp),
-    (114, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Best pizza!', 5, '21 Lime St', '42 Fig St', 22, '2024-04-10 12:00:00'::timestamp),
-    (115, 'CANCELLED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Changed my mind', 2, '78 Plum St', '89 Orange St', 10, NULL),
-    (116, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130002', 'Good service overall', 4, '60 Strawberry St', '70 Blueberry St', 19, '2024-04-15 13:50:00'::timestamp),
-    (117, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Healthy and tasty', 5, '88 Blackberry St', '99 Raspberry St', 18, '2024-04-20 10:30:00'::timestamp),
-    (118, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130006', 'Order in progress', 3, '15 Watermelon St', '25 Melon St', 14, NULL),
-    (119, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Perfectly cooked', 5, '100 Pineapple St', '150 Banana St', 25, '2024-04-22 17:25:00'::timestamp),
-    (120, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Loved every bite!', 5, '33 Coconut St', '44 Papaya St', 21, '2024-04-25 19:40:00'::timestamp),
-    (121, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'wooow so delicioso', 5, '88 Blackberry St', '99 Raspberry St', 18, '2024-04-20 10:30:00'::timestamp);
+    (101, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 22, null, 'John', 'Doe', '2024-12-01 10:00:00', '2024-12-15 18:00:00', 'john.doe@example.com', '123456789'),
+    (102, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 15, '2024-03-28 00:00:00'::timestamp, 'Jane', 'Smith', '2024-11-20 09:30:00', '2024-12-01 14:00:00', 'jane.smith@example.com', '987654321'),
+    (103, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 11, null, 'Alice', 'Johnson', '2024-11-15 08:45:00', '2024-11-30 16:00:00', 'alice.johnson@example.com', '654321987'),
+    (104, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Delicious meals!', 5, '22 Elm St', '88 Pine St', 18, '2024-03-15 12:45:00'::timestamp, 'Michael', 'Brown', '2024-02-28 10:00:00', '2024-03-15 12:45:00', 'michael.brown@example.com', '111222333'),
+    (105, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Loved the smoothies!', 4, '300 Oak St', '700 Maple St', 10, '2024-03-20 15:30:00'::timestamp, 'Emily', 'Davis', '2024-03-05 08:45:00', '2024-03-20 15:30:00', 'emily.davis@example.com', '444555666'),
+    (106, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Waiting for delivery...', 3, '55 Birch St', '66 Willow St', 12, NULL, 'James', 'Wilson', '2024-03-10 09:30:00', '2024-03-25 14:00:00', 'james.wilson@example.com', '777888999'),
+    (107, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Fast service!', 5, '99 Cedar St', '101 Oak St', 25, '2024-03-21 18:00:00'::timestamp, 'Olivia', 'Moore', '2024-03-08 10:00:00', '2024-03-21 18:00:00', 'olivia.moore@example.com', '112233445'),
+    (108, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130002', 'Had to cancel', 1, '200 Ash St', '300 Spruce St', 15, NULL, 'Liam', 'Taylor', '2024-03-01 10:00:00', '2024-03-15 14:00:00', 'liam.taylor@example.com', '556677889'),
+    (109, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Very fresh ingredients', 4, '45 Palm St', '50 Mango St', 14, '2024-03-25 11:20:00'::timestamp, 'Sophia', 'Anderson', '2024-03-10 08:45:00', '2024-03-25 11:20:00', 'sophia.anderson@example.com', '667788990'),
+    (110, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130006', 'Looking forward to it', 4, '77 Cypress St', '99 Mahogany St', 17, NULL, 'Charlotte', 'Thomas', '2024-03-05 08:45:00', '2024-03-25 18:00:00', 'charlotte.thomas@example.com', '778899001'),
+    (111, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp, 'Henry', 'Martin', '2024-03-10 08:45:00', '2024-04-01 19:45:00', 'henry.martin@example.com', '889900112'),
+    (112, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Late order', 2, '11 Pear St', '22 Peach St', 13, NULL, 'Grace', 'White', '2024-03-10 08:45:00', '2024-03-25 18:00:00', 'grace.white@example.com', '990011223'),
+    (113, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Great taste', 5, '19 Apricot St', '31 Grape St', 16, '2024-04-05 20:10:00'::timestamp, 'Isabella', 'Harris', '2024-03-10 08:45:00', '2024-04-05 20:10:00', 'isabella.harris@example.com', '334455667'),
+    (114, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Best pizza!', 5, '21 Lime St', '42 Fig St', 22, '2024-04-10 12:00:00'::timestamp, 'Elijah', 'Clark', '2024-03-10 08:45:00', '2024-04-10 12:00:00', 'elijah.clark@example.com', '445566778'),
+    (115, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Good service', 5, '123 Starting St', '789 Destination Ave', 22, null, 'John', 'Doe', '2024-12-01 10:00:00', '2024-12-15 18:00:00', 'john.doe@example.com', '123456789'),
+    (116, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Quick delivery', 4, '456 Another St', '101 Another Ave', 15, '2024-03-28 00:00:00'::timestamp, 'Jane', 'Smith', '2024-11-20 09:30:00', '2024-12-01 14:00:00', 'jane.smith@example.com', '987654321'),
+    (117, 'CANCELLED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Not delivered on time', 2, '789 Late St', '111 Final Ave', 11, null, 'Alice', 'Johnson', '2024-11-15 08:45:00', '2024-11-30 16:00:00', 'alice.johnson@example.com', '654321987'),
+    (118, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130004', 'Delicious meals!', 5, '22 Elm St', '88 Pine St', 18, '2024-03-15 12:45:00'::timestamp, 'Michael', 'Brown', '2024-02-28 10:00:00', '2024-03-15 12:45:00', 'michael.brown@example.com', '111222333'),
+    (119, 'COMPLETED', '919b0f69-766e-4f51-a36c-5e9e643385cd', 'Loved the smoothies!', 4, '300 Oak St', '700 Maple St', 10, '2024-03-20 15:30:00'::timestamp, 'Emily', 'Davis', '2024-03-05 08:45:00', '2024-03-20 15:30:00', 'emily.davis@example.com', '444555666'),
+    (120, 'PENDING', '6c84fb95-12c4-11ec-82a8-0242ac130005', 'Waiting for delivery...', 3, '55 Birch St', '66 Willow St', 12, NULL, 'James', 'Wilson', '2024-03-10 09:30:00', '2024-03-25 14:00:00', 'james.wilson@example.com', '777888999'),
+    (121, 'COMPLETED', '6c84fb95-12c4-11ec-82a8-0242ac130003', 'Satisfying meal', 5, '33 Cherry St', '44 Chestnut St', 20, '2024-04-01 19:45:00'::timestamp, 'Henry', 'Martin', '2024-03-10 08:45:00', '2024-04-01 19:45:00', 'henry.martin@example.com', '889900112');
 
 -- Pasta Carbonara (Meal ID: 1) - składniki: Wheat Flour (ID: 3), Milk (ID: 1), Egg Whites (ID: 5)
 INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES (101, 3);

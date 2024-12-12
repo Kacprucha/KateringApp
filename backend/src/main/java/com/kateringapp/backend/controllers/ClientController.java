@@ -7,6 +7,7 @@ import com.kateringapp.backend.dtos.ClientGetDTO;
 
 import com.kateringapp.backend.services.interfaces.IClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,9 @@ public class ClientController implements IClient {
   }
 
   @GetMapping
-  public ClientGetDTO getClient(@AuthenticationPrincipal Jwt token) {
-    return clientService.getClient(token);
+  public ResponseEntity<Object> getClient(@AuthenticationPrincipal Jwt token) {
+    ClientGetDTO clientGetDTO = clientService.getClient(token);
+    Object response = clientGetDTO!=null ? clientGetDTO : "null";
+    return ResponseEntity.ok(response);
   }
 }
