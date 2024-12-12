@@ -24,7 +24,7 @@ export class ClientService {
     return this.http.get<ClientDTO>(`${this.apiUrl}`);
   }
 
-  updateClient(client: ClientDTO): Observable<ClientDTO> {
+  updateClient(client: ClientUpdateDTO): Observable<ClientDTO> {
     return this.http.put<ClientDTO>(`${this.apiUrl}`, client);
   }
 }

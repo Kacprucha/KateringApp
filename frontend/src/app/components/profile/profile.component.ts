@@ -42,8 +42,7 @@ export class ProfileComponent implements OnInit {
         this.errorMessage = null;
       },
       error: (err) => {
-        console.error('Błąd podczas pobierania danych użytkownika:', err);
-        this.errorMessage = 'Nie udało się pobrać danych użytkownika. Spróbuj ponownie.';
+        this.errorMessage = 'Failed to fetch user data. Please try again.';
       },
     });
   }
@@ -66,7 +65,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.clientService.updateClient(this.client).subscribe({
+    this.clientService.updateClient(this.clientUpdate).subscribe({
       next: () => {
         this.isEditing = false;
         this.errorMessage = null;
@@ -74,8 +73,7 @@ export class ProfileComponent implements OnInit {
         this.loadClient();
       },
       error: (err) => {
-        console.error('Błąd podczas zapisu:', err);
-        this.errorMessage = 'Nie udało się pobrać danych użytkownika. Spróbuj ponownie.';
+        this.errorMessage = 'Failed to update user data. Please try again.';
       },
     });
   }
@@ -84,27 +82,27 @@ export class ProfileComponent implements OnInit {
     this.formErrors = {};
 
     if (form.controls['firstName']?.invalid) {
-      this.formErrors['firstName'] = 'Imię jest wymagane.';
+      this.formErrors['firstName'] = 'First name is required.';
     }
     if (form.controls['lastName']?.invalid) {
-      this.formErrors['lastName'] = 'Nazwisko jest wymagane.';
+      this.formErrors['lastName'] = 'Last name is required.';
     }
     if (form.controls['email']?.invalid) {
       if (form.controls['email'].errors?.['required']) {
-        this.formErrors['email'] = 'Email jest wymagany.';
+        this.formErrors['email'] = 'Email is required.';
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.clientUpdate.email)) { 
-        this.formErrors['email'] = 'Podaj poprawny adres email.';
+        this.formErrors['email'] = 'Provide a valid email address.';
       }
     }
     if (form.controls['phone']?.invalid) {
       if (form.controls['phone'].errors?.['required']) {
-        this.formErrors['phone'] = 'Numer telefonu jest wymagany.';
+        this.formErrors['phone'] = 'Phone number is required.';
       } else if (!/^\+?[0-9]{9,15}$/.test(this.clientUpdate.phoneNumber)) { 
-        this.formErrors['phone'] = 'Podaj poprawny numer telefonu (np. +48123456789).';
+        this.formErrors['phone'] = 'Provide a valid phone number (e.g. +48123456789).';
       }
     }
     if (form.controls['address']?.invalid) {
-      this.formErrors['address'] = 'Adres jest wymagany.';
+      this.formErrors['address'] = 'Address is required.';
     }
 
     return Object.keys(this.formErrors).length === 0;
