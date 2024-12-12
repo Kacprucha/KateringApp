@@ -37,6 +37,9 @@ export class ProfileComponent implements OnInit {
   {
     this.clientService.getClient().subscribe({
       next: (data) => {
+        if(data == null)
+          return;
+
         this.client = data;
         this.client.phoneNumber = this.client.phoneNumber.replaceAll(' ', '');
         this.errorMessage = null;
