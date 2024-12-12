@@ -12,6 +12,7 @@ public class ClientMapper {
     return Client.builder()
         .firstName(clientCreateDTO.getFirstName())
         .lastName(clientCreateDTO.getLastName())
+        .email(clientCreateDTO.getEmail())
         .phoneNumber(clientCreateDTO.getPhoneNumber())
         .address(clientCreateDTO.getAddress())
         .build();
@@ -22,6 +23,7 @@ public class ClientMapper {
         .clientId(client.getClientId())
         .firstName(client.getFirstName())
         .lastName(client.getLastName())
+        .email(client.getEmail())
         .phoneNumber(client.getPhoneNumber())
         .address(client.getAddress())
         .build();

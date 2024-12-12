@@ -15,9 +15,11 @@ import { httpInterceptor } from './http.interceptor';
 import { MealUpdateModule } from './features/meal/meal-update-form/meal-update.module';
 import { CartComponent } from './components/cart/cart.component';
 import { StatisticsModule } from './features/statistics/statistics.module';
+import { ProfileComponent } from './components/profile/profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, PageNotFoundComponent, CartComponent],
+  declarations: [AppComponent, HeaderComponent, PageNotFoundComponent, ProfileComponent, CartComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,7 +28,8 @@ import { StatisticsModule } from './features/statistics/statistics.module';
     MealListModule,
     KeycloakAngularModule,
     OrderModule,
-    StatisticsModule
+    StatisticsModule,
+    FormsModule
   ],
   providers: [
     provideHttpClient(withInterceptors([httpInterceptor])),
