@@ -11,6 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 public class ClientCreateDTO{
   String firstName;
   String lastName;
+  String email;
   String phoneNumber;
   String address;
 }

@@ -12,6 +12,7 @@ public class ClientGetDTO {
   UUID clientId;
   String firstName;
   String lastName;
+  String email;
   String phoneNumber;
   String address;
 }
