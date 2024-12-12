@@ -6,6 +6,7 @@ import OrderListComponent from './features/order/order-list/order-list.component
 import MealListComponent from './features/meal/meal-list/meal-list.component';
 import MealFormComponent from './features/meal/meal-form/meal-form.component';
 import MealUpdateComponent from './features/meal/meal-update-form/meal-update.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import OrderFormComponent from './features/order/order-form/order-form.component';
 
 const routes: Routes = [
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'meal',
     component: MealListComponent,
     title: 'KateringApp - Meals',
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'KateringApp - Profile',
   },
   {
     path: 'meal/create',
