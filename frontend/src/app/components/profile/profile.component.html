@@ -1,5 +1,5 @@
 <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4">Profil użytkownika</h2>
+    <h2 class="text-2xl font-bold mb-4">User profile</h2>
   
     <div *ngIf="errorMessage" class="mb-4 p-2 text-red-600 bg-red-100 rounded">
       {{ errorMessage }}
@@ -16,7 +16,7 @@
         (click)="toggleEdit()"
         class="mt-4 bg-indigo-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-indigo-700"
       >
-        Edytuj
+        Edit
       </button>
     </div>
   
@@ -93,14 +93,14 @@
           type="submit"
           class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-md shadow hover:bg-indigo-700"
         >
-          Zapisz
+          Save
         </button>
         <button
           type="button"
           (click)="toggleEdit()"
           class="bg-gray-300 text-black font-medium py-2 px-4 rounded-md shadow hover:bg-gray-400"
         >
-          Anuluj
+          Cancel
         </button>
       </div>
     </form>
