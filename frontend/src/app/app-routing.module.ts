@@ -8,12 +8,18 @@ import MealFormComponent from './features/meal/meal-form/meal-form.component';
 import MealUpdateComponent from './features/meal/meal-update-form/meal-update.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import OrderFormComponent from './features/order/order-form/order-form.component';
+import { StatisticsComponent } from './features/statistics/statistics.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'meal',
     pathMatch: 'full',
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
+    canActivate: [cateringFirmEnvironmentGuard]
   },
   {
     path: 'orders',

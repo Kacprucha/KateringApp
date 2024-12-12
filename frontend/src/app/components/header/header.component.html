@@ -23,6 +23,9 @@
       >
         <li><a routerLink="/meal">Meals</a></li>
         <li><a routerLink="/orders">My orders</a></li>
+        @if (isCateringFirmEnvironment) {
+        <li><a routerLink="/statistics">Statistics</a></li>
+        }
         <li><a routerLink="/profile">Profile</a></li>
         <li><a (click)="logout()">Logout</a></li>
       </ul>
