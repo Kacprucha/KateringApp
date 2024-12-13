@@ -8,9 +8,9 @@ spring:
           jwk-set-uri: http://keycloak:8081/realms/kateringapp/protocol/openid-connect/certs
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/katering
+    username: postgres
+    password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
