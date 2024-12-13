@@ -14,6 +14,7 @@ import { MealFormModule } from './features/meal/meal-form/meal-form.module';
 import { httpInterceptor } from './http.interceptor';
 import { MealUpdateModule } from './features/meal/meal-update-form/meal-update.module';
 import { CartComponent } from './components/cart/cart.component';
+import { StatisticsModule } from './features/statistics/statistics.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FormsModule } from '@angular/forms';
 
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     MealListModule,
     KeycloakAngularModule,
     OrderModule,
+    StatisticsModule,
     FormsModule
   ],
   providers: [
