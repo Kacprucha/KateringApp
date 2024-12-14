@@ -10,6 +10,7 @@ import com.kateringapp.backend.repositories.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.List;
 
 @Component
@@ -28,7 +29,7 @@ public class MealMapper implements IMealMapper {
                 .price(mealDTO.getPrice())
                 .cateringFirmData(cateringFirmData)
                 .description(mealDTO.getDescription())
-                .photo(mealDTO.getPhoto())
+                .photo(Base64.getDecoder().decode(mealDTO.getPhoto()))
                 .ingredients(ingredients)
                 .build();
     }
