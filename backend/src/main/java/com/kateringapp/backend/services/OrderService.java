@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,7 +73,7 @@ public class OrderService implements IOrderService {
                 .toList();
 
         if(AuthHelper.isCateringFirm(jwt)) {
-            removeUnnecessaryMeals(orderDTOList, userId);
+            orderDTOList = removeUnnecessaryMeals(orderDTOList, userId);
         }
 
         return orderDTOList;
@@ -91,8 +92,10 @@ public class OrderService implements IOrderService {
                         .save(updatedOrder));
     }
 
-    private void removeUnnecessaryMeals(List<OrderDTO> orderDTOS, UUID cateringFirmId) {
-        orderDTOS.forEach(orderDTO -> {
+    private List<OrderDTO> removeUnnecessaryMeals(List<OrderDTO> orderDTOS, UUID cateringFirmId) {
+        List<OrderDTO> modifiableOrderList = new ArrayList<>(orderDTOS);
+
+        modifiableOrderList.removeIf(orderDTO -> {
             List<Long> filteredMealIds = orderDTO.getMealIds().stream()
                     .filter(mealId -> {
                         Meal meal = mealRepository.findById(mealId)
@@ -102,6 +105,11 @@ public class OrderService implements IOrderService {
                     .toList();
 
             orderDTO.setMealIds(filteredMealIds);
+            return filteredMealIds.isEmpty();
         });
+
+        return modifiableOrderList;
     }
+
+
 }
