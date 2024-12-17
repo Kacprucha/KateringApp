@@ -60,6 +60,7 @@ export class StatisticsComponent implements OnInit {
 
   onPeriodChange(period: string): void {
     this.selectedPeriod = period;
+    this.chart.options.scales.x.title.text = 'Period: ' + this.selectedPeriod;
     this.generateChart()
   }
 
@@ -80,7 +81,6 @@ export class StatisticsComponent implements OnInit {
     this.statisticsService.getStatistics(fromDateTimestamp, toDateTimestamp, this.selectedPeriod).subscribe({
       next: (res: StatisticsDTO[]) => {
         if(res.length !== 0) {
-          console.log(this.dates)
           const dates = res.map(item => this.convertTimestampToDate(item.date));
           const sales = res.map(item => item.sale);
           this.updateChartData(dates, sales)
