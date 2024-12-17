@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 export interface StatisticsDTO {
-    date: Date,
+    date: string,
     sale: number
 }
 

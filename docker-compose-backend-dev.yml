@@ -19,7 +19,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+      - ./backend/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
     healthcheck:
       test: pg_isready -U postgres
       interval: 5s

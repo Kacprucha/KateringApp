@@ -27,7 +27,7 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.generateChart()
     this.chart = new Chart('sale-statistic-chart', {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: this.dates,
         datasets: [
@@ -42,7 +42,17 @@ export class StatisticsComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Revenue: [PLN]'
+            }
           },
+          x: {
+            title: {
+              display: true,
+              text: 'Period: ' + this.selectedPeriod
+            }
+          }
         },
       },
     })
@@ -69,10 +79,11 @@ export class StatisticsComponent implements OnInit {
     const toDateTimestamp: string = new Date(this.endDate).toISOString().replace('T', ' ').replace('Z', ''); //otherwise backend throws 400
     this.statisticsService.getStatistics(fromDateTimestamp, toDateTimestamp, this.selectedPeriod).subscribe({
       next: (res: StatisticsDTO[]) => {
-        if(res) {
-          this.dates = res.map(item => this.convertTimestampToDate(item.date));
-          this.sales = res.map(item => item.sale);
-          this.updateChartData()
+        if(res.length !== 0) {
+          console.log(this.dates)
+          const dates = res.map(item => this.convertTimestampToDate(item.date));
+          const sales = res.map(item => item.sale);
+          this.updateChartData(dates, sales)
         } else {
           this.alert.show('No sales data! Please provide another range!', 'error');
         }
@@ -86,13 +97,16 @@ export class StatisticsComponent implements OnInit {
     })
   }
 
-  updateChartData(): void {
-    this.chart.data.labels = this.dates;
-    this.chart.data.datasets[0].data = this.sales;
+  updateChartData(dates: string[], sales: any): void {
+    this.chart.data.labels = dates;
+    this.chart.data.datasets[0].data = sales;
     this.chart.update();
+    this.sales = sales
+    this.dates = dates
   }
   
-  convertTimestampToDate(date: Date) {
+  convertTimestampToDate(dateString: string) {
+    const date = new Date(dateString)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
