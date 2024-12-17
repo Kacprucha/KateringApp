@@ -9,7 +9,7 @@ import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
     templateUrl: './statistics.component.html',
 })
 export class StatisticsComponent implements OnInit {
-  startDate: string | null = '2015-01-01';
+  startDate: string | null = '2024-01-01';
   endDate: string | null = null;
   dataPeriods: string[] = ['WEEK', 'MONTH', 'YEAR'];
   selectedPeriod = 'YEAR';
