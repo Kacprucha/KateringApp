@@ -14,7 +14,8 @@
       [(ngModel)]="startDate" 
       (change)="generateChart()"
       [max]="maxDate"
-      class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      [disabled]="selectedPeriod !== 'NO PERIOD'"
+      class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
     >
   </div>
 
@@ -25,7 +26,8 @@
       [(ngModel)]="endDate"
       (change)="generateChart()"
       [max]="maxDate"
-      class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      [disabled]="selectedPeriod !== 'NO PERIOD'"
+      class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
     >
   </div>
   <button
