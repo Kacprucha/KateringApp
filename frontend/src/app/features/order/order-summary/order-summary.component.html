@@ -37,7 +37,10 @@
       Total Amount: {{ cart.total | currency: "PLN" }}
     </div>
 
-    <button class="btn btn-primary mt-6 w-full" routerLink="/order/checkout">
+    <button
+      class="btn btn-primary mt-6 w-full"
+      (click)="redirectToPaymentForm()"
+    >
       Proceed to Checkout
     </button>
   </div>

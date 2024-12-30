@@ -8,7 +8,7 @@ import MealFormComponent from './features/meal/meal-form/meal-form.component';
 import MealUpdateComponent from './features/meal/meal-update-form/meal-update.component';
 import OrderFormComponent from './features/order/order-form/order-form.component';
 import OrderSummaryComponent from './features/order/order-summary/order-summary.component';
-import OrderCheckoutComponent from './features/order/order-checkout/order-checkout.component';
+import OrderCheckoutComponent from './features/order/payment-form/payment-form.component';
 
 const routes: Routes = [
   {

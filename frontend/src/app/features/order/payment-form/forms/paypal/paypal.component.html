@@ -1,0 +1,45 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-base-100 shadow-lg rounded-lg">
+  <h2 class="text-2xl font-bold mb-4">PayPal Payment</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="form-control mb-4">
+      <label class="label">
+        <span class="label-text">Email</span>
+      </label>
+      <input
+        type="email"
+        formControlName="email"
+        class="input input-bordered w-full"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched
+        "
+        class="text-red-500"
+      >
+        Please enter a valid email address.
+      </div>
+    </div>
+    <div class="form-control mb-4">
+      <label class="label">
+        <span class="label-text">Password</span>
+      </label>
+      <input
+        type="password"
+        formControlName="password"
+        class="input input-bordered w-full"
+      />
+      <div
+        *ngIf="
+          paymentForm.get('password')?.invalid &&
+          paymentForm.get('password')?.touched
+        "
+        class="text-red-500"
+      >
+        Password is required and must be at least 6 characters long.
+      </div>
+    </div>
+    <button class="btn btn-primary w-full" [disabled]="paymentForm.invalid">
+      Pay Now
+    </button>
+  </form>
+</div>

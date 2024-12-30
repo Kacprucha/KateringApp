@@ -1,0 +1,8 @@
+@switch (paymentMethod()) {
+  @case ("paypal") {
+    <paypal-payment-form />
+  }
+  @case ("credit_card") {
+    <credit-card-payment-form />
+  }
+}
