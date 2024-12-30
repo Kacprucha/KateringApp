@@ -13,6 +13,14 @@ export interface OrderDTO {
   orderStatus: OrderStatus;
   startingAddress: string;
   destinationAddress: string;
+  contactData: {
+    name: string;
+    surname: string;
+    email: string;
+    phoneNumber: string;
+    orderDateTime: string;
+    dueDateTime: string;
+  };
 }
 
 export enum OrderStatus {

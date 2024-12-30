@@ -1,5 +1,6 @@
 package com.kateringapp.backend.dtos;
 
+import com.kateringapp.backend.entities.order.ContactData;
 import com.kateringapp.backend.entities.order.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -23,4 +24,6 @@ public class OrderDTO {
     private OrderStatus orderStatus;
     private String startingAddress;
     private String destinationAddress;
+    @NotNull
+    private ContactData contactData;
 }

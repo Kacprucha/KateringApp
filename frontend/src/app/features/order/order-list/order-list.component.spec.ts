@@ -19,6 +19,14 @@ const MOCK_ORDERS: OrderDTO[] = [
     orderStatus: OrderStatus.PENDING,
     startingAddress: 'ADDR1',
     destinationAddress: 'DEST1',
+    contactData: {
+      name: 'John',
+      surname: 'Doe',
+      email: 'john.doe@example.com',
+      phoneNumber: '123456789',
+      orderDateTime: '2023-12-01T10:00:00',
+      dueDateTime: '2023-12-02T10:00:00',
+    },
   },
   {
     id: 2,
@@ -29,6 +37,14 @@ const MOCK_ORDERS: OrderDTO[] = [
     orderStatus: OrderStatus.COMPLETED,
     startingAddress: 'ADDR2',
     destinationAddress: 'DEST2',
+    contactData: {
+      name: 'Jane',
+      surname: 'Smith',
+      email: 'jane.smith@example.com',
+      phoneNumber: '987654321',
+      orderDateTime: '2023-12-03T12:00:00',
+      dueDateTime: '2023-12-04T12:00:00',
+    },
   },
 ];
 
@@ -61,6 +77,7 @@ describe('OrderListComponent', () => {
     expect(component.orderList.length).toBe(2);
     expect(component.orderList[0].opinion).toBe('GOOD');
     expect(component.orderList[0].orderStatus).toBe(OrderStatus.PENDING);
+    expect(component.orderList[0].contactData.name).toBe('John');
   });
 
   it('should set selectedOrder and open modal on successful order fetch', () => {

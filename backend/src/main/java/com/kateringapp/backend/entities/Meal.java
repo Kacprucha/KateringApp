@@ -31,8 +31,6 @@ public class Meal {
     @Column(nullable = false)
     private String description;
 
-    @Lob
-    @Column(name = "photo", columnDefinition = "BYTEA")
     private byte[] photo;
 
     @ManyToOne

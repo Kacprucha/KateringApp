@@ -19,10 +19,14 @@
       </div>
       <ul
         tabindex="0"
-        class="z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 fixed top-[60px]"
+        class="z-[1] p-2 gap-y-1 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 fixed top-[60px]"
       >
         <li><a routerLink="/meal">Meals</a></li>
         <li><a routerLink="/orders">My orders</a></li>
+        @if (isCateringFirmEnvironment) {
+        <li><a routerLink="/statistics">Statistics</a></li>
+        }
+        <li><a routerLink="/profile">Profile</a></li>
         <li><a (click)="logout()">Logout</a></li>
       </ul>
     </div>

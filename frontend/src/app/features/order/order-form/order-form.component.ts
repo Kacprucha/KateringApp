@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {ClientGetDTO, ClientService} from '../../../services/client/client.service';
 
 @Component({
   selector: 'order-form',
@@ -11,6 +12,7 @@ export default class OrderFormComponent {
     surname: '',
     address: '',
     phone: '',
+    email: '',
     paymentMethod: '',
   };
 
@@ -19,10 +21,28 @@ export default class OrderFormComponent {
     surname: '',
     address: '',
     phone: '',
+    email: '',
     paymentMethod: '',
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private clientService: ClientService) {}
+
+  ngOnInit(): void {
+    this.clientService.getClient().subscribe({
+      next: (client: ClientGetDTO | null) => {
+        if (client) {
+          this.deliveryDetails.name = client.firstName;
+          this.deliveryDetails.surname = client.lastName;
+          this.deliveryDetails.address = client.address;
+          this.deliveryDetails.email = client.email;
+          this.deliveryDetails.phone = client.phoneNumber;
+        }
+      },
+      error: (error: unknown) => {
+        console.error('Failed to fetch client data:', error);
+      },
+    });
+  }
 
   submitOrder(): void {
     this.clearErrors();
@@ -56,6 +76,16 @@ export default class OrderFormComponent {
       isValid = false;
     }
 
+    if (!this.deliveryDetails.email.trim()) {
+      this.errors.email = 'Email is required.';
+      isValid = false;
+    }
+
+    if (!this.deliveryDetails.email.includes('@')) {
+      this.errors.email = 'Invalid email address.';
+      isValid = false;
+    }
+
     if (!this.deliveryDetails.paymentMethod.trim()) {
       this.errors.paymentMethod = 'Please select a payment method.';
       isValid = false;
@@ -70,6 +100,7 @@ export default class OrderFormComponent {
       surname: '',
       address: '',
       phone: '',
+      email: '',
       paymentMethod: '',
     };
   }

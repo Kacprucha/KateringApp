@@ -18,6 +18,14 @@ describe('OrderService', () => {
       orderStatus: OrderStatus.PENDING,
       startingAddress: 'ADDR1',
       destinationAddress: 'DEST1',
+      contactData: {
+        name: 'John',
+        surname: 'Doe',
+        email: 'john.doe@example.com',
+        phoneNumber: '123456789',
+        orderDateTime: '2023-12-01T10:00:00',
+        dueDateTime: '2023-12-02T10:00:00',
+      },
     },
     {
       id: 2,
@@ -28,6 +36,14 @@ describe('OrderService', () => {
       orderStatus: OrderStatus.COMPLETED,
       startingAddress: 'ADDR2',
       destinationAddress: 'DEST2',
+      contactData: {
+        name: 'Jane',
+        surname: 'Smith',
+        email: 'jane.smith@example.com',
+        phoneNumber: '987654321',
+        orderDateTime: '2023-12-03T12:00:00',
+        dueDateTime: '2023-12-04T12:00:00',
+      },
     },
   ];
 
@@ -40,6 +56,14 @@ describe('OrderService', () => {
     orderStatus: OrderStatus.PENDING,
     startingAddress: 'ADDR1',
     destinationAddress: 'DEST1',
+    contactData: {
+      name: 'John',
+      surname: 'Doe',
+      email: 'john.doe@example.com',
+      phoneNumber: '123456789',
+      orderDateTime: '2023-12-01T10:00:00',
+      dueDateTime: '2023-12-02T10:00:00',
+    },
   };
 
   beforeEach(() => {
@@ -61,9 +85,11 @@ describe('OrderService', () => {
   });
 
   describe('getOrders', () => {
-    it('should fetch all orders', () => {
+    it('should fetch all orders with contact data', () => {
       service.getOrders().subscribe((orders) => {
         expect(orders).toEqual(mockOrders);
+        expect(orders[0].contactData.name).toBe('John');
+        expect(orders[0].contactData.phoneNumber).toBe('123456789');
       });
 
       const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order`);
@@ -85,9 +111,10 @@ describe('OrderService', () => {
   });
 
   describe('getOrder', () => {
-    it('should fetch a single order by ID', () => {
+    it('should fetch a single order by ID with contact data', () => {
       service.getOrder(mockOrder.id).subscribe((order) => {
         expect(order).toEqual(mockOrder);
+        expect(order.contactData.email).toBe('john.doe@example.com');
       });
 
       const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order/${mockOrder.id}`);

@@ -5,3 +5,23 @@ services:
       - '8080:8080'
     environment:
       SPRING_PROFILES_ACTIVE: test
+    depends_on:
+      - backend-db
+
+  backend-db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: backend-db
+      PGPORT: 5432
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./backend/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 5s
+      timeout: 5s
+      retries: 5
