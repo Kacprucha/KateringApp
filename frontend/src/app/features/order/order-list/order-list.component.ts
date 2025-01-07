@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  OrderDTO,
+  GetOrderDTO,
   OrderService,
   OrderStatus,
 } from '../../../services/order/order.service';
@@ -19,10 +19,10 @@ export default class OrderListComponent
   implements OnInit, OnDestroy, IOrdersWindow
 {
   isCateringFirmEnvironment = isCateringFirmEnvironment;
-  orderList: OrderDTO[] = [];
+  orderList: GetOrderDTO[] = [];
   orderStatusKeys = Object.values(OrderStatus);
   showModal: boolean = false;
-  selectedOrder!: OrderDTO;
+  selectedOrder!: GetOrderDTO;
   selectedOrderMeals: MealGetDTO[] = [];
   sub = new Subscription();
 
@@ -42,7 +42,7 @@ export default class OrderListComponent
   ngOnInit(): void {
     this.sub.add(
       this.orderService.getOrders().subscribe({
-        next: (orders: OrderDTO[]) => {
+        next: (orders: GetOrderDTO[]) => {
           this.showOrders(orders);
         },
         error: (error: HttpErrorResponse) => {
@@ -54,13 +54,13 @@ export default class OrderListComponent
     );
   }
 
-  showOrders(orderList: OrderDTO[]): void {
+  showOrders(orderList: GetOrderDTO[]): void {
     this.orderList = orderList;
   }
 
-  showOrder(orderDTO: OrderDTO): void {
+  showOrder(orderDTO: GetOrderDTO): void {
     this.sub.add(
-      this.mealService.getMeals(orderDTO.id).subscribe({
+      this.mealService.getMeals(orderDTO.orderId).subscribe({
         next: (meals: MealGetDTO[]) => {
           this.selectedOrder = orderDTO;
           this.selectedOrderMeals = meals;
@@ -79,15 +79,15 @@ export default class OrderListComponent
     this.showModal = false;
   }
 
-  onChangeStatus(order: OrderDTO, event: Event) {
+  onChangeStatus(order: GetOrderDTO, event: Event) {
     const newStatus: OrderStatus = (event.target as HTMLSelectElement)
       .value as OrderStatus;
     order.orderStatus = newStatus;
     this.sub.add(
-      this.orderService.changeOrderStatus(order.id, order).subscribe({
-        next: (order: OrderDTO) => {
+      this.orderService.changeOrderStatus(order.orderId, order).subscribe({
+        next: (order: GetOrderDTO) => {
           this.orderList.forEach((o) => {
-            if (o.id === order.id) {
+            if (o.orderId === order.orderId) {
               o.orderStatus = newStatus;
             }
           });

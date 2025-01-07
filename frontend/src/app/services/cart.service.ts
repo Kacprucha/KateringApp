@@ -45,6 +45,11 @@ export class CartService {
     this.saveCartState();
   }
 
+  public clearCart() {
+    this.cartState.set(defaultCartState);
+    this.saveCartState();
+  }
+
   private async retrieveCart() {
     const username = await this.authService.getUserName();
     const cart = localStorage.getItem(`cart-${username}`);

@@ -1,0 +1,47 @@
+<div class="container mx-auto p-6">
+  <div class="bg-base-100 p-6 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4">Order Summary</h1>
+
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Delivery Details</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <p>
+          <strong>Name:</strong> {{ deliveryDetails.name }}
+          {{ deliveryDetails.surname }}
+        </p>
+        <p><strong>Address:</strong> {{ deliveryDetails.address }}</p>
+        <p><strong>Phone:</strong> {{ deliveryDetails.phone }}</p>
+        <p>
+          <strong>Payment Method:</strong>
+          {{ deliveryDetails.paymentMethod | titlecase }}
+        </p>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Cart Items</h2>
+      <ul class="list-none">
+        <li
+          *ngFor="let item of cart.products"
+          class="border-b border-gray-300 py-2"
+        >
+          <div class="flex justify-between">
+            <span class="font-semibold">{{ item.meal.name }}</span>
+            <span>Quantity: {{ item.quantity }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="text-right font-bold text-lg">
+      Total Amount: {{ cart.total | currency: "PLN" }}
+    </div>
+
+    <button
+      class="btn btn-primary mt-6 w-full"
+      (click)="redirectToPaymentForm()"
+    >
+      Proceed to Checkout
+    </button>
+  </div>
+</div>

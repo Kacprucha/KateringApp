@@ -1,6 +1,7 @@
-import { OrderDTO } from "./order.service";
+import { GetOrderDTO } from './order.service';
 
 export interface IOrdersWindow {
-    showOrder(mealDTO: OrderDTO): void;
-    showOrders(orderList: OrderDTO[]): void;
+  showOrder(mealDTO: GetOrderDTO): void;
+  showOrders(orderList: GetOrderDTO[]): void;
 }
+
