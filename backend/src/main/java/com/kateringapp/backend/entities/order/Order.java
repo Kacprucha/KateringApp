@@ -39,12 +39,12 @@ public class Order {
     private Long id;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     private UUID clientId;
     private String opinion;
     private int rate;
     private String startingAddress;
-    private String destinationAddress;
     @ManyToMany
     @Builder.Default
     @JoinTable(

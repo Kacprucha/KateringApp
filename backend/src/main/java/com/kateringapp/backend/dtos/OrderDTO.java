@@ -2,6 +2,7 @@ package com.kateringapp.backend.dtos;
 
 import com.kateringapp.backend.entities.order.ContactData;
 import com.kateringapp.backend.entities.order.OrderStatus;
+import com.kateringapp.backend.entities.order.PaymentMethod;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,15 +16,16 @@ import java.util.List;
 @Getter
 public class OrderDTO {
 
-    private Long id;
+    private Long orderId;
     @NotNull
     private List<Long> mealIds;
     private String opinion;
     private BigDecimal totalPrice;
     private int rate;
     private OrderStatus orderStatus;
+    @NotNull
+    private PaymentMethod paymentMethod;
     private String startingAddress;
-    private String destinationAddress;
     @NotNull
     private ContactData contactData;
 }

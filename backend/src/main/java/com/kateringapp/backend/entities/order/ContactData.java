@@ -1,5 +1,6 @@
 package com.kateringapp.backend.entities.order;
 
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Embeddable
 @NoArgsConstructor
 public class ContactData {
 
@@ -20,6 +22,8 @@ public class ContactData {
     private String email;
     @NotNull
     private String phoneNumber;
+    @NotNull
+    private String destinationAddress;
     private LocalDateTime orderDateTime;
     private LocalDateTime dueDateTime;
 }

@@ -15,11 +15,10 @@ public class TestDataProvider {
 
     public static OrderDTO provideOrderDTO() {
         return OrderDTO.builder()
-                .id(1L)
+                .orderId(1L)
                 .rate(3)
                 .orderStatus(OrderStatus.PENDING)
                 .startingAddress("aaa")
-                .destinationAddress("bbb")
                 .opinion("good")
                 .mealIds(Collections.emptyList())
                 .build();
@@ -31,7 +30,6 @@ public class TestDataProvider {
                 .rate(3)
                 .orderStatus(OrderStatus.PENDING)
                 .startingAddress("aaa")
-                .destinationAddress("bbb")
                 .opinion("good")
                 .clientId(UUID.randomUUID())
                 .build();

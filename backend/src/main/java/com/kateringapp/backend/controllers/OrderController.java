@@ -4,6 +4,7 @@ import com.kateringapp.backend.controllers.interfaces.IOrders;
 import com.kateringapp.backend.dtos.OrderDTO;
 import com.kateringapp.backend.dtos.criteria.OrderCriteria;
 import com.kateringapp.backend.services.interfaces.IOrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.annotation.Secured;
@@ -30,7 +31,7 @@ public class OrderController implements IOrders {
     @Override
     @Secured("ROLE_client")
     @PostMapping
-    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO, @AuthenticationPrincipal Jwt token) {
+    public OrderDTO createOrder(@Valid @RequestBody OrderDTO orderDTO, @AuthenticationPrincipal Jwt token) {
         return orderService.createOrder(orderDTO, token);
     }
 
