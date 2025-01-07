@@ -57,22 +57,25 @@
       </p>
       <p>
         <strong>Destination address:</strong>
-        {{ selectedOrder.destinationAddress }}
+        {{ selectedOrder.contactData.destinationAddress }}
       </p>
       <p>
-        <strong>Order Date and Time:</strong> 
-        {{ selectedOrder.contactData.orderDateTime | date:'short' }}
+        <strong>Order Date and Time:</strong>
+        {{ selectedOrder.contactData.orderDateTime | date: "short" }}
       </p>
       <p>
-        <strong>Due Date and Time:</strong> 
-        {{ selectedOrder.contactData.dueDateTime | date:'short' }}
+        <strong>Due Date and Time:</strong>
+        {{ selectedOrder.contactData.dueDateTime | date: "short" }}
       </p>
       <div class="pl-6 border-l-4 border-blue-500 mt-4 mb-4">
         <h3 class="text-lg font-semibold">Contact Information</h3>
         <p><strong>Name:</strong> {{ selectedOrder.contactData.name }}</p>
         <p><strong>Surname:</strong> {{ selectedOrder.contactData.surname }}</p>
         <p><strong>Email:</strong> {{ selectedOrder.contactData.email }}</p>
-        <p><strong>Phone Number:</strong> {{ selectedOrder.contactData.phoneNumber }}</p>
+        <p>
+          <strong>Phone Number:</strong>
+          {{ selectedOrder.contactData.phoneNumber }}
+        </p>
       </div>
       <div *ngIf="selectedOrderMeals && selectedOrderMeals.length > 0">
         <strong>Order items:</strong>
@@ -87,7 +90,9 @@
             </div>
             <div class="font-bold">{{ item.price }} PLN</div>
           </li>
-          <li class="flex flex-row justify-between px-2 border-t-2 border-black">
+          <li
+            class="flex flex-row justify-between px-2 border-t-2 border-black"
+          >
             <div class="font-bold">Total:</div>
             <div class="font-bold">
               {{ getSelectedOrderMealsSum() }}

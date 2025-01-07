@@ -1,7 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { DeliveryDetails } from '../../../types/delivery-details';
-import { Router } from '@angular/router';
-import { PaymentService } from './payment.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  GetOrderDTO,
+  OrderService,
+} from '../../../services/order/order.service';
+import { PaymentService } from '../../../services/payment/payment.service';
+import { TransactionFinalizationService } from './payment.service';
 
 @Component({
   selector: 'payment-form',
@@ -9,15 +13,28 @@ import { PaymentService } from './payment.service';
 })
 export default class PaypalPaymentPaymentFormComponent implements OnInit {
   paymentService = inject(PaymentService);
+  finalizeTransactionService = inject(TransactionFinalizationService);
+  orderService = inject(OrderService);
+  route = inject(ActivatedRoute);
   router = inject(Router);
-  paymentMethod = signal<DeliveryDetails['paymentMethod'] | undefined>(
-    undefined,
-  );
+  orderId: number | null = null;
+  orderDetails: GetOrderDTO | null = null;
+  paymentId: string | null = null;
 
   ngOnInit() {
-    this.paymentMethod.set(history.state.data.paymentMethod);
-    if (this.paymentMethod() === 'cash_on_delivery') {
-      this.paymentService.completeTransaction();
-    }
+    this.route.queryParams.subscribe((params) => {
+      this.orderId = params['orderId'];
+      if (this.orderId) {
+        this.orderService.getOrder(this.orderId).subscribe((orderDetails) => {
+          this.orderDetails = orderDetails;
+          console.log(orderDetails);
+          this.paymentService
+            .createPayment(orderDetails.orderId)
+            .subscribe((payment) => {
+              this.paymentId = payment.id;
+            });
+        });
+      }
+    });
   }
 }

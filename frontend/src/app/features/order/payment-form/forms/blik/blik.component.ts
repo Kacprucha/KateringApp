@@ -4,17 +4,16 @@ import { Router } from '@angular/router';
 import { TransactionFinalizationService } from '../../payment.service';
 
 @Component({
-  selector: 'paypal-payment-form',
-  templateUrl: './paypal.component.html',
+  selector: 'blik-payment-form',
+  templateUrl: './blik.component.html',
 })
-export default class PaypalPaymentPaymentFormComponent {
+export default class BlikPaymentComponent {
   finalizationService = inject(TransactionFinalizationService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   paymentId = input.required<string>();
   paymentForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    code: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
   });
 
   onSubmit() {

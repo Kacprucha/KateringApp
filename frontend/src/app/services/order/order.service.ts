@@ -4,29 +4,45 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface OrderDTO {
-  id: number;
+export interface CreateDeliveryDetailsDTO {
+  name: string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  destinationAddress: string;
+}
+
+export interface GetDeliveryDetailsDTO extends CreateDeliveryDetailsDTO {
+  orderDateTime: string;
+  dueDateTime: string;
+}
+
+export interface CreateOrderDTO {
   mealIds: number[];
-  clientId: number[];
+  paymentMethod: PaymentMethod;
+  contactData: CreateDeliveryDetailsDTO;
+}
+
+export interface GetOrderDTO extends CreateOrderDTO {
+  orderId: number;
   opinion: string;
+  totalPrice: number;
   rate: number;
   orderStatus: OrderStatus;
   startingAddress: string;
-  destinationAddress: string;
-  contactData: {
-    name: string;
-    surname: string;
-    email: string;
-    phoneNumber: string;
-    orderDateTime: string;
-    dueDateTime: string;
-  };
+  contactData: GetDeliveryDetailsDTO;
 }
 
 export enum OrderStatus {
   COMPLETED = 'COMPLETED',
   PENDING = 'PENDING',
   CANCELLED = 'CANCELLED',
+}
+
+export enum PaymentMethod {
+  CREDIT_CARD = 'CREDIT_CARD',
+  PAYPAL = 'PAYPAL',
+  BLIK = 'BLIK',
 }
 
 @Injectable({
@@ -37,15 +53,19 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<OrderDTO[]> {
-    return this.http.get<OrderDTO[]>(this.apiUrl + '/order');
+  getOrders(): Observable<GetOrderDTO[]> {
+    return this.http.get<GetOrderDTO[]>(this.apiUrl + '/order');
   }
 
   getOrder(id: number) {
-    return this.http.get<OrderDTO>(this.apiUrl + `/order/${id}`);
+    return this.http.get<GetOrderDTO>(this.apiUrl + `/order/${id}`);
   }
 
-  changeOrderStatus(id: number, orderDTO: OrderDTO) {
-    return this.http.put<OrderDTO>(this.apiUrl + `/order/${id}`, orderDTO);
+  changeOrderStatus(id: number, orderDTO: GetOrderDTO) {
+    return this.http.put<GetOrderDTO>(this.apiUrl + `/order/${id}`, orderDTO);
+  }
+
+  createOrder(order: CreateOrderDTO) {
+    return this.http.post<GetOrderDTO>(this.apiUrl + '/order', order);
   }
 }

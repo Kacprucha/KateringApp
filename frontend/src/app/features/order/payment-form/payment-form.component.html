@@ -1,8 +1,15 @@
-@switch (paymentMethod()) {
-  @case ("paypal") {
-    <paypal-payment-form />
+@if (paymentId) {
+  @switch (orderDetails?.paymentMethod) {
+    @case ("PAYPAL") {
+      <paypal-payment-form [paymentId]="paymentId" />
+    }
+    @case ("CREDIT_CARD") {
+      <credit-card-payment-form [paymentId]="paymentId" />
+    }
+    @case ("BLIK") {
+      <blik-payment-form [paymentId]="paymentId" />
+    }
   }
-  @case ("credit_card") {
-    <credit-card-payment-form />
-  }
+} @else {
+  <p>Cannot find payment ID.</p>
 }

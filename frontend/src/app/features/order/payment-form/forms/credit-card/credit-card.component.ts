@@ -1,16 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PaymentService } from '../../payment.service';
+import { TransactionFinalizationService } from '../../payment.service';
 
 @Component({
   selector: 'credit-card-payment-form',
   templateUrl: './credit-card.component.html',
 })
 export default class CreditCardPaymentComponent {
-  paymentService = inject(PaymentService);
+  finalizationService = inject(TransactionFinalizationService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
+  paymentId = input.required<string>();
   paymentForm = this.formBuilder.group({
     nameOnCard: ['', [Validators.required, Validators.minLength(3)]],
     cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
@@ -23,9 +24,7 @@ export default class CreditCardPaymentComponent {
 
   onSubmit() {
     if (this.paymentForm.valid) {
-      this.paymentService.completeTransaction();
-    } else {
-      console.log('Form is invalid');
+      this.finalizationService.completeTransaction(this.paymentId());
     }
   }
 }

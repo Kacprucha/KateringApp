@@ -1,23 +1,30 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { OrderService, OrderDTO, OrderStatus } from './order.service';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import {
+  OrderService,
+  GetOrderDTO,
+  OrderStatus,
+  PaymentMethod,
+} from './order.service';
 import { environment } from '../../../environments/environment';
-
 
 describe('OrderService', () => {
   let service: OrderService;
   let httpMock: HttpTestingController;
 
-  const mockOrders: OrderDTO[] = [
+  const mockOrders: GetOrderDTO[] = [
     {
       id: 1,
       mealIds: [1],
-      clientId: [1],
+      totalPrice: 1000,
+      paymentMethod: PaymentMethod.CREDIT_CARD,
       opinion: 'GOOD',
       rate: 100,
       orderStatus: OrderStatus.PENDING,
       startingAddress: 'ADDR1',
-      destinationAddress: 'DEST1',
       contactData: {
         name: 'John',
         surname: 'Doe',
@@ -25,17 +32,18 @@ describe('OrderService', () => {
         phoneNumber: '123456789',
         orderDateTime: '2023-12-01T10:00:00',
         dueDateTime: '2023-12-02T10:00:00',
+        destinationAddress: 'DEST1',
       },
     },
     {
       id: 2,
       mealIds: [2],
-      clientId: [2],
       opinion: 'AVERAGE',
+      totalPrice: 500,
+      paymentMethod: PaymentMethod.PAYPAL,
       rate: 50,
       orderStatus: OrderStatus.COMPLETED,
       startingAddress: 'ADDR2',
-      destinationAddress: 'DEST2',
       contactData: {
         name: 'Jane',
         surname: 'Smith',
@@ -43,19 +51,20 @@ describe('OrderService', () => {
         phoneNumber: '987654321',
         orderDateTime: '2023-12-03T12:00:00',
         dueDateTime: '2023-12-04T12:00:00',
+        destinationAddress: 'DEST2',
       },
     },
   ];
 
-  const mockOrder: OrderDTO = {
+  const mockOrder: GetOrderDTO = {
     id: 1,
     mealIds: [1],
-    clientId: [1],
     opinion: 'GOOD',
+    totalPrice: 1000,
+    paymentMethod: PaymentMethod.CREDIT_CARD,
     rate: 100,
     orderStatus: OrderStatus.PENDING,
     startingAddress: 'ADDR1',
-    destinationAddress: 'DEST1',
     contactData: {
       name: 'John',
       surname: 'Doe',
@@ -63,6 +72,7 @@ describe('OrderService', () => {
       phoneNumber: '123456789',
       orderDateTime: '2023-12-01T10:00:00',
       dueDateTime: '2023-12-02T10:00:00',
+      destinationAddress: 'DEST1',
     },
   };
 
@@ -106,7 +116,10 @@ describe('OrderService', () => {
       });
 
       const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order`);
-      req.flush('Error fetching orders', { status: 500, statusText: 'Internal Server Error' });
+      req.flush('Error fetching orders', {
+        status: 500,
+        statusText: 'Internal Server Error',
+      });
     });
   });
 
@@ -117,7 +130,9 @@ describe('OrderService', () => {
         expect(order.contactData.email).toBe('john.doe@example.com');
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order/${mockOrder.id}`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+      );
       expect(req.request.method).toBe('GET');
       req.flush(mockOrder);
     });
@@ -130,7 +145,9 @@ describe('OrderService', () => {
         },
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order/${mockOrder.id}`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+      );
       req.flush('Order not found', { status: 404, statusText: 'Not Found' });
     });
   });
@@ -139,11 +156,15 @@ describe('OrderService', () => {
     it('should update the order status', () => {
       const updatedOrder = { ...mockOrder, orderStatus: OrderStatus.COMPLETED };
 
-      service.changeOrderStatus(mockOrder.id, updatedOrder).subscribe((order) => {
-        expect(order).toEqual(updatedOrder);
-      });
+      service
+        .changeOrderStatus(mockOrder.id, updatedOrder)
+        .subscribe((order) => {
+          expect(order).toEqual(updatedOrder);
+        });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order/${mockOrder.id}`);
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+      );
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(updatedOrder);
       req.flush(updatedOrder);
@@ -159,8 +180,13 @@ describe('OrderService', () => {
         },
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/api/v1/order/${mockOrder.id}`);
-      req.flush('Invalid order data', { status: 400, statusText: 'Bad Request' });
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+      );
+      req.flush('Invalid order data', {
+        status: 400,
+        statusText: 'Bad Request',
+      });
     });
   });
 });
