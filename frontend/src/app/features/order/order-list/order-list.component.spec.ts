@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OrderDTO, OrderStatus } from '../../../services/order/order.service';
+import {
+  GetOrderDTO,
+  OrderStatus,
+  PaymentMethod,
+} from '../../../services/order/order.service';
 import {
   HttpTestingController,
   provideHttpClientTesting,
@@ -9,16 +13,16 @@ import { environment } from '../../../../environments/environment';
 import OrderListComponent from './order-list.component';
 import OrderDetails from '../order-details/order-details.component';
 
-const MOCK_ORDERS: OrderDTO[] = [
+const MOCK_ORDERS: GetOrderDTO[] = [
   {
-    id: 1,
+    orderId: 1,
     mealIds: [1],
-    clientId: [1],
+    totalPrice: 1000,
+    paymentMethod: PaymentMethod.CREDIT_CARD,
     opinion: 'GOOD',
     rate: 100,
     orderStatus: OrderStatus.PENDING,
     startingAddress: 'ADDR1',
-    destinationAddress: 'DEST1',
     contactData: {
       name: 'John',
       surname: 'Doe',
@@ -26,17 +30,18 @@ const MOCK_ORDERS: OrderDTO[] = [
       phoneNumber: '123456789',
       orderDateTime: '2023-12-01T10:00:00',
       dueDateTime: '2023-12-02T10:00:00',
+      destinationAddress: 'DEST1',
     },
   },
   {
-    id: 2,
+    orderId: 2,
     mealIds: [2],
-    clientId: [2],
     opinion: 'AVERAGE',
+    totalPrice: 500,
+    paymentMethod: PaymentMethod.PAYPAL,
     rate: 50,
     orderStatus: OrderStatus.COMPLETED,
     startingAddress: 'ADDR2',
-    destinationAddress: 'DEST2',
     contactData: {
       name: 'Jane',
       surname: 'Smith',
@@ -44,6 +49,7 @@ const MOCK_ORDERS: OrderDTO[] = [
       phoneNumber: '987654321',
       orderDateTime: '2023-12-03T12:00:00',
       dueDateTime: '2023-12-04T12:00:00',
+      destinationAddress: 'DEST2',
     },
   },
 ];

@@ -17,7 +17,7 @@ describe('OrderService', () => {
 
   const mockOrders: GetOrderDTO[] = [
     {
-      id: 1,
+      orderId: 1,
       mealIds: [1],
       totalPrice: 1000,
       paymentMethod: PaymentMethod.CREDIT_CARD,
@@ -36,7 +36,7 @@ describe('OrderService', () => {
       },
     },
     {
-      id: 2,
+      orderId: 2,
       mealIds: [2],
       opinion: 'AVERAGE',
       totalPrice: 500,
@@ -57,7 +57,7 @@ describe('OrderService', () => {
   ];
 
   const mockOrder: GetOrderDTO = {
-    id: 1,
+    orderId: 1,
     mealIds: [1],
     opinion: 'GOOD',
     totalPrice: 1000,
@@ -125,20 +125,20 @@ describe('OrderService', () => {
 
   describe('getOrder', () => {
     it('should fetch a single order by ID with contact data', () => {
-      service.getOrder(mockOrder.id).subscribe((order) => {
+      service.getOrder(mockOrder.orderId).subscribe((order) => {
         expect(order).toEqual(mockOrder);
         expect(order.contactData.email).toBe('john.doe@example.com');
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+        `${environment.apiUrl}/api/v1/order/${mockOrder.orderId}`,
       );
       expect(req.request.method).toBe('GET');
       req.flush(mockOrder);
     });
 
     it('should handle error on getOrder', () => {
-      service.getOrder(mockOrder.id).subscribe({
+      service.getOrder(mockOrder.orderId).subscribe({
         next: () => fail('Expected an error, but got a response'),
         error: (error) => {
           expect(error.status).toBe(404);
@@ -146,7 +146,7 @@ describe('OrderService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+        `${environment.apiUrl}/api/v1/order/${mockOrder.orderId}`,
       );
       req.flush('Order not found', { status: 404, statusText: 'Not Found' });
     });
@@ -157,13 +157,13 @@ describe('OrderService', () => {
       const updatedOrder = { ...mockOrder, orderStatus: OrderStatus.COMPLETED };
 
       service
-        .changeOrderStatus(mockOrder.id, updatedOrder)
+        .changeOrderStatus(mockOrder.orderId, updatedOrder)
         .subscribe((order) => {
           expect(order).toEqual(updatedOrder);
         });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+        `${environment.apiUrl}/api/v1/order/${mockOrder.orderId}`,
       );
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(updatedOrder);
@@ -173,7 +173,7 @@ describe('OrderService', () => {
     it('should handle error on changeOrderStatus', () => {
       const updatedOrder = { ...mockOrder, orderStatus: OrderStatus.COMPLETED };
 
-      service.changeOrderStatus(mockOrder.id, updatedOrder).subscribe({
+      service.changeOrderStatus(mockOrder.orderId, updatedOrder).subscribe({
         next: () => fail('Expected an error, but got a response'),
         error: (error) => {
           expect(error.status).toBe(400);
@@ -181,7 +181,7 @@ describe('OrderService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/api/v1/order/${mockOrder.id}`,
+        `${environment.apiUrl}/api/v1/order/${mockOrder.orderId}`,
       );
       req.flush('Invalid order data', {
         status: 400,
