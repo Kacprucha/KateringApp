@@ -134,31 +134,27 @@ public class StatisticsService implements IStatistics {
         }
     
         JPAQuery<MealStatisticsDTO> query = new JPAQuery<>(entityManager)
-                .select(
-                        Projections.constructor(
-                                MealStatisticsDTO.class,
-                                Projections.constructor(
-                                        MealGetDTO.class,
-                                        qMeal.mealId,
-                                        qMeal.name,
-                                        qMeal.price,
-                                        qMeal.description,
-                                        qMeal.photo,
-                                        qMeal.ingredients,
-                                        qMeal.cateringFirmData.cateringFirmId,
-                                        qMeal.cateringFirmData.name
-                                ),
-                                qMeal.orders.size().castToNum(Long.class).as("quantitySold"),
-                                qMeal.price.multiply(qMeal.orders.size()).sum().as("totalSalesValue")
-                        )
-                )
-                .from(qMeal)
-                .join(qMeal.orders, qOrder)
-                .where(conditions)
-                .groupBy(qMeal.mealId, qMeal.name, qMeal.price, qMeal.description, qMeal.photo, qMeal.cateringFirmData.cateringFirmId, qMeal.cateringFirmData.name)
-                .orderBy(qMeal.orders.size().desc(), qMeal.price.multiply(qMeal.orders.size()).desc());
+        .select(
+            Projections.constructor(
+                MealStatisticsDTO.class,
+                qMeal.mealId,
+                qMeal.name,
+                qMeal.price,
+                qMeal.description,
+                qMeal.photo,
+                qMeal.cateringFirmData.cateringFirmId,
+                qMeal.cateringFirmData.name,
+                qOrder.count().castToNum(Long.class).as("quantitySold"),
+                qMeal.price.multiply(qOrder.count()).as("totalSalesValue")  // Remove nested sum
+            )
+        )
+        .from(qMeal)
+        .join(qMeal.orders, qOrder)
+        .where(conditions)
+        .groupBy(qMeal.mealId, qMeal.name, qMeal.price, qMeal.description, qMeal.photo, qMeal.cateringFirmData.cateringFirmId, qMeal.cateringFirmData.name)
+        .orderBy(qOrder.count().desc(), qMeal.price.multiply(qOrder.count()).desc());
     
-        return query.fetch();
+    return query.fetch();
     }
     
 }
