@@ -6,6 +6,7 @@ import com.kateringapp.backend.entities.Meal;
 import com.kateringapp.backend.entities.order.Order;
 import com.kateringapp.backend.entities.order.OrderStatus;
 import com.kateringapp.backend.exceptions.meal.MealNotFoundException;
+import com.kateringapp.backend.exceptions.order.ForbiddenOrderStatusUpdateException;
 import com.kateringapp.backend.exceptions.order.OrderNotFoundException;
 import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
 import com.kateringapp.backend.repositories.IOrderRepository;
@@ -81,8 +82,21 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderDTO updateOrder(Long id, OrderDTO orderDTO) {
-        orderRepository.findById(id)
+        Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(id));
+
+        if(order.getOrderStatus() != orderDTO.getOrderStatus()) {
+
+            OrderStatus currentOrderStatus = order.getOrderStatus();
+
+            if(currentOrderStatus != OrderStatus.PENDING) {
+                throw new ForbiddenOrderStatusUpdateException(
+                        String.format(
+                                "Status %s cannot be updated. Only %s status can be updated.",
+                                currentOrderStatus.name(), OrderStatus.PENDING.name())
+                );
+            }
+        }
 
         Order updatedOrder = orderMapper.mapDTOToEntity(orderDTO);
         updatedOrder.setId(id);
