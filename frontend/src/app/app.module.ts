@@ -17,6 +17,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { StatisticsModule } from './features/statistics/statistics.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FormsModule } from '@angular/forms';
+import { MealStatisticsModule } from './features/statistics/meal/meal-statistics.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, PageNotFoundComponent, ProfileComponent, CartComponent, ProfileComponent],
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     KeycloakAngularModule,
     OrderModule,
     StatisticsModule,
-    FormsModule
+    FormsModule, 
+    MealStatisticsModule
   ],
   providers: [
     provideHttpClient(withInterceptors([httpInterceptor])),
