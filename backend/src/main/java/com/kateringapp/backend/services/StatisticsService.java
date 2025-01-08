@@ -1,6 +1,8 @@
 package com.kateringapp.backend.services;
 
 import com.kateringapp.backend.configurations.SpringContextRetriever;
+import com.kateringapp.backend.dtos.MealGetDTO;
+import com.kateringapp.backend.dtos.MealStatisticsDTO;
 import com.kateringapp.backend.dtos.OrderStatisticsDTO;
 import com.kateringapp.backend.dtos.criteria.OrderStatisticCriteria;
 import com.kateringapp.backend.entities.QMeal;
@@ -91,4 +93,68 @@ public class StatisticsService implements IStatistics {
         return query.fetch();
     }
 
+    public List<MealStatisticsDTO> getMealStatistics(OrderStatisticCriteria criteria) {
+        QOrder qOrder = QOrder.order;
+        QMeal qMeal = QMeal.meal;
+        UUID cateringFirmId = springContextRetriever.getCurrentUserIdFromJwt();
+    
+        BooleanBuilder conditions = new BooleanBuilder();
+        conditions.and(qMeal.cateringFirmData.cateringFirmId.eq(cateringFirmId))
+                .and(qOrder.orderStatus.eq(OrderStatus.COMPLETED));
+    
+        if(criteria.getStatisticsPeriod() == null) {
+            if (criteria.getStartDate() != null) {
+                conditions.and(qOrder.completedAt.goe(criteria.getStartDate()));
+            }
+            if (criteria.getEndDate() != null) {
+                conditions.and(qOrder.completedAt.loe(criteria.getEndDate()));
+            }
+        }
+        else {
+            switch(criteria.getStatisticsPeriod()) {
+                case WEEK -> {
+                    Instant oneWeekAgo = LocalDateTime.now().minusWeeks(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneWeekAgo)));
+                }
+                case MONTH -> {
+                    Instant oneMonthAgo = LocalDateTime.now().minusMonths(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneMonthAgo)));
+                }
+                case YEAR -> {
+                    Instant oneYearAgo = LocalDateTime.now().minusYears(1)
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant();
+                    conditions.and(qOrder.completedAt.goe(Timestamp.from(oneYearAgo)));
+                }
+            }
+        }
+    
+        JPAQuery<MealStatisticsDTO> query = new JPAQuery<>(entityManager)
+        .select(
+            Projections.constructor(
+                MealStatisticsDTO.class,
+                qMeal.mealId,
+                qMeal.name,
+                qMeal.price,
+                qMeal.description,
+                qMeal.photo,
+                qMeal.cateringFirmData.cateringFirmId,
+                qMeal.cateringFirmData.name,
+                qOrder.count().castToNum(Long.class).as("quantitySold"),
+                qMeal.price.multiply(qOrder.count()).as("totalSalesValue")  // Remove nested sum
+            )
+        )
+        .from(qMeal)
+        .join(qMeal.orders, qOrder)
+        .where(conditions)
+        .groupBy(qMeal.mealId, qMeal.name, qMeal.price, qMeal.description, qMeal.photo, qMeal.cateringFirmData.cateringFirmId, qMeal.cateringFirmData.name)
+        .orderBy(qOrder.count().desc(), qMeal.price.multiply(qOrder.count()).desc());
+    
+    return query.fetch();
+    }
+    
 }

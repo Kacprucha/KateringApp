@@ -1,5 +1,6 @@
 package com.kateringapp.backend.controllers;
 
+import com.kateringapp.backend.dtos.MealStatisticsDTO;
 import com.kateringapp.backend.dtos.OrderStatisticsDTO;
 import com.kateringapp.backend.dtos.criteria.OrderStatisticCriteria;
 import com.kateringapp.backend.services.StatisticsService;
@@ -20,5 +21,10 @@ public class StatisticsController {
     @GetMapping
     public List<OrderStatisticsDTO> getStatisticsChart(@ModelAttribute OrderStatisticCriteria orderStatisticCriteria){
         return statisticsService.getOrderStatistics(orderStatisticCriteria);
+    }
+
+    @GetMapping("/meals")
+    public List<MealStatisticsDTO> getMealStatistics(@ModelAttribute OrderStatisticCriteria orderStatisticCriteria) {
+        return statisticsService.getMealStatistics(orderStatisticCriteria);
     }
 }
