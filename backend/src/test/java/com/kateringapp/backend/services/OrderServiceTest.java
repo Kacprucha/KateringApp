@@ -3,6 +3,8 @@ package com.kateringapp.backend.services;
 import com.kateringapp.backend.data.TestDataProvider;
 import com.kateringapp.backend.dtos.OrderDTO;
 import com.kateringapp.backend.entities.order.Order;
+import com.kateringapp.backend.entities.order.OrderStatus;
+import com.kateringapp.backend.exceptions.order.ForbiddenOrderStatusUpdateException;
 import com.kateringapp.backend.exceptions.order.OrderNotFoundException;
 import com.kateringapp.backend.mappers.OrderMapper;
 import com.kateringapp.backend.mappers.interfaces.IOrderMapper;
@@ -74,5 +76,109 @@ class OrderServiceTest {
                 () -> orderService.deleteOrder(-1L));
     }
 
+    @Test
+    void testUpdateOrder_shouldUpdateStatus_whenOrderStatusIsPending() {
 
+        Long orderId = 1L;
+
+        Order testOrder = TestDataProvider.provideOrder();
+        OrderDTO testOrderDTO = TestDataProvider.provideOrderDTO();
+
+        testOrder.setOrderStatus(OrderStatus.PENDING);
+        testOrderDTO.setOrderStatus(OrderStatus.COMPLETED);
+
+        when(orderRepository.findById(orderId))
+                .thenReturn(Optional.of(testOrder));
+        when(orderMapper.mapDTOToEntity(testOrderDTO))
+                .thenReturn(testOrder);
+        when(orderRepository.save(testOrder))
+                .thenReturn(testOrder);
+        when(orderMapper.mapEntityToDTO(testOrder))
+                .thenReturn(testOrderDTO);
+
+
+        OrderDTO resultOrderDTO = orderService.updateOrder(orderId, testOrderDTO);
+
+        assertEquals(testOrderDTO, resultOrderDTO);
+    }
+
+    @Test
+    void testUpdateOrder_shouldThrowException_whenCancelledStatusIsUpdated() {
+
+        Long orderId = 1L;
+
+        Order testOrder = TestDataProvider.provideOrder();
+        OrderDTO testOrderDTO = TestDataProvider.provideOrderDTO();
+
+        testOrder.setOrderStatus(OrderStatus.CANCELLED);
+        testOrderDTO.setOrderStatus(OrderStatus.COMPLETED);
+
+        when(orderRepository.findById(orderId))
+                .thenReturn(Optional.of(testOrder));
+        when(orderMapper.mapDTOToEntity(testOrderDTO))
+                .thenReturn(testOrder);
+        when(orderRepository.save(testOrder))
+                .thenReturn(testOrder);
+        when(orderMapper.mapEntityToDTO(testOrder))
+                .thenReturn(testOrderDTO);
+
+
+        assertThrows(
+                ForbiddenOrderStatusUpdateException.class,
+                () -> orderService.updateOrder(orderId, testOrderDTO)
+        );
+    }
+
+    @Test
+    void testUpdateOrder_shouldThrowException_whenCompletedStatusIsUpdated() {
+
+        Long orderId = 1L;
+
+        Order testOrder = TestDataProvider.provideOrder();
+        OrderDTO testOrderDTO = TestDataProvider.provideOrderDTO();
+
+        testOrder.setOrderStatus(OrderStatus.COMPLETED);
+        testOrderDTO.setOrderStatus(OrderStatus.CANCELLED);
+
+        when(orderRepository.findById(orderId))
+                .thenReturn(Optional.of(testOrder));
+        when(orderMapper.mapDTOToEntity(testOrderDTO))
+                .thenReturn(testOrder);
+        when(orderRepository.save(testOrder))
+                .thenReturn(testOrder);
+        when(orderMapper.mapEntityToDTO(testOrder))
+                .thenReturn(testOrderDTO);
+
+
+        assertThrows(
+                ForbiddenOrderStatusUpdateException.class,
+                () -> orderService.updateOrder(orderId, testOrderDTO)
+        );
+    }
+
+    @Test
+    void testUpdateOrder_shouldUpdate_whenCancelledStatusIsNotUpdated() {
+
+        Long orderId = 1L;
+
+        Order testOrder = TestDataProvider.provideOrder();
+        OrderDTO testOrderDTO = TestDataProvider.provideOrderDTO();
+
+        testOrder.setOrderStatus(OrderStatus.CANCELLED);
+        testOrderDTO.setOrderStatus(OrderStatus.CANCELLED);
+
+        when(orderRepository.findById(orderId))
+                .thenReturn(Optional.of(testOrder));
+        when(orderMapper.mapDTOToEntity(testOrderDTO))
+                .thenReturn(testOrder);
+        when(orderRepository.save(testOrder))
+                .thenReturn(testOrder);
+        when(orderMapper.mapEntityToDTO(testOrder))
+                .thenReturn(testOrderDTO);
+
+
+        OrderDTO resultOrderDTO = orderService.updateOrder(orderId, testOrderDTO);
+
+        assertEquals(testOrderDTO, resultOrderDTO);
+    }
 }
