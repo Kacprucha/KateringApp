@@ -22,6 +22,7 @@
             <select
               class="border border-gray-300 rounded px-2 py-1 w-full"
               [(ngModel)]="order.orderStatus"
+              [disabled]="order.orderStatus !== 'PENDING'"
               (change)="onChangeStatus(order, $event)"
             >
               <option *ngFor="let status of orderStatusKeys" [value]="status">
