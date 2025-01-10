@@ -20,3 +20,6 @@ docker compose -f docker-compose-keycloak-dev.yml up --build
 ```shell
 docker compose -f docker-compose-backend-dev.yml -f docker-compose-frontend-dev.yml -f docker-compose-keycloak-dev.yml up --build
 ```
+
+###
+TETS
